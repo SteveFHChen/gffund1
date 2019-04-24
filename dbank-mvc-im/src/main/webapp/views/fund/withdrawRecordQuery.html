@@ -1,0 +1,43 @@
+<script type="text/javascript" src="../scripts/forPage/withdrawRecordQuery.js" ></script>
+<div class="fs-16 ml-20 mt-20 mb-10">
+查询统计&nbsp;-&gt;&nbsp;收费信息&nbsp;-&gt;&nbsp;提现记录查询
+</div>
+<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+	<div class="fl-l ml-10">提现时间&nbsp;
+		<input type="text" class="txt-small w-120">
+		-
+		<input type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-15">用户名&nbsp;
+		<input type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-15">状态&nbsp;
+		<select class='sel-small'>
+			<option value=''>全部</option>
+			<option value=''>成功</option>
+			<option value=''>失败</option>
+		</select>
+	</div>
+	<div class="fl-r mr-20">
+		<input id="queryWithdraw" type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+	</div>
+</div>
+<div class="pt-15 pb-15 pl-20 pr-20">
+	<table class="listTable">
+		<thead>
+			<tr>
+				<td>用户名</td>
+				<td>真实姓名/企业名称</td>
+				<td>提现账号</td>
+				<td>提现时间</td>
+				<td>提现金额</td>
+				<td>手续费</td>
+				<td>应到账金额</td>
+				<td>状态</td>
+			</tr>
+		</thead>
+		<tbody id="withdrawTbody">
+			
+		</tbody>
+	</table>
+</div>

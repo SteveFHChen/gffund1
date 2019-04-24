@@ -1,0 +1,468 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	//获取数据
+	WD.Tab();
+	WD.api.user.myLoan(null,function(data){
+		/* $('.iLoanAllAsset').text(data.LoanAllAsset);
+		$('.iCurrentMustRepayAsset').text(data.CurrentMustRepayAsset);
+		$('.iMustRepayAllAsset').text(data.MustRepayAllAsset);
+		$('.iOverdueAsset').text(data.OverdueAsset);
+		$('.iMustRepayDate').text(data.MustRepayDate); */
+		loanId=data.loanId;
+		if(data.status == 'RECYCLE'){
+			$('.iCurrentLoanData tbody.isRepayment').show().siblings().hide();
+			$('.iloanId').text(data.loanId);
+			$('.iloanAsset').text(data.amount);
+			$('.iloanTime').text(data.period);
+			$('.iyearRate').text(data.interest);
+			$('.itype').text(data.type);
+			$('.istate').text(data.status);
+			$('.ireturnTime').text($U.convertDate(data.nextRepayDate))
+		}
+		if(data.status == 'CHECKING'){
+			$('.iCurrentLoanData tbody.isCheck').show().siblings().hide();
+			$('.iloanId').text(data.loanId);
+			$('.iloanAsset').text(data.amount);
+			$('.iloanTime').text(data.period);
+			$('.iyearRate').text(data.interest);
+			$('.itype').text(data.type);
+			$('.istate').text(data.status);
+		};
+		if(data.status == 'PROCESSING'){
+			$('.iCurrentLoanData tbody.isBid').show().siblings().hide();
+			$('.iloanId').text(data.loanId);
+			$('.iloanAsset').text(data.amount);
+			$('.iloanTime').text(data.period);
+			$('.iyearRate').text(data.interest);
+			$('.itype').text(data.type);
+			$('.ibidRemainTime').text($U.convertDate(data.raiseDeadline));
+			$('.ibidSchedule').text(data.rate);
+			$('.istate').text(data.status);
+		};
+		if(data.status == 'FULL'){//contract.html
+			//ID传参;
+			var loanId='';
+			loanId=data.loanId;
+			$('.iCurrentLoanData tbody.isFull').show().siblings().hide();
+			$('.iloanId').text(data.loanId);
+			$('.iloanAsset').text(data.amount);
+			$('.iloanTime').text(data.period);
+			$('.iyearRate').text(data.interest);
+			$('.itype').text(data.type);
+			$('.ibidTime').text(data.raisePeriod);
+			$('.ialreadyBidTime').text($U.convertDate(data.fullBidDate));
+			$('.istate').text(data.status);
+			$('#contractBtn').click(function(){
+				$U.navigate('user/contract.html?id='+loanId)
+			});
+		};
+		if(data[0]){
+			if(data[0].status == 'DUE'){
+				var dueCon='';
+				for(var i=0; i<data.length; i++){
+					var dat=data[i];
+					dueCon+= '<tr style="border-bottom:1px solid #ccc;"><td valign="center"><a href="tb-view.html"class="c-blue1">借款ID : <span class="">'
+						+dat.loanId+'</span></a><br/><a href="tb-view.html"class="c-blue1">期数 : <span class="">'
+						+dat.period+'-'+dat.currentPeriod+'</span>期</a></td><td valign="center">状态 : <span>'
+						+dat.status+'</span><br>本期应还额 : <span>'
+						+dat.currentRepayment+'</span><br>本期应还时间 : <span>'
+						+$U.convertDate(dat.currentRepayDate)+'</span></td><td valign="center">逾期本息 : <span>'
+						+dat.dueInterestOnPrincipal+'</span><br>逾期罚息 : <span>'
+						+dat.dueFine+'</span><br>逾期天数 : <span>'
+						+dat.dueDays+'</span>天</td></tr>';
+				};
+				$('.iCurrentLoanData tbody.isOverdue').show().siblings().hide();
+				$('.iCurrentLoanData tbody.isOverdue').html(dueCon);
+			};
+		};
+		
+	});
+	//获取历史数据
+	WD.api.user.historyLoanBid(null,function(data){
+		//console.log('............',data)
+	
+		var iHistoryLoanDataStr = ''
+			for( var i=0,l=data.length;i<l;i++){
+				
+				var dat = data[i];
+				var ramark='';
+				if(dat.bidStatus=='FLOW'){
+					ramark='流标时间：<span class="iloanAsset">'+$U.convertDate(dat.flowBidDate)+'</span><br>'
+					+'流标原因：<span class="iyearRate">'+dat.flowBidReason+'</span>';
+				}else if(dat.bidStatus=='DENY'){
+					ramark='撤销时间：<span class="iloanAsset">'+$U.convertDate(dat.denyBidDate)+'</span><br>'
+					+'撤销原因：<span class="iyearRate">'+dat.reason+'</span><br>'; 
+				}else if(dat.bidStatus=='NORMAL_CLEAR'){
+					ramark='已还本息：<span class="iloanAsset">'+dat.totalInterestOnPrincipal+'</span><br>'
+					+'还清时间：<span class="iyearRate">'+$U.convertDate(dat.clearBidDate)+'</span><br>';
+				}else if(dat.bidStatus=='DUE_CLEAR'){
+					ramark='已还本息：<span class="iloanAsset">'+dat.totalInterestOnPrincipal+'</span><br>'
+					+'已还罚息：<span class="iyearRate">'+dat.dueDefaultInterest+'</span><br>'
+					+'总还款额：<span class="iyearRate">'+dat.dueDefaultInterest+'</span><br>'
+					+'年利率：<span class="iyearRate">'+dat.dueDefaultInterest+'</span><br>'
+					+'还清时间：<span class="istate">'+$U.convertDate(dat.clearBidDate)+'</span>';
+				}else if(dat.bidStatus=='ADVANCED_CLEAR'){
+					ramark='已还额：<span class="iloanAsset">'+dat.totalInterestOnPrincipal+'</span><br>'
+					+'未还额：<span class="iyearRate">'+dat.dueInterestOnPrincipal+'</span><br>'
+					+'担保垫付金额：<span class="iyearRate">'+dat.dueInterestOnPrincipal+'</span><br>'
+					/*+'担保机构：<span class="iyearRate">'+dat.flowBidReason+'</span><br>'*/
+					+'结清时间：<span class="istate">'+$U.convertDate(dat.clearBidDate)+'</span>';
+				}else if(dat.bidStatus=='CANCEL_CLEAR'){
+					ramark='已还额：<span class="iloanAsset">'+dat.totalInterestOnPrincipal+'</span><br>'
+					+'未还额：<span class="iyearRate">'+dat.dueInterestOnPrincipal+'</span><br>'
+					+'结清时间：<span class="iyearRate">'+$U.convertDate(dat.clearBidDate)+'</span>';
+				};
+				/* ramark='流标时间：<span class="iloanAsset">'+$U.convertDate(dat.flowBidDate)+'</span><br>'
+					+'流标原因：<span class="iyearRate">'+dat.flowBidReason+'</span><br>'
+					+'年利率：<span class="iyearRate"></span><br>'
+					+'年利率：<span class="iyearRate"></span><br>'
+					+'状态：<span class="istate"></span>'; */
+				iHistoryLoanDataStr += '<tr><td valign="center"><a href="tb-view.html"class="c-blue1">ID <span class="">'
+					+dat.loanId+'</span></a><div>'
+					+dat.title+'</div></td><td valign="center">借款金额：<span>'
+					+dat.amount+'</span>元<br>借款期限：<span>'
+					+dat.period+'</span>天<br>年利率：<span>'
+					+dat.interest+'</span>%</td><td align="center">'
+					+dat.bidStatus+'</td><td valign="center">'
+					+ramark+'</td></tr>';
+			}
+		$('.iHistoryLoanData').html(iHistoryLoanDataStr);
+	});
+});
+</script>
+</head>
+<body>
+<div class="wrap">
+	<!--header start-->
+	<div class="header"></div>
+	<!--header end-->
+	<!--middle start-->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+				<a href="userCenter.html"> <img src="../../images/lxy_01.png"alt=""> <span>信息总览</span> </a>
+				<a href="myFinance.html"> <img src="../../images/lxy_02.png"alt=""> <span>我的投资</span> </a>
+				<a href="myLoan.html"class="active"> <img src="../../images/lxy_03a.png"alt=""> <span>我的借款</span> </a>
+				<a href="myMoney.html"> <img src="../../images/lxy_04.png"alt=""> <span>我的资金账户</span> </a>
+				<a href="account.html"> <img src="../../images/lxy_05.png"alt=""> <span>安全与设置</span> </a>
+				<a href="notice.html"> <img src="../../images/lxy_06.png"alt=""> <span>消息通知</span> </a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					<div class="part-left1 w-225 fl-l">
+						<span class="fs-16">当前借款总额</span>
+						<br>
+						<span class="fs-24 iLoanAllAsset"></span>
+						<span class="fs-18">元</span>
+						<br>
+						<div class="h-10"></div>
+						<span class="fs-16">本期应还额</span>
+						<br>
+						<span class="fs-24 iCurrentMustRepayAsset"></span>
+						<span class="fs-18">元</span>
+					</div>
+					<div class="part-right1 w-450 fl-r pt-20">
+						<span class="fs-14 h-45 fl-l">应还总额<span class="iMustRepayAllAsset"></span>元 <span class="w-30"></span> 逾期金额<span class="iOverdueAsset"></span>元</span>
+						<div class="clear h-0"></div>
+						<span class="blueBox pl-15 pr-15 mr-55">应还时间：<span class="iMustRepayDate"></span></span>
+						<a class="blueBtn round-2 h-30 lh-30 pl-15 pr-15 mr-3"href="../loan/personLoan.html"> 申请贷款 </a>
+						<a class="redBtn round-2 h-30 lh-30 pl-15 pr-15"href="myMoneyPay.html"> 充值还款 </a>
+					</div>
+				</div>
+				<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+					<div class="tabTitle clearfix">
+						<h3 class="active"><span>当前借款</span></h3>
+						<h3><span>历史借款</span></h3>
+					</div>
+					<div class="tabContent mt-20">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="h-35 lh-34 iCurrentLoanData">
+							<!--正常还款中的借款-->
+							<tbody class="dp-n isRepayment">
+								<tr>
+									<td align="left"class="w-100b tdGray pl-10"colspan="2">借款信息</td>
+								</tr>
+								<tr>
+									<td align="left"class="w-45b pl-30 pt-10 pb-10"> 借款ID：<span class="iloanId"></span>
+									<br>
+									借款期限：<span class="iloanTime"></span>
+									<br>
+									标的类型：<span class="itype"></span></td>
+									<td align="left"class="w-45b pl-30 pt-10 pb-10"> 借款金额：￥<span class="iloanAsset"></span>
+									<br>
+									年利率：<span class="iyearRate"></span>
+									<br>
+									状态：<span class="istate"></span></br> 应还时间：<span class="ireturnTime"></span></td>
+								</tr>
+								<tr>
+									<td align="left"class="w-100b tdGray pl-10"colspan="2">已还款信息</td>
+								</tr>
+								<tr>
+									<td align="left"class="w-45b pl-30 pt-10 pb-10">已还本息：￥6,000.00
+									&nbsp;
+									&nbsp;
+									&nbsp;</td>
+									<td align="left"class="w-45b pl-30 pt-10 pb-10">已还期数：4期</td>
+								</tr>
+								<tr>
+									<td align="left"class="w-100b tdGray pl-10"colspan="2">待还款信息</td>
+								</tr>
+								<tr>
+									<td align="left"class="w-45b pl-30 pt-10 pb-10">待还本息：￥6,000.00
+									&nbsp;
+									&nbsp;
+									&nbsp;</td>
+									<td align="left"class="w-45b pl-30 pt-10 pb-10">待还期数：2期</td>
+								</tr>
+							</tbody>
+							<!--审核中-->
+							<tbody class="dp-n isCheck">
+								<tr>
+									<td align="center"class="w-230 tdGray">借款ID</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">借款金额</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">借款期限</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46 iloanId"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46"><span class="iloanAsset"></span>元</td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 iloanTime"></td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="w-230 tdGray">年利率</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">标的类型</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">状态</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46 iyearRate"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 itype"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 istate"></td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="w-230 tdGray">操作</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230">&nbsp;</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46"><a href="javascript:;" class="c-blueDeep">认证资料修改</a></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+							</tbody>
+							<!--投标中-->
+							<tbody class="dp-n isBid">
+								<tr>
+									<td align="center"class="w-230 tdGray">借款ID</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">借款金额</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">借款期限</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46 iloanId"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46"><span class="iloanAsset"></span>元</td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 iloanTime"></td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="w-230 tdGray">年利率</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">标的类型</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">状态</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46 iyearRate"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 itype"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 istate"></td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="w-230 tdGray">筹标剩余时间</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">投标进度</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46 ibidRemainTime"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 ibidSchedule"></td>
+									<td align="center"class="ffs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+							</tbody>
+							<!--满标-->
+							<tbody class="dp-n isFull">
+								<tr>
+									<td align="center"class="w-230 tdGray">借款ID</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">借款金额</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">借款期限</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46 iloanId"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46"><span class="iloanAsset"></span>元</td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 iloanTime"></td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="w-230 tdGray">年利率</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">标的类型</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">状态</td>
+								</tr>
+								<tr>
+									<td align="center"class="fs-18 lh-46 iyearRate"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 itype"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 istate"></td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="center"class="w-230 tdGray">筹标期限</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">已筹时间</td>
+									<td align="center"class="w-30">&nbsp;</td>
+									<td align="center"class="w-230 tdGray">操作</td>
+								</tr>
+								<tr>
+
+									<td align="center"class="fs-18 lh-46 ibidTime"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46 ialreadyBidTime"></td>
+									<td align="center"class="fs-18 lh-46">&nbsp;</td>
+									<td align="center"class="fs-18 lh-46"><a href="javascript:;" class="c-blueDeep" id="contract">合同确认</a></td>
+								</tr>
+								<tr>
+									<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+							</tbody>
+							<!--逾期-->
+							<tbody class="dp-n isOverdue">
+								<!-- <tr>
+								<td align="center"class="w-230 tdGray">借款ID</td>
+								<td align="center"class="w-30">&nbsp;</td>
+								<td align="center"class="w-230 tdGray">期数</td>
+								<td align="center"class="w-30">&nbsp;</td>
+								<td align="center"class="w-230 tdGray">状态</td>
+								</tr>
+								<tr>
+								<td align="center"class="fs-18 lh-46 iloanId"></td>
+								<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								<td align="center"class="fs-18 lh-46"><span class="iperiods"></span>期</td>
+								<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								<td align="center"class="fs-18 lh-46 istate"></td>
+								</tr>
+								<tr>
+								<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+								<td align="center"class="w-230 tdGray">本期应还额</td>
+								<td align="center"class="w-30">&nbsp;</td>
+								<td align="center"class="w-230 tdGray">本期应还时间</td>
+								<td align="center"class="w-30">&nbsp;</td>
+								<td align="center"class="w-230 tdGray">逾期本息</td>
+								</tr>
+								<tr>
+								<td align="center"class="fs-18 lh-46"><span class="icurrentMustRepayAsset"></span>元</td>
+								<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								<td align="center"class="fs-18 lh-46 icurrentMustRepayDate"></td>
+								<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								<td align="center"class="fs-18 lh-46"><span class="ioverduePrincipalInterest"></span>元</td>
+								</tr>
+								<tr>
+								<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr>
+								<tr>
+								<td align="center"class="w-230 tdGray">逾期罚息</td>
+								<td align="center"class="w-30">&nbsp;</td>
+								<td align="center"class="w-230 tdGray">逾期天数</td>
+								<td align="center"class="w-30">&nbsp;</td>
+								<td align="center"class="w-230">&nbsp;</td>
+								</tr>
+								<tr>
+								<td align="center"class="fs-18 lh-46"><span class="ioverduePunishInterest"></span>元</td>
+								<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								<td align="center"class="fs-18 lh-46"><span class="ioverdueTime"></span></td>
+								<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								<td align="center"class="fs-18 lh-46">&nbsp;</td>
+								</tr>
+								<tr>
+								<td colspan="5"class="h-15 lh-14">&nbsp;</td>
+								</tr> -->
+							</tbody>
+						</table>
+
+						<!--历史借款-->
+						<table width="100%"border="0"cellspacing="0"cellpadding="0"class="tbP30 dp-n isHistory">
+							<thead>
+								<tr>
+									<th scope="col">标题</th>
+									<th scope="col">借款详情</th>
+									<th scope="col">状态</th>
+									<th scope="col" width="200">备注</th>
+								</tr>
+							</thead>
+							<tbody class="iHistoryLoanData"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--middle end-->
+	<!--footer start-->
+	<div class="footer">
+	</div>
+	<!--footer end-->
+</div>
+</body>
+</html>

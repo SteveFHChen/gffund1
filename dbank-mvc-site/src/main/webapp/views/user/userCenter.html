@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	WD.api.user.getInfo(null,function(data){
+		$('.iUserName').text(data.username);
+		/* $('.iBalanceAsset').text(data.BalanceAsset);
+		$('.iFreezeAsset').text(data.FreezeAsset);
+		$('.iUsableAsset').text(data.UsableAsset);
+		$('.iNetAsset').text(data.NetAsset);
+		$('.iFinanceAssets').text(data.FinanceAssets);
+		$('.iLoanAssets').text(data.LoanAssets);
+		var iLately5DataStr = ''
+		for( var i=0,l=data.Lately5Data.length;i<l;i++){
+			iLately5DataStr += '<tr><td align="center">'+data.Lately5Data[i].time
+			+'</td><td align="center">'+data.Lately5Data[i].type
+			+'</td><td align="center">'+data.Lately5Data[i].income
+			+'</td><td align="center">'+data.Lately5Data[i].expend
+			+'</td><td align="center">'+data.Lately5Data[i].balance
+			+'</td><td align="center">'+data.Lately5Data[i].remark+'</td></tr>'
+		}
+		$('.iLately5Data').html(iLately5DataStr); */
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html" class="active">
+						<img src="../../images/lxy_01a.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html">
+						<img src="../../images/lxy_02.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+	
+					<a href="account.html">
+						<img src="../../images/lxy_05.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					<div class=" w-80 fl-l pt-10 pb-10 pr-10">
+						<img src="../../images/lxy_11.jpg">
+					</div>
+					<div class="part-left1 w-140 fl-l pt-20 pb-10">
+						<span class="fs-22 iUserName"></span><br>
+						<div class="mt-5">
+							<a href="javascript:;">
+								<img src="../../images/lxy_13.jpg" alt="手机绑定" title="手机绑定">
+							</a>
+							<a href="javascript:;">
+								<img src="../../images/lxy_16.jpg" alt="邮箱绑定" title="邮箱绑定">
+							</a>
+							<a href="javascript:;">
+								<img src="../../images/lxy_14.jpg">
+							</a>
+							<a href="javascript:;">
+								<img src="../../images/lxy_15.jpg">
+							</a>
+						</div>
+						<!--<div class="fs-12 lh-16">
+							安全级别 <span class=" c-greenDeep">高</span>
+							<a href="javascript:;" class="c-blue1 ml-10">[提升]</a>
+						</div>-->
+					</div>
+					<div class="part-right1 w-450 fl-r pt-8 pst-r">
+						<div class="fl-l w-310">
+							<span class="fs-14">账户余额</span>
+							<span class="fs-24 iBalanceAsset"></span>
+							<span class="fs-18">元</span>
+							
+							<div class="h-10"></div>
+							
+							冻结资金  
+							<span class="fs-18 iFreezeAsset"></span>
+							元
+							<br>
+							可用资金  
+							<span class="fs-18 iUsableAsset"></span>
+							元
+						</div>
+					
+						<div class="fl-r w-130">
+							<a class="w-100b subBtn round-2 h-30 lh-30 ta-c" href="javascript:;">我要投资</a>
+							<a class="w-100b subBtn round-2 h-30 lh-30 ta-c mt-5" href="../loan/pro.html">我要借款</a>
+							<a class="w-60 blueBtn round-2 h-30 lh-30 mr-3 ta-c fl-l mt-5" href="myMoneyPay.html">充值</a>
+							<a class="w-60 redBtn round-2 h-30 lh-30 ta-c fl-r mt-5" href="myMoneyWithdrawal.html">提现</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="bd-gray1 fs-14 ml-20 mr-20 mt-20 mb-10 pt-20 pb-20 clearfix">
+					<table cellpadding="0" cellspacing="0" border="0" width="60%" class=" m-0a">
+						<tr>
+							<td align="center">账户净资产</td>
+							<td align="center"></td>
+							<td align="center">投资资产</td>
+							<td align="center"></td>
+							<td align="center">借款负债</td>
+							<td align="center"></td>
+							<td align="center">账户余额</td>
+						</tr>
+						<tr>
+							<td align="center" class="fs-18"><span class="iNetAsset"></span>元</td>
+							<td align="center" class="fs-18">=</td>
+							<td align="center" class="fs-18"><span class="iFinanceAssets"></span>元</td>
+							<td align="center" class="fs-18">-</td>
+							<td align="center" class="fs-18"><span class="iLoanAssets"></span>元</td>
+							<td align="center" class="fs-18">+</td>
+							<td align="center" class="fs-18"><span class="iBalanceAsset"></span>元</td>
+						</tr>
+					</table>
+				</div>
+				<div class="clearfix">
+				<div class="fs-16 ml-20 mt-20 mb-10 fl-l">
+				最近5笔交易记录
+				</div>
+				<a class="fs-12 fl-r c-blue1 mt-10 mr-20" href="userCenterList.html">交易明细查询</a>
+</div>
+				<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+
+					<div class="tabContent mt-20">
+					
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc">
+						<thead>
+						<tr>
+							<th scope="col">交易时间</th>
+							<th scope="col">交易类型</th>
+							<th scope="col">收入</th>
+							<th scope="col">支出</th>
+							<th scope="col">账户余额</th>
+							<th scope="col">备注</th>
+						</tr>
+						</thead>
+						<tbody class="iLately5Data">
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

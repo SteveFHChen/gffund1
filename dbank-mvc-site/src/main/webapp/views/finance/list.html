@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js" ></script>
+<script>
+
+var searchParams = {'itemType':'0','itemDeadline':'0','byComplete':'1','byRate':'1'};
+var pageNav;
+
+function doInit(){	
+	
+	$('#itemType li a,#itemDeadline li a').on('click',function(){
+		$(this).closest('ul').find('.on').removeClass('on');
+		$(this).addClass('on');
+		var ck = $(this).closest('ul').attr('id');
+		if(searchParams[ck] == $(this).attr('title')){
+			return;
+		}else{
+			searchParams[ck] = $(this).attr('title');
+		}
+		pageNav.first();
+	});
+	
+	$('#byComplete,#byRate').on('change',function(){
+		var sk = $(this).attr('id');
+		searchParams[sk] = $(this).val();
+		pageNav.first();
+	});
+	
+	pageNav = new WD.PageNav($('#pageNav'), {
+		callback : $.proxy(function(params){
+			$.extend(params, searchParams);
+			console.log('参数...',params);
+			WD.api.finance.getInvestLists(params,function(data){
+				_createFinanceList(data.content.content);
+				pageNav.setParams(data.content);
+			});			
+		}, this)
+	});		
+	pageNav.first();
+}
+$(doInit);
+
+function _createFinanceList(data){	
+	var str = '';
+	if(data){		
+		for(var i=0;i<data.length;i++){
+			var fl = data[i];
+			str += '<tr><td><p class="y_shi y_sx ta-l">'+fl.title+'</p></td>';
+			str += '<td>'+fl.rate+'</td>';
+			str += '<td>'+fl.money+'</td>';		
+			str += '<td>'+fl.date+'</td>'
+			str += '<td>'+_createPercent(fl.percent)+'</td>';
+			str += '<td>'+fl.createDate+'</td>';
+			str += '<td><a href="investInfo.html?id='+fl.id+'" class="y_index_toubiao">查看详情</a></td></tr>';	
+		}
+	}
+	$('#investLists>tbody').empty().append(str);
+}
+
+function _createPercent(data){
+	var s = '';
+	s += '<div class="graph">';
+	var num = 15*data;
+	for(var i=0;i<15;i++){
+		if(num<5){
+			s += (i<num)?'<span class="bar bg-redDeep round-5"></span>':'<span class="bar round-5"></span>';
+		}else if(num<10){
+			s += (i<num)?'<span class="bar bg-orgLight round-5"></span>':'<span class="bar round-5"></span>';
+		}else{
+			s += (i<num)?'<span class="bar bg-purpleDeep round-5"></span>':'<span class="bar round-5"></span>';
+		}
+			
+	}
+	s += '<span class="bar num">'+data+'</span></div>';
+	return s;
+}
+$(function(){
+	$('.nav .headList').eq(1).addClass('active');
+})
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle w-960 m-0a y_area">
+		<div class="breadCrumb">
+			<a href="#">我要理财</a> &gt; 投资列表
+		</div>
+		<!-- 面包屑结束 -->
+        <div class="xm-nav">
+            <div class="panel">
+                <div class="panel-head bg-fff">
+                    <h3 class="title">筛选投资项目</h3>
+                </div>
+                <div class="panel-body clearfix">
+                    <div class="shaixuan">
+                        <ul class="clearfix" id="itemType">
+                            <li>标的类型</li>
+                            <li><a class="on" href="javascript:;" title='0'>不限</a></li>
+                            <li><a href="javascript:;" title='1'>个人信用贷</a></li>
+                            <li><a href="javascript:;" title='2'>企业经营贷</a></li>
+                        </ul>
+                        <ul class="clearfix" id="itemDeadline">
+                            <li>借款期限</li>
+                            <li><a class="on" href="javascript:;" title='0'>不限</a></li>
+                            <li><a href="javascript:;" title='0_3'>0-3个月</a></li>
+                            <li><a href="javascript:;" title='3_6'>3-6个月</a></li>
+                            <li><a href="javascript:;" title='6_9'>6-9个月</a></li>
+                            <li><a href="javascript:;" title='9_12'>9-12个月</a></li>
+                        </ul>
+                    </div><!-- 筛选菜单 -->
+                    <div class="fqa">
+                    	<ul>
+                    		<li><a href="../loan/personLoan.html">什么是个人信用贷款？</a></li>
+                    		<li><a href="../loan/entLoan.html">什么是经营贷？</a></li>
+                    		<!-- <li><a href="aGrxyd-Introduction.html">什么是等级认证？</a></li> -->
+                    	</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xm-main">
+            <div class="panel">
+                 <div class="panel-head bg-fff">
+                     <h3 class="title">交易进行中的投资列表</h3>
+                     <div class="extre">
+                     	<select id="byComplete">
+                     		<option value="1">按完成度由高到低</option>
+                     		<option value="2">按完成度由低到高</option>
+                     	</select>
+                     	<select id="byRate">
+                     		<option value="1">按利率度由高到低</option>
+                     		<option value="2">按利率度由低到高</option>
+                     	</select>
+                     </div>
+                 </div>
+                 <div class="panel-body">
+                   	<div class="xm-top clearfix">
+                           <div class="tips">自主选择投资项目，每月获得等额本息回款；<span class="c-orangeLight">100元</span>即可获得理财乐趣，随时可赎回。</div>
+                           <div class="btnbox">
+                           		<button class="btn-jisuanqi">理财计算器</button>
+								<button class="btn-fabiao" onclick="location.href='../loan/pro.html'">免费发标</button>
+						   </div>
+                   	</div>
+                    <div class="xm-list">
+                       <table id="investLists" class="y_index_table" width="100%">
+	                       	<thead>
+	                            <tr>
+	                                <th width="20%">借款标题</th>
+	                                <th width="10%">年利率</th>
+	                                <th width="15%">金额</th>
+	                                <th width="10%">期限</th>
+	                                <th width="20%">进度</th>
+	                                <th width="15%">发标时间</th>
+	                                <th >&nbsp;</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                   
+	                        </tbody>
+	                        <tfoot>
+	                        	 <tr><td colspan="7"><div id="pageNav"></div></td></tr>
+	                        </tfoot>     
+                       </table>
+                   </div>
+               </div>
+            </div>
+        </div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>95508理财系统-后台管理系统</title>
+	<script type="text/javascript" src="../../include.js" ></script>
+
+	<script type="text/javascript">
+		 $(function() {
+			loadRoleList();
+		 });
+ 		function loadRoleList(roleName) {
+			var pageNav = new WD.PageNav('#pageNav', {
+			callback : $.proxy(function(params) {
+				if(roleName) {
+					$.extend(params, {name : roleName});
+				}
+				WD.api.role.queryListByPage(params, function(data) {
+					var tbody="";
+					$(data.content).each(function() {
+						tbody += "<tr class='gare_bg'>";
+						tbody += "<td>" + this.code + "</td>";
+						tbody += "<td>" + this.name + "</td>";
+						tbody += "<td>" + this.roleType　+"</td>";
+						tbody += "<td>" + this.desc　+"</td>";
+						tbody += "<td><a href='javascript:void(0)' onclick='updateRole(\""+ this.id +"\")'>修改</a>  &nbsp; ";
+						tbody += "<a href='javascript:void(0)' onclick='deleteRole(\""+ this.id + "\")'>删除</a></td></tr>";
+					});
+					$("#roleTbody").html(tbody);
+					pageNav.setParams(data);
+					});
+				}, this)
+			});
+			pageNav.first();
+		} 
+		
+ 		function queryRoleList() {
+ 			var name = $("#name").val();
+ 			loadRoleList(name);
+ 		}
+		
+		function updateRole(roleId) {
+			$U.navigate('role/roleUpdate.html?id='+roleId);
+		}
+		
+		function createRole() {
+			$U.navigate('role/roleAdd.html');
+		}
+		
+		function deleteRole(roleId) {
+			if(!confirm("确定没有用户引用该角色，删除该角色将级联删除角色菜单？")) {
+				return;
+			}
+			WD.api.role.deleteRole({id : roleId}, {
+				success:function(data) {
+					alert("删除成功!");
+					queryRoleList();
+				}, error : function(data) {
+					alert(data);
+				}
+			});
+		} 
+		
+	</script>	
+</head>
+
+<body>
+	<div class="fs-16 ml-20 mt-20 mb-10">
+		系统管理&nbsp;-&gt;&nbsp;角色管理
+	</div>
+	
+	<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+		<div class="fl-l ml-10">角色编号&nbsp;
+			<input id="code" type="text" class="txt-small w-120">
+		</div>
+		<div class="fl-l ml-10">角色名称&nbsp;
+			<input id="name" type="text" class="txt-small w-120">
+		</div>
+		<div class="fl-l ml-10">角色描述&nbsp;
+			<input id="desc" type="text" class="txt-small w-120">
+		</div>
+		<div class="fl-l ml-30">
+			<input onclick="queryRoleList()" id="searchBtn" type="button" value="查询" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">&nbsp;&nbsp;
+			<input onclick="createRole()" id="createFaqBtn" type="button" value="新增" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		</div>
+	</div>
+
+	<table class="listTable">
+		<thead>
+			<tr>
+				<td>角色编号</td>
+				<td>角色名称</td>
+				<td>角色类别</td>
+				<td>角色描述</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<tbody id='roleTbody'></tbody>
+	</table>
+
+	<div class="page mt-30">
+		<div class="ui-page-outer">
+			<div class="ui-page">
+				<div id="pageNav"></div>
+			</div>
+		</div>
+	</div>
+</body>

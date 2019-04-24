@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+    $(function() {
+    //nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+        WD.api.user.account(null, function(data) {
+            $('.iUserName').text(data.username);
+            if(data.mobileStatus == false) {
+                $('.iPhoneState').html('<a href="accountBindPhone.html" class="no_identy">去认证</a>');
+                $('.iPhone').text('未认证');
+            } else {
+                $('.iPhoneState').html('<span class="had_identy">已认证</span>');
+                $('.iPhone').text(data.mobile);
+            }
+            if(data.emailStatus == false) {
+                $('.iEmailState').html('<a href="accountBindEmail.html" class="no_identy">去认证</a>');
+                $('.iEmail').text('未认证');
+            } else {
+                $('.iEmailState').html('<span class="had_identy">已认证</span>');
+                $('.iEmail').text(data.email);
+            }
+            if(data.nameStatus == false) {
+                $('.iTruthNameState').html('<a href="accountRealnameAuthen.html" class="no_identy">去认证</a>');
+                $('.iTruthName').text('未认证');
+            } else {
+                $('.iTruthNameState').html('<span class="had_identy">已认证</span>');
+                $('.iTruthName').text(data.realName);
+                $('.iIdNumShow').show();
+                $('.iSexShow').show();
+            	$('.iBirthdayShow').show();
+            }
+             if(data.certStatus == false) {
+                $('.iIdNumState').html('<a href="accountRealnameAuthen.html" class="no_identy">去认证</a>');
+                $('.iIdNum').text('未认证');
+            } else {
+                $('.iIdNumState').html('<span class="had_identy">已认证</span>');
+                $('.iIdNum').text(data.certNo);
+            }
+            if(data.sex) {
+                $('.iSex').text(data.sex);
+            } else {
+                $('.iSex').text('未认证');
+            }
+            if(data.birthday) {
+                $('.iBirthday').text(data.birthday);
+            } else {
+                $('.iBirthday').text('未认证');
+            }
+        });
+    });
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header"></div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+				<a href="userCenter.html"> <img src="../../images/lxy_01.png" alt=""> <span> 信息总览 </span> </a>
+				<a href="myFinance.html"> <img src="../../images/lxy_02.png" alt=""> <span> 我的投资 </span> </a>
+				<a href="myLoan.html"> <img src="../../images/lxy_03.png" alt=""> <span> 我的借款 </span> </a>
+				<a href="myMoney.html"> <img src="../../images/lxy_04.png" alt=""> <span> 我的资金账户 </span> </a>
+				<a href="account.html" class="active"> <img src="../../images/lxy_05a.png" alt=""> <span> 安全与设置 </span> </a>
+				<div class="nextNav">
+					<a href="account.html" class="active"> 个人基础信息 </a>
+					<a href="accountCreditInfo.html"> 认证资料信息 </a>
+					<a href="accountSecurity.html"> 安全设置 </a>
+				</div>
+				<a href="notice.html"> <img src="../../images/lxy_06.png" alt=""> <span> 消息通知 </span> </a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="uc uc_baseInfo">
+					<div class="content pl-120 pr-120">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td width="70%"><span class="c-redLight"> * </span><span class="w-80 ml-5"> 用户名： </span><span class="iUserName"> </span></td>
+								<td width="30%"></td>
+							</tr>
+							<tr>
+								<td><span class="c-redLight"> * </span><span class="w-80 ml-5"> 手机号码： </span><span class="iPhone"> </span></td>
+								<td class="iPhoneState"></td>
+							</tr>
+							<tr>
+								<td><span class="c-redLight"> * </span><span class="w-80 ml-5"> 邮件地址： </span><span class="iEmail"> </span></td>
+								<td class="iEmailState"></td>
+							</tr>
+							<tr>
+								<td class="ta-l"><span class="c-redLight"> * </span><span class="w-80 ml-5"> 真实姓名： </span><span class="iTruthName"> </span></td>
+								<td class="iTruthNameState"></td>
+							</tr>
+							<tr class="dp-n iIdNumShow">
+								<td><span class="c-redLight"> * </span><span class="w-80 ml-5"> 身份证号： </span><span class="iIdNum"> </span></td>
+								<td class="iIdNumState"></td>
+							</tr>
+							<tr class="dp-n iSexShow">
+								<td><span class="c-redLight"> * </span><span class="w-80 ml-5"> 性别： </span><span  class="iSex"> </span></td>
+								<td></td>
+							</tr>
+							<tr class="dp-n iBirthdayShow">
+								<td><span class="c-redLight"> * </span><span class="w-80 ml-5"> 出生日期： </span><span class="iBirthday"> </span></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer"></div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

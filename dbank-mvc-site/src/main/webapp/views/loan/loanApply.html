@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript" src="../../scripts/lib/jquery.validate.min.js" ></script>
+<!-- <script type="text/javascript" src="../../scripts/lib/jQselectable/jQselectable.js" ></script> -->
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(2).addClass('active');
+	//设置全部select样式
+	/*$('select').jQselectable({
+    	style: "simple",
+    	set: "slideDown",
+		setDuration: "fast",
+		opacity: .9,
+		height: 150
+	});*/
+	//判断用户类型
+	WD.api.user.getInfo(null,function(data){
+		data.uType="ent";
+		if(data.uType=="person"){
+			$('.isEntTopNav').text('个人信用贷介绍')
+		}else if(data.uType=="ent"){
+			$('.isEntTopNav').text('经营贷介绍')
+		}
+	});
+	
+	//信息完整度
+	$('.infoScale').html(_createPercent(0));
+	
+	//获取用户信息
+	WD.api.user.account(null,function(data){
+		if(data.nameStatus=='false'){
+			$U.navigate('loan/realnameAuthen.html');
+			return false;
+		}
+	});
+	//获取已填信息
+	WD.api.loan.getLoanInfo({},function(data){
+		$('input[name="title"]').val(data.title);
+		$('input[name="use"]').val(data.usage);
+		$('input[name="money"]').val(data.amount);
+		$('#timeLimit').val(data.period);
+		$('input[name="rate"]').val(data.interest);
+		$('#repayMode').val(data.repayMode);
+		$('input[name="raisePeriod"]').val(data.raisePeriod);
+		$('#desc').val(data.desc);
+	});
+	var vForm = $('#cFillReg').validate({
+		ignore:'hidden',
+		rules:{
+			title:{
+				required:true, 
+				minlength:2
+			},
+			money:{
+				required:true,
+				minlength:2
+			},
+			rate:{
+				required:true,
+				range:[10,24],
+				number:true
+			},
+			use:{
+				required:true
+			},
+			raisePeriod:{
+				required:true,
+				number:true
+			},
+			timeLimit:{
+				required:true
+			},
+			repayMode:{
+				required:true
+			},
+			desc:{
+				required:true
+			},
+			agreement:{
+				required:true
+			}
+		},
+		messages:{
+			title:{
+				required:'请输入借款标题',
+				minlength:$.format('借款标题不能少于{0}位')
+			},
+			money:{
+				required:'请输入借款金额',
+				minlength:$.format('字数不能少于{0}位')
+			},
+			rate:{
+				required:'请输入年利率数据',
+				range:'年利率范围在10%-24%之间',
+				number:'只能输入数字'
+			},
+			use:{
+				required:'请输入借款用途'
+			},
+			raisePeriod:{
+				required:'请输入筹标期限',
+				number:'只能输入数字'
+			},
+			timeLimit:{
+				required:'请选择一项借款期限'
+			},
+			repayMode:{
+				required:'请选择一项还款方式'
+			},
+			desc:{
+				required:'请填写借款描述'
+			},
+			agreement:{
+				required: "请勾选《借款协议》"
+			}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('td'));
+		},
+		submitHandler:function () {
+			 //_dealSubmit();			
+		}
+	});
+	
+	//下一步
+	$("#nextStep").click(function(){
+		var vb = vForm.form();
+		if(vb){
+			_dealSubmit('next');
+		}
+	});
+	//保存
+	$('#cKeep').click(function(){
+		var vb = vForm.form();
+		if(vb){
+			_dealSubmit('save');
+		}
+	});
+});
+function _dealSubmit(attr){
+	var params = {};
+	params.title = $('input[name="title"]').val();
+	params.usage = $('input[name="use"]').val();
+	params.amount = $('input[name="money"]').val();
+	params.period = $('#timeLimit').val();
+	params.interest = $('input[name="rate"]').val();
+	params.repayMode = $('#repayMode').val();
+	params.raisePeriod = $('input[name="raisePeriod"]').val();
+	params.desc = $('#desc').val();
+	//提交
+	WD.api.loan.submitInfo(params,function(data){
+		if(data.id){
+			if(attr == 'save'){
+				$('.infoScale').html(_createPercent(0.2));
+				alert('保存成功！');
+			}else if(attr == 'next'){
+				$('.infoScale').html(_createPercent(0.2));
+				$U.navigate('loan/loanMessage.html?id='+data.id);
+			}
+		}
+	});
+}
+function _createPercent(data){
+	var s = '';
+	s += '<div class="graph">';
+	var num = 15*data;
+	for(var i=0;i<15;i++){
+		s += (i<num)?'<span class="bar bg-redDeep round-5"></span>':'<span class="bar round-5"></span>';
+	}
+	s += '<span class="bar num">'+(data*100)+'%</span></div>';
+	return s;
+}
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!--页面头部-->
+	 <div class="header">
+	 </div>
+	<!--页面头部END-->
+	
+	<!--页面内容部分-->
+	<div id="aMainWrap" class="middle">
+		<div class="cMainTop">
+	    	<h3 class="cMainTopTitle">我要借款 > <span class="isEntTopNav">个人信用贷介绍</span> > 借款申请填写</h3>
+	        <div class="cMainContent">
+	        	<div class="cMConLeft">
+	            	<p>信息完整度：<span class="infoScale"></span></p>
+	            </div>
+	            <div class="cMConRight">
+	            	<p>温馨提示：带<span class="cLogoColor">*</span>号为必填项，所有资料均会严格保密</p>
+	            </div>
+	      </div>
+	    </div>
+		<div class="cMain">
+	    	<div class="cFillApp">
+	        	<h3 class="cFillAppText ml-100">借款申请信息填写</h3>
+	        	<form id="cFillReg" >
+	        		<table class="w-680 ml-150 lh-50">
+			        	<tr>
+			                <td class="w-180 ta-r pr-10"><span class="c-redLight pr-5">*</span>借款标题：</td>
+			                <td><input type="text" name="title" class="txt-small w-170 mr-5"></td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"><span class="c-redLight pr-5">*</span>借款用途：</td>
+			                <td><input type="text" name="use" class="txt-small w-170 mr-5"></td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"><span class="c-redLight pr-5">*</span>借款金额：</td>
+			                <td><input type="text" name="money" class="txt-small w-170 mr-5"><span class="gUnit">元</span></td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"><span class="c-redLight pr-5">*</span>借款期限：</td>
+			                <td>
+			                	<select id="timeLimit" name="timeLimit" title="" class="sel-small mr-5">
+			                		<option value="">请选择</option>
+			                    	<option value="1">1个月</option>
+			                    	<option value="2">2个月</option>
+			                    	<option value="3">3个月</option>
+			                    	<option value="4">4个月</option>
+			                    	<option value="5">5个月</option>
+			                    	<option value="6">6个月</option>
+			                    	<option value="7">7个月</option>
+			                    	<option value="8">8个月</option>
+			                    	<option value="9">9个月</option>
+			                    	<option value="10">10个月</option>
+			                    	<option value="11">11个月</option>
+			                    	<option value="12">12个月</option>
+			                   </select>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"><span class="c-redLight pr-5">*</span>年利率：</td>
+			                <td><input type="text" name="rate" class="txt-small w-170 mr-5"><span class="gUnit">%</span></td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"> </td>
+			                <td class="lh-30 c-999">
+			                	利率精确到小数点后一位，范围10%-24%之间借款最低利率由借款期限确定，
+			                	一般来说借款利率越高，筹款速度越快
+			                </td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"><span class="c-redLight pr-5">*</span>还款方式 :</td>
+			                <td>
+			                	<select id="repayMode" name="repayMode" class="sel-small mr-5">
+			                		<option value="">请选择</option>
+			                    	<option value="MONTH">按月还款，等额本息</option>
+			                    	<option value="SEASON">按季还款，等额本息</option>
+			                    </select>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"><span class="c-redLight pr-5">*</span>筹标期限 :</td>
+			                <td><input type="text" name="raisePeriod" class="txt-small w-170 mr-5"/><span class="gUnit">天</span></td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"><span class="c-redLight pr-5">*</span>借款描述：</td>
+			                <td>
+			                	<textarea id="desc" name="desc" title="" class="w-400 h-200"></textarea>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"></td>
+			                <td>
+		                        <label>
+		                        	<input type="checkbox" name="agreement" id="agreement">
+		                        	我已阅读并同意签署 <a href="javascript:;" class="c-blue1">《借款协议》</a>
+		                    	</label>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td class="ta-r pr-10"></td>
+			                <td>
+			                    <div class="cPreANextBtn">
+			                        <a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10" id="nextStep">下一步</a>
+			                        <a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14" id="cKeep">保存</a>
+			                    </div>
+			                    <!-- <div class="mt-20"><input type="submit" value="提交" class="btn-gray round-3 h-35 lh-34 pl-70 pr-70 fs-14 cs-p"></div> -->
+			                </td>
+			            </tr>
+		           </table>
+				</form>
+	        </div>
+	    </div>
+	</div>
+	<!--页面内容部分END-->
+	
+	<!--页面底部-->
+	<div class="footer">
+	</div>
+	<!--页面底部END-->
+</div>
+</body>
+</html>

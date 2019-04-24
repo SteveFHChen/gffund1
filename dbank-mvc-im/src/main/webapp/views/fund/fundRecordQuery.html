@@ -1,0 +1,69 @@
+<script type="text/javascript" src="../scripts/forPage/fundRecordQuery.js" ></script>
+<div class="fs-16 ml-20 mt-20 mb-10">
+查询统计&nbsp;-&gt;&nbsp;收费信息&nbsp;-&gt;&nbsp;资金记录查询
+</div>
+<div class="searchBox ml-20 mt-20 clearfix">
+	<div class="fl-l ml-10">交易时间&nbsp;
+		<input type="text" class="txt-small w-120">
+		-
+		<input type="text" class="txt-small w-120">
+	</div>
+</div>
+<div class="searchBox ml-20 mt-10 mb-30 clearfix">
+	<div class="fl-l ml-10">收支类型&nbsp;
+		<select class='sel-small'>
+			<option value=''>全部</option>
+			<option value=''>收入</option>
+			<option value=''>支出</option>
+		</select>
+	</div>
+	<div class="fl-l ml-25">交易类型&nbsp;
+		<select class='sel-small'>
+			<option selected value="全部">全部</option>
+			<option value="充值">充值</option>
+            <option value="充值费">充值费</option>
+            <option value="投标冻结">投标冻结</option>
+            <option value="投标解冻">投标解冻</option>
+            <option value="投标">投标</option>
+            <option value="借入">借入</option>
+            <option value="本金">本金</option>
+            <option value="利息">利息</option>
+            <option value="罚息">罚息</option>
+            <option value="借款服务费">借款服务费</option>
+            <option value="投资服务费">投资服务费</option>
+            <option value="提现">提现</option>
+            <option value="提现费">提现费</option>
+		</select>
+	</div>
+	<div class="fl-l ml-25">状态&nbsp;
+		<select class='sel-small'>
+			<option value=''>全部</option>
+			<option value=''>成功</option>
+			<option value=''>失败</option>
+		</select>
+	</div>
+	<div class="fl-l ml-30">
+		<input id='queryFundRecord' type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+	</div>
+</div>
+<div class="pt-15 pb-15 pl-20 pr-20">
+	<table class="listTable">
+		<thead>
+			<tr>
+				<td>用户名</td>
+				<td>真实姓名/企业名称</td>
+				<td>收入</td>
+				<td>支出</td>
+				<td>账户余额</td>
+				<td>交易类型</td>
+				<td>交易流水号</td>
+				<td>交易时间</td>
+				<td>状态</td>
+			</tr>
+		</thead>
+		<tbody id='fundRecordTbody'>
+			
+		</tbody>
+	</table>
+</div>
+			

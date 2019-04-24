@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	WD.api.user.myFinanceList(null,function(data){
+		$('.iWaitPrincipalInterest').text(data.WaitPrincipalInterest);
+		$('.iWaitPrincipal').text(data.WaitPrincipal);
+		$('.iWaitInterest').text(data.WaitInterest);
+		$('.iRecycle30Asset').text(data.Recycle30Asset);
+		var iListDataStr = ''
+		for( var i=0,l=data.ListData.length;i<l;i++){
+			iListDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.ListData[i].loanId
+				+'</a></td><td align="center">'+data.ListData[i].loanUser
+				+'</td><td align="center">'+data.ListData[i].asset
+				+'</td><td align="center">'+data.ListData[i].type
+				+'</td><td align="center">'+data.ListData[i].date
+				+'</td></tr>'
+		}
+		$('.iListData').html(iListDataStr);
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html" class="active">
+						<img src="../../images/lxy_02a.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html">
+						<img src="../../images/lxy_05.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					<div class="part-left1 w-400 fl-l">
+						<div class="fl-l pt-15 pr-50 w-180">
+							<span class="fs-16">待收金额</span><br>
+							<span class="fs-24 iWaitPrincipalInterest"></span>
+							<span class="fs-18">元</span>
+						</div>
+						<div class="fl-l lh-18">
+							<span class="fs-12">待收本金<br>
+								<span class="iWaitPrincipal"></span>元</span><br>
+							<span class="fs-12 mt-10">待收利息<br>
+								<span class="iWaitInterest"></span>元</span>
+						</div>
+					</div>
+					<div class="part-right1 w-270 fl-r pt-10">
+						<span class="fs-14 w-170 h-45 fl-l">未来30天待收金额<br>
+							<span class="fs-18"><span class="iRecycle30Asset"></span>元</span>
+						</span>
+					</div>
+				</div>
+				<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+					<div class="fl-l">收帐日期&nbsp;
+						<input type="text" class="txt-small w-125">
+						—
+						<input type="text" class="txt-small 2-125">
+					</div>
+					<div class="fl-r mr-20">
+						<input type="button" value="查询" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+				</div>
+				<div class="h-1 ml-20 mr-20 bgc-gray90"></div>
+				<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+					<div class="tabContent mt-20">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc">
+					<thead>
+						<tr>
+							<th scope="col">借款ID</th>
+							<th scope="col">借款人</th>
+							<th scope="col">金额</th>
+							<th scope="col">款项类型</th>
+							<th scope="col">收账日期</th>
+						</tr>
+					</thead>
+					<tbody class="iListData"></tbody>
+					</table>
+					<div class="page mt-30">
+						<div class="ui-page-outer">
+							<div class="ui-page">
+								<span class="ui-page-on">1</span>
+								<a href="#" data-page="2">2</a>
+								<a href="#" data-page="3">3</a>
+								<span class="ui-page-dot">...</span>
+								<a href="#" data-page="16">16</a>
+								<a href="#" class="ui-page-next" data-page="2">&gt;</a>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

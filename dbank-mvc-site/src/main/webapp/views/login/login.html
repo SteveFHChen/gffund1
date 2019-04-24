@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript">
+$(function () {
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.noUser').find('a').eq(1).addClass('active');
+	//获取图片验证码
+	/*api.auth.getPicVerCode(null,{
+	 success:function(){
+	 $('#verCodeImg').attr('src','');
+	 }
+	 });*/
+	//默认文字的显示隐藏
+	$('#username').on('focus', function () {
+		if ($(this).val() == '用户名') {
+			$(this).css('color', '#333');
+			$(this).val('');
+		}
+	}).on('blur', function () {
+		if ($(this).val() == '') {
+			$(this).css('color', '#c0c0c0');
+			$(this).val('用户名');
+			$(this).addClass('txt-red');
+		}
+	});
+	$('#password').on('focus', function () {
+		if ($(this).val() == '密码') {
+			$(this).attr('type', 'password');
+			$(this).css('color', '#333');
+			$(this).val('');
+		}
+	}).on('blur', function () {
+		if ($(this).val() == '') {
+			$(this).attr('type', 'text');
+			$(this).css('color', '#c0c0c0');
+			$(this).val('密码');
+			$(this).addClass('txt-red');
+		}
+	});
+	$('#verCode').on('focus', function () {
+		$(this).css('color', '#333');
+	}).on('blur', function () {
+		if ($(this).val() == '') {
+			$(this).addClass('txt-red');
+		}
+	});
+	$('.login-ipt').on('focus', function () {
+		$(this).removeClass('txt-red');
+	});
+	//提交时表单验证
+	$('#subBtn').on('click', function () {
+		if(loginCheck()){
+			//提交登录信息
+			WD.api.auth.login({username: $('#username').val(), password: $('#password').val()}, {
+				success: function (data) {
+					$U.navigate("index.html");
+				}
+			});
+		}
+	});
+	//提交时表单验证(企业)
+	$('#subBtnEnt').on('click', function () {
+		if(loginCheck()){
+			//提交登录信息
+			WD.api.auth.login({username: $('#username').val(), password: $('#password').val(),syncEnt:'ent'}, {
+				success: function (data) {
+					$U.navigate("index.html");
+				}
+			});
+		}
+	});
+});
+function loginCheck() {
+	if ($('login-ipt').val() == '' || $('#username').val() == '用户名' || $('#password').val() == '密码') {
+		if ($('#username').val() == '用户名' || $('#username').val() == '') {
+			$('#username').addClass('txt-red');
+		}
+		if ($('#password').val() == '密码' || $('#password').val() == '') {
+			$('#password').addClass('txt-red');
+		}
+		if ($('#verCode').val() == '') {
+			$('#verCode').addClass('txt-red');
+		}
+		return false;
+	}
+	else{
+		//图片验证码
+		/*WD.api.auth.checkPicVerCode({verCode:$('#verCode').val()},function(){
+			return true;
+		});*/
+		return true;
+	}
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle y_area w-960 m-0a">
+		<div class="pt-35 pb-120">
+			<table cellpadding="0" cellspace="0" border="0" class="w-100b">
+				<tbody>
+				<tr>
+					<td class="w-640" valign="top">
+						<table cellpadding="0" cellspace="0" border="0" class="w-560">
+							<tbody>
+							<tr>
+								<td rowspan="2" valign="center" class="w-80">
+									<img src="../../images/login_01.png">
+								</td>
+								<td class="c-greenDeep pb-5 fs-16">安全放心！</td>
+							</tr>
+							<tr>
+								<td class="c-blue2 pb-15 lh-22">以投资人人贷平台现有信贷产品为基础的稳健，安全，流动性好的投资计划理财操作更轻松，收益处理更灵活</td>
+							</tr>
+							<tr>
+								<td rowspan="2" valign="center">
+									<img src="../../images/login_02.png">
+								</td>
+								<td class="c-greenDeep pb-5 fs-16">快速收钱！</td>
+							</tr>
+							<tr>
+								<td class="c-blue2 pb-15 lh-22">以投资人人贷平台现有信贷产品为基础的稳健，安全，流动性好的投资计划理财操作更轻松，收益处理更灵活</td>
+							</tr>
+							<tr>
+								<td rowspan="2" valign="center">
+									<img src="../../images/login_03.png">
+								</td>
+								<td class="c-greenDeep pb-5 fs-16">节省时间！</td>
+							</tr>
+							<tr>
+								<td class="c-blue2 pb-15 lh-22">以投资人人贷平台现有信贷产品为基础的稳健，安全，流动性好的投资计划理财操作更轻松，收益处理更灵活</td>
+							</tr>
+							</tbody>
+						</table>
+					</td>
+					<td class="w-320" valign="top">
+						<div class="bd-s1c bdc-gray90 round-4 bgc-fff p-20">
+							<h3 class="fs-18 c-blue2">用户登录</h3>
+							<table cellpadding="0" cellspace="0" border="0" class="w-100b">
+								<tbody>
+								<tr>
+									<td colspan="3" class="pt-20 pb-10">
+										<input type="text" name="username" id="username"
+											   class="login-ipt login-ipt-username w-245 h-35 lh-35" value="用户名">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" class="pb-10">
+										<input type="text" name="password" id="password"
+											   class="login-ipt login-ipt-password w-245 h-35 lh-35" value="密码">
+									</td>
+								</tr>
+								<tr>
+									<td valgin="center">
+										<input type="text" name="verCode" id="verCode"
+											   class="login-ipt login-ipt-vc w-130 h-35 lh-35 c-333">
+									</td>
+									<td valgin="center">
+										<img src="../../images/login_15.jpg" class="fl-l mt-2" id="verCodeImg">
+									</td>
+									<td valgin="center">
+										<a href="javascript:;" class="c-blue1" id="verCodeAgain">换一张</a>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" class="pt-30">
+										<input type="submit" value="个人用户登录" name="subBtn" id="subBtn" class="subBtn fl-l round-3 h-40 lh-40 w-135 ta-c fs-14">
+										<input type="submit" value="企业用户登录" name="subBtnEnt" id="subBtnEnt" class="blueBtn1 fl-r round-3 h-40 lh-40 w-135 ta-c fs-14">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" class="pb-10 pt-10"><a href="resetPsw.html" class="c-blue1">忘记登录密码</a></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

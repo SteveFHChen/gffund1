@@ -1,0 +1,35 @@
+<configuration>
+
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %X{user.username} %X{req.requestURI} %logger{36}:%line - %msg%n"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %X{user.username} %X{req.requestURI} %logger{36}:%line - %msg%n"/>
+
+    <define name="LOG_PATH" class="com.ycnet.dbank.web.config.LogHomeDefiner"></define>
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>${LOG_PATH}/dbank.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		    <fileNamePattern>${LOG_PATH}/dbank-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+		    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+    			<maxFileSize>200MB</maxFileSize>
+		    </timeBasedFileNamingAndTriggeringPolicy>
+	    </rollingPolicy>
+	    <encoder>
+	      <pattern>${FILE_LOG_PATTERN}</pattern>
+	    </encoder>
+  	</appender>
+	
+	<logger name="com.ycnet.dbank" level="INFO">
+		<appender-ref ref="rollingFile" />
+	</logger>
+	
+	<root level="INFO">
+		<appender-ref ref="stdout" />
+	</root>
+
+</configuration>

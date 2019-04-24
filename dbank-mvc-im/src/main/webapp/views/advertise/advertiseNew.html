@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<title>广告新增</title>
+<meta charset="UTF-8">
+<script type="text/javascript" src="../../include.js" ></script>
+<style type="text/css">
+.td1{
+	background:#eee;
+	width:150px;
+}
+.table1 td{border:1px solid #000;}
+.table1 .td2{
+	height:20px;border:0;
+	
+}
+</style>
+</head>
+<body>
+<h5>信息管理>广告管理</h5>
+<p/>
+<h5>广告新增信息</h5>
+<form action="/dbank-mvc-im/manage/advertise/" method="post">
+	<table class="table1" style="border-collapse:collapse; width:800px; margin:0 auto;">
+	<thead></thead>
+	<tbody>
+		<tr>
+			<td colspan="4" style="background:#ccc;">广告信息</td>
+		</tr>
+		<tr>
+			<td colspan="4" >第一步：设置广告信息</td>
+		</tr>
+		<tr><td class="td2"></td></tr>
+		<tr>
+			<td class="td1">*广告位ID：</td><td style="width:250px;"><input type="text" id="adColumnId"/><input type="button" value="选择"/></td><td class="td1">*播放顺序：</td><td><input type="text" id="orderNo"/></td>
+		</tr>
+		<tr>
+			<td class="td1">*广告名称：</td><td><input type="text" id="name"/></td><td class="td1">*广告标题：</td><td><input type="text" id="title"/></td>
+		</tr>
+		<tr>
+			<td class="td1">广告内容：</td><td><textarea id="content" style="width:230px; height:80px;"></textarea></td><td class="td1">广告资源文件：</td><td><input type="text" id="source"/><input type="button" value="浏览"/></td>
+		</tr>
+		<tr>
+			<td class="td2"></td>
+		</tr>
+		<tr><td colspan="4">第二步：设置链接信息</td></tr>
+		<tr>
+			<td class="td1">链接地址：</td><td colspan="3"><input type="text" id="linked"/></td>
+		</tr>
+		<tr><td colspan="4">第三步：设置投放要求</td></tr>
+		<tr><td class="td1">*状态：</td><td><input type="radio" name="status" value="OPEN"/>开放中<input type="radio" name="status" value="CLOSE"/>关闭</td><td></td><td></td></tr>
+		<tr><td class="td1">*开放时间：</td><td><input type="text" id="openTime"/></td><td class="td1">*结束时间：</td><td><input type="text" id="closeTime"/></td></tr>
+		<tr><td colspan="4" align="center" class="td2"><input type="button" id="submit" value="提交"/>      <input type="button" id="reset" value="重置"/>      <input type="button" id="back" value="返回"/></td></tr>
+	</tbody>
+	</table>
+</form>
+</body>
+<script type="text/javascript">
+$(function(){
+	$('#submit').bind('click', execute);
+	$('#reset').bind('click', doClear);
+});
+
+function execute(){
+	alert('Hello execute');
+	var adColumnId = $('#adColumnId').val();
+	var name = $('#name').val();
+	var title = $('#title').val();
+	var content = $('#content').val();
+	var source = $('#source').val();
+	var linked = $('#linked').val();
+	var status = $("input[name='status']:checked").val();
+	var openTime = $('#openTime').val();
+	var closeTime = $('#closeTime').val();
+	var orderNo = $('#orderNo').val();
+	var params = {adColumnId : adColumnId , name : name, title : title,
+			content : content, source : source, linked : linked,
+			status : status, openTime : openTime, closeTime : closeTime,
+			orderNo : orderNo};
+	 WD.api.advertise.createAdvertise(params, function(data) {
+		alert("添加成功!");
+		$U.navigate('advertise/advertiseManage.html');
+	});  
+}
+
+function doClear(){
+	$("input[type='text']").each(function(i, item){item.value='';});
+}
+</script>
+</html>

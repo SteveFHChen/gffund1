@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	WD.api.user.accountSecurity(null,function(data){
+		for(var i=0; i<data.length; i++){
+				if(data[i].settingValue == false){
+					$('.i'+data[i].settingName+'State').text('未绑定');
+					$('.i'+data[i].settingName+'Add').show();
+				}
+				else if(data[i].settingValue == true){
+					$('.i'+data[i].settingName+'State').text('已绑定');
+					$('.i'+data[i].settingName+'Edit').show();
+				}
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html">
+						<img src="../../images/lxy_02.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html" class="active">
+						<img src="../../images/lxy_05a.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<div class="nextNav">
+						<a href="account.html">个人基础信息</a>
+						<a href="accountCreditInfo.html">认证资料信息</a>
+						<a href="accountSecurity.html" class="active">安全设置</a>
+					</div>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="uc uc_security">
+					<h3>安全设置</h3>
+					<div class="content">
+						<table>
+							<tr>
+								<td class="uc_bg uc_bg3" width="10%"></td>
+								<td width="25%" >登录密码</td>
+								<td width="15%" class="iPWDState"></td>
+								<td width="50%">
+									<a href="accountUpdatePwd.html" target="_blank" class="iPWDAdd c-blue1 dp-n">添加</a>
+									<a href="accountUpdatePwd.html" target="_blank" class="iPWDEdit c-blue1 dp-n">修改</a>
+								</td>
+							</tr>
+							<tr>
+								<td class="uc_bg uc_bg4"></td>
+								<td >绑定邮箱</td>
+								<td class="iEMAILState"></td>
+								<td>
+									<a href="accountBindEmail.html" target="_blank" class="iEMAILAdd c-blue1 dp-n">添加</a>
+									<a href="accountUpdateEmail.html" target="_blank" class="iEMAILEdit c-blue1 dp-n">修改</a>
+								</td>
+							</tr>
+							<tr>
+								<td class="uc_bg uc_bg5"></td>
+								<td>绑定手机</td>
+								<td class="iMOBILEState"></td>
+								<td>
+									<a href="accountBindPhone.html" target="_blank" class="iMOBILEAdd c-blue1 dp-n">添加</a>
+									<a href="accountBindPhone.html" target="_blank" class="iMOBILEEdit c-blue1 dp-n">修改</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

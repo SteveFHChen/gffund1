@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>95508理财系统-后台管理系统</title>
+<script type="text/javascript" src="../../include.js" ></script>
+<script type="text/javascript" src="../../scripts/forPage/advertiseColumnNew.js"></script>
+
+</head>
+
+<body>
+	<div class="fs-16 ml-20 mt-20 mb-10">试卷管理&nbsp;-&gt;&nbsp;试卷新增</div>
+	<b>填写试卷名称</b><br>
+	<div class="searchBox ml-10 mt-20 mb-30 clearfix" align="center">
+		<table>
+			<tr>
+				<td>
+					<div class="fl-l ml-10">
+						试卷名称：&nbsp; <input id="name" type="text" class="txt-small w-120">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="fl-l ml-30">
+						<input onclick="save()" id="saveBtn" type="button"
+							value="保存" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+					<div class="fl-l ml-30">
+						<input id="reset" type="reset"
+							value="重置" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+					<div class="fl-l ml-30">
+						<input id="backBtn" type="button"
+							value="返回" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<b>查询结果</b>
+	<table class="listTable">
+		<thead>
+			<tr>
+				<td>试卷名称</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<tbody id='paperTbody'></tbody>
+	</table>
+</body>

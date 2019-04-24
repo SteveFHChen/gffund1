@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>95508理财系统-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript">
+	function addRole() {
+		var name = $('#name').val();
+		var desc = $('#desc').val();
+		var roleType = $('input[name="roleType"]:checked').val();
+		
+		var params = {
+				name : name,
+				desc : desc,
+				roleType : roleType
+			};
+		WD.api.role.createRole(params, {
+			success: function(data) {
+				alert("添加成功!");
+				$U.navigate('role/roleManage.html');
+			}, error : function(data) {
+				alert(data);	
+			}
+		});
+	}
+	</script>
+</head>
+
+<body>
+	<div align="left">位置：系统管理 > 角色管理 > 新增</div>
+	<div align="center">
+		<!-- <form id="faqCateAddForm" method="post" action=""> -->
+		<table class="editTable">
+			<tr>
+				<td align="right">角色名称：</td>
+				<td align="left"><input id="name" name="name" type="text"></td>
+			</tr>
+			<tr>
+				<td align="right">角色描述：</td>
+				<td align="left"><textarea id="desc" name="desc" type="text"> </textarea></td>
+			</tr>
+			<tr>
+				<td align="right">角色类别：</td>
+				<td align="left">
+					<input name="roleType" type="radio" value="ZH" checked>总行
+					<input name="roleType" type="radio" value="FH">分行
+					<input name="roleType" type="radio" value="LH">支行
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input onclick="javascript:history.back(-1);" type="button" value="返回" id="backBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					<input onclick="addRole();" type="button" value="添加" id="addFaqCategoryBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</td>
+			</tr>
+		</table>
+		<!-- </form> -->
+	</div>
+</body>
+
+				
+				
+				
+				
+				
+				
+			

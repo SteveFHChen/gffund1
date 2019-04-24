@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百贷网-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript" src="../../scripts/forPage/forCreditReviewOfBorrowingPerson.js" ></script>
+</head>
+<body>
+	<div align="left">位置：贷前管理 > 认证授信 > 复审</div>
+	<div class="ml-20 mr-20 mb-30">
+		<div>
+			<span id="menuItem"></span><span id="crumbs"></span>
+		</div>
+		<div class="tabTitle clearfix">
+			<h3 class="active" id="basicInformation">
+				<span>基本信息</span>
+			</h3>
+			<h3 id="theBankCredit">
+				<span>央行征信</span>
+			</h3>
+			<h3 id=" familyInformation">
+				<span>家庭信息</span>
+			</h3>
+			<h3 id="jobInformantion">
+				<span>工作信息</span>
+			</h3>
+			<h3 id="assetinformation">
+				<span>资产信息</span>
+			</h3>
+			<h3 id="creditextension">
+				<span>授信</span>
+			</h3>
+			<div align="right"><input type="button" value="返回" id="backBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30"></div>
+		</div>
+		<div id="basicInformation-content" class="tabContent mt-20">
+			<div class="basicInformation">
+				<div class="content">
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td align="right">借款人：</td>
+							<td align="left" width="220"><span id="realname"></span></td>
+							<td align="right">用户名：</td>
+							<td align="left" width="220"><span id="username"></span></td>
+							<td align="right">性别：</td>
+							<td align="left"><span id="sex"></span></td>
+						</tr>
+						<tr>
+							<td align="right">身份证号：</td>
+							<td align="left"><span id="certNo"></span></td>
+							<td align="right">出生日期：</td>
+							<td align="left"><span id="birthday"></span></td>
+							<td align="right">手机号码：</td>
+							<td align="left"><span id="phonenum"></span></td>
+						</tr>
+						<tr>
+							<td align="right">最高学历：</td>
+							<td align="left"><span id="topEdu"></span></td>
+							<td align="right">毕业院校：</td>
+							<td align="left"><span id="gradSchool"></span></td>
+							<td align="right">入学年份：</td>
+							<td align="left"><span id="entSchYear"></span></td>
+						</tr>
+						<tr>
+							<td align="right">籍贯：</td>
+							<td align="left"><span id="home"></span></td>
+							<td align="right">户口所在地：</td>
+							<td align="left"><span id="regist"></span></td>
+							<td align="right">居住地址：</td>
+							<td align="left"><span id="liveAddr"></span></td>
+						</tr>
+						<tr>
+							<td align="right">居住地邮编：</td>
+							<td align="left"><span id="liveAddrPost"></span></td>
+							<td align="right">居住地电话：</td>
+							<td align="left" colspan="3"><span id="liveAddrPhone"></span></td>
+						</tr>
+					</table>
+					<div class="h-1 ml-20 mr-20 bgc-gray90"></div>
+	
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr class="lh-40">
+							<td width="40%">身份证：<img src="../../images/lxy_01.png" alt=""><a href="#">下载</a></td>
+							<td width="10%">待认证 </td>
+							<td width="50%">
+							</td>
+						</tr>
+						<tr class="lh-40">
+							<td width="40%">居住地认证：<img src="../../images/lxy_01.png"><a href="#">下载</a></td>
+							<td width="10%">认证通过 </td>
+							<td width="50%">
+							</td>
+						</tr>
+						<tr class="lh-40">
+							<td width="40%">学历认证：<img src="../../images/lxy_01.png"><a href="#">下载</a></td>
+							<td width="10%">未提及</td>
+							<td width="50%">
+							</td>
+						</tr>
+						<tr class="lh-40">
+							<td width="40%">手机实名认证：<img src="../../images/lxy_01.png"><a href="#">下载</a></td>
+							<td width="10%">认证通过</td>
+							<td width="50%">
+							</td>
+						</tr>
+					</table>
+	
+				</div>
+			</div>
+		</div>
+		<!-- 基本信息 end -->
+  		<!-- 央行征信 -->
+		<div id="theBankCredit-content" class="tabContent mt-20" style="display: none">
+		<div class="basicInformation">
+			<div class="content">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="40%"><span class="w-90 ml-5"> 身份证： </span> <span>
+								<img src="../../images/lxy_01.png" alt=""><a href="#">下载</a>
+						</span></td>
+						<td width="10%"><span class="w-80 ml-5"> 待认证 </span></td>
+						<td width="50%"><span class="w-80 ml-5"
+							style="margin-right: 25px;"> <input type="button"
+								value="认证通过" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+						</span> <span class="w-80 ml-5" style="margin-right: 25px;"> <input
+								type="button" value="格式不对"
+								class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+						</span> <span class="w-80 ml-5"> <input type="button" value="虚假资料"
+								class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+						</span></td>
+					</tr>
+					<tr>
+						<td width="40%"><span class="w-90 ml-5"> 居住地认证： </span> <span>
+								<img src="../../images/lxy_01.png"><a href="#">下载</a>
+						</span></td>
+						<td width="10%"><span class="w-80 ml-5"> 认证通过 </span></td>
+						<td width="50%"><span class="w-80 ml-5"
+							style="margin-right: 25px;"> <input type="button"
+								value="认证通过" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+						</span> <span class="w-80 ml-5" style="margin-right: 25px;"> <input
+								type="button" value="格式不对"
+								class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+						</span> <span class="w-80 ml-5"> <input type="button" value="虚假资料"
+								class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+						</span></td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 					end央行征信 -->
+
+	<div id=" familyInformation-content" class="tabContent mt-20"
+		style="display: none">
+		<div class="basicInformation">
+			<div class="content">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="33%"><span class="w-80 ml-5"> 婚姻状态： </span> <span>
+								已婚 </span></td>
+						<td width="33%"><span class="w-80 ml-5"> 有无子女： </span> <span>
+								有 </span></td>
+						<td width="34%"><span class="w-80 ml-5"> </span> <span>
+						</span></td>
+					</tr>
+					<tr>
+						<td width="100%" colspan="3"><span class="w-80 ml-5">
+								<strong>直系亲属</strong>
+						</span></td>
+					</tr>
+					<tr>
+						<td width="33%"><span class="w-80 ml-5"> 姓名： </span> <span>
+								张庆红 </span></td>
+						<td width="33%"><span class="w-80 ml-5"> 关系： </span> <span>
+								父子 </span></td>
+						<td width="34%"><span class="w-80 ml-5"> 手机： </span> <span>
+								13512345678 </span></td>
+					</tr>
+					<tr>
+						<td width="100%" colspan="3"><span class="w-80 ml-5">
+								<strong>其他关系</strong>
+						</span></td>
+					</tr>
+					<tr>
+						<td width="33%"><span class="w-80 ml-5"> 姓名： </span> <span>
+								李四 </span></td>
+						<td width="33%"><span class="w-80 ml-5"> 关系： </span> <span>
+								朋友 </span></td>
+						<td width="34%"><span class="w-80 ml-5"> 手机： </span> <span>13512345678
+						</span></td>
+					</tr>
+				</table>
+				<div class="h-1 ml-20 mr-20 bgc-gray90"></div>
+
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="40%">
+							<span class="w-90 ml-5"> 婚姻证明： </span> 
+							<span><img src="../../images/lxy_01.png"><a href="#">下载</a></span>
+						</td>
+						<td width="10%">
+							<span class="w-80 ml-5"> 待认证 </span>
+						</td>
+						<td width="50%">
+							<span class="w-80 ml-5" style="margin-right: 25px;"> 
+								<input type="button" value="认证通过" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+							</span> 
+							<span class="w-80 ml-5" style="margin-right: 25px;"> 
+								<input type="button" value="格式不对" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+							</span> 
+							<span class="w-80 ml-5"> 
+								<input type="button" value="虚假资料" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+							</span>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+	<!-- end家庭信息 -->
+	<div id="jobInformantion-content" class="tabContent mt-20"
+		style="display: none">
+		<div class="basicInformation">
+			<div class="content">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="30%">
+							<span class="w-80 ml-5"> 职业状态： </span> 
+							<span>工薪阶层 </span>
+						</td>
+						<td width="30%">
+							<span class="w-80 ml-5">职位： </span> 
+							<span>程序员</span>
+						</td>
+						<td width="40%">
+							<span class="w-80 ml-5"> 单位名称： </span> 
+							<span>北京宇信易诚网络技术有限公司 </span>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<span class="w-80 ml-5"> 工作邮箱： </span> <span>zhansf@belink.com </span></td>
+						<td width="30%">
+							<span class="w-80 ml-5"> 工作城市： </span> <span>北京 </span>
+						</td>
+						<td width="40%">
+							<span class="w-80 ml-5"> 公司地址： </span> <span>北京市北三环东路环球贸易中心 </span>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<span class="w-80 ml-5"> 公司类别： </span> <span>民企 </span>
+						</td>
+						<td width="30%">
+							<span class="w-80 ml-5"> 公司行业： </span> <span>金融IT </span>
+						</td>
+						<td width="40%">
+							<span class="w-80 ml-5"> 公司规模： </span> <span>100-200人</span>
+						</td>
+					</tr>
+					<tr>
+						<td width="30%">
+							<span class="w-135 ml-5"> 在现单位工作年限： </span> <span>5年 </span>
+						</td>
+						<td width="30%">
+							<span class="w-80 ml-5"> 月收入： </span> <span>￥3,000.00 </span>
+						</td>
+						<td width="40%">
+							<span class="w-80 ml-5"> 公司电话： </span> <span>010-77777777</span>
+						</td>
+					</tr>
+				</table>
+				<div class="h-1 ml-20 mr-20 bgc-gray90"></div>
+
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="40%">
+							<span class="w-90 ml-5"> 工作证明： </span> <span><img src="images/lxy_01.png"><a href="#">下载</a></span>
+						</td>
+						<td width="10%">
+							<span class="w-80 ml-5"> 待认证 </span>
+						</td>
+						<td width="50%"></td>
+					</tr>
+					<tr>
+						<td width="40%">
+							<span class="w-90 ml-5"> 技术职称证明： </span> <span><img src="images/lxy_01.png"><a href="#">下载</a></span>
+						</td>
+						<td width="10%"><span class="w-80 ml-5"> 待认证 </span></td>
+						<td width="50%"></td>
+					</tr>
+					<tr>
+						<td width="40%">
+							<span class="w-90 ml-5"> 收入证明： </span> <span><img src="images/lxy_01.png"><a href="#">下载</a></span>
+						</td>
+						<td width="10%"><span class="w-80 ml-5"> 未提交 </span></td>
+						<td width="50%"></td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+	<!-- end工作信息 -->
+
+	<div id="assetinformation-content" class="tabContent mt-20"
+		style="display: none">
+		<div class="basicInformation">
+			<div class="content">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="40%">
+							<span class="w-90 ml-5"> 房产证明： </span> <span><img src="images/lxy_01.png"><a href="#">下载</a></span>
+						</td>
+						<td width="10%"><span class="w-80 ml-5"> 待认证 </span></td>
+						<td width="50%"></td>
+					</tr>
+					<tr>
+						<td width="40%">
+							<span class="w-90 ml-5"> 车产证明： </span> <span><img src="images/lxy_01.png"><a href="#">下载</a></span>
+						</td>
+						<td width="10%"><span class="w-80 ml-5"> 待认证 </span></td>
+						<td width="50%"></td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+	<!-- 					end资产信息 -->
+
+	<div id="creditextension-content" class="tabContent mt-20"
+		style="display: none">
+		<div class="basicInformation">
+			<div class="content">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="23%">
+							<span class="w-80 ml-5"> 借款人： </span> <span>张三丰 </span>
+						</td>
+						<td width="23%">
+							<span class="w-80 ml-5">用户名： </span> <span>奔跑的野马</span>
+						</td>
+						<td width="25%">
+							<span class="w-80 ml-5"> 借款标题： </span> <span>急需，借点钱 </span></td>
+						<td width="29%">
+							<span class="w-80 ml-5"> 标的类型： </span> <span>个人信用贷 </span>
+						</td>
+					</tr>
+					<tr>
+						<td width="23%"><span class="w-80 ml-5"> 借款金额： </span> <span>￥30,000.00 </span></td>
+						<td width="23%"><span class="w-80 ml-5"> 利率： </span> <span>7.50% </span></td>
+						<td width="25%"><span class="w-80 ml-5"> 期限： </span> <span>30 天 </span></td>
+						<td width="29%"><span class="w-80 ml-5"> 还款方式： </span> <span>每月还款，等额本息 </span></td>
+					</tr>
+					<tr>
+						<td width="23%"><span class="w-80 ml-5"> 借款用途： </span> <span>消费 </span></td>
+						<td width="23%"><span class="w-80 ml-5"> 筹标期限： </span> <span>10天</span></td>
+						<td width="25%"><span class="w-80 ml-5"> 借款状态： </span> <span>复审中 </span></td>
+						<td width="29%"><span class="w-80 ml-5"> <img src="images/lxy_01.png"></span> <span> <a href="#">资料认证表</a></span></td>
+					</tr>
+					<tr>
+						<td width="23%"><span class="w-80 ml-5"> 担保机构： </span> <span>小贷担保公司 </span></td>
+						<td width="23%"><span class="w-80 ml-5">担保时间： </span> <span>2013-12-12</span></td>
+						<td width="25%"><span class="w-80 ml-5"> </span></td>
+						<td width="29%"><span class="w-80 ml-5"> </span></td>
+					</tr>
+				</table>
+				<div class="h-1 ml-20 mr-20 bgc-gray90"></div>
+
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td width="10%"><span class="w-115 ml-5"> 授信额度 </span></td>
+						<td width="90%"><span class="w-115 ml-5"> 20,000 </span></td>
+					</tr>
+					<tr>
+						<td width="10%"><span class="w-115 ml-5"> 授信意见： </span></td>
+						<td width="90%"><span class="w-300 ml-5">认证资料比较齐备，信用也很良好 </span></td>
+					</tr>
+					<tr>
+						<td width="10%"><span class="w-115 ml-5"> 授信人 </span></td>
+						<td width="90%"><span class="w-115 ml-5">李四 </span></td>
+					</tr>
+					<tr>
+						<td width="10%"><span class="w-115 ml-5"> 授信复审意见： </span></td>
+						<td width="90%"><span class="w-115 ml-5"> <textarea rows="5" cols="75"></textarea></span></td>
+					</tr>
+					<tr>
+						<td width="10%">
+							<span class="w-80 ml-5"> 
+								<input
+								id="reviewPassBtn"
+								type="button" value="复审通过"
+								class="subBtn round-3 h-30 lh-28 pl-30 pr-30"
+								onclick="$U.loadPage('beforeLoan/forCreditReviewOfBorrowingPersonResult.html');">
+							</span>
+						</td>
+						<td width="10%">
+							<span class="w-80 ml-5"> 
+								<input
+								id="reviewDenyBtn"
+								type="button" value="复审不通过"
+								class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+							</span>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
+</body>

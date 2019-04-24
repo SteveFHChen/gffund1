@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript" src="../../scripts/lib/jquery.validate.min.js" ></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(2).addClass('active');
+	$('#realnameForm').validate({
+		rules:{
+			realName:{
+				required:true, 
+				minlength:2
+			},
+			certNo:{
+				required:true, 
+				rangelength:[15,18]
+			}
+		},
+		messages:{
+			realName:{
+				required:'请输入真实姓名', 
+				minlength:'真实姓名最少2位'
+			},
+			certNo:{
+				required:'请输入身份证号', 
+				rangelength:'身份证号长度为15-18位'
+			}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('td'));
+		},
+		submitHandler:function () {
+			WD.api.auth.realnameAuthen({realName:$('.realName').val(),certNo:$('.certNo').val()},function(data){
+				alert('实名认证成功，点击确定将继续之前的操作。');
+				$U.navigate('loan/loanApply.html');
+			});	
+		}
+	});
+	$('.goRealname').click(function() {
+		$('.realname').show();
+		$('.beforeRealname').hide();
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!--页面头部-->
+	<div class="header">
+	</div>
+	<!--页面头部END-->
+	<!--页面内容部分-->
+	<div id="aMainWrap" class="middle">
+		<div class="bMain">
+			<div class="ta-c beforeRealname mt-100 mb-100">
+				<h2 class="bTitle">我要借款需要实名认证，您尚未进行实名认证。</h2>
+				<p class="fs-16 mt-20">请点击&nbsp;<a href="javascript:;" class="c-blue1 goRealname">这里</a>&nbsp;进行实名认证……</p>
+				<div class="mt-30">
+					<span class="bBtnLeft"><a href="../index.html" class="subBtn round-3 h-40 lh-40 pl-70 pr-70 fs-16 subBtn">返回首页</a></span>
+				</div>
+			</div>
+			<form id="realnameForm" >
+				<table class="realname dp-n mt-30 mb-100 ml-100 lh-50">
+					<tr>
+						<td class="ta-l fs-16 h-50" colspan="2">实名认证</td>
+					</tr>
+					<tr>
+						<td class="ta-r" width="300px"><span class="c-redLight">*　</span>真实姓名：</td>
+						<td width="450px"><input type="text" class="txt-small w-160" id="realName" name="realName" /></td>
+					</tr>
+					<tr>
+						<td class="ta-r"><span class="c-redLight">*　</span>身份证号：</td>
+						<td><input type="text" class="txt-small w-160" id="certNo" name="certNo"/></td>
+					</tr>
+					<tr>
+						<td class="ta-r"></td>
+						<td><input type="submit" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10" value="确认"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+	<!--页面内容部分END-->
+	<!--页面底部-->
+	<div class="footer">
+	</div>
+	<!--页面底部END-->
+</div>
+</body>
+</html>

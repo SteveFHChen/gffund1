@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript" src="../../scripts/lib/jquery.validate.min.js" ></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	var isNameStatus = false;
+	var eMail = '';
+	var phone = '';
+	WD.api.user.account(null,function(data){
+		isNameStatus = data.nameStatus;
+		eMail = data.email;
+		phone = data.mobile;
+		if(data.nameStatus == true){
+			$('.isNameStatus').show();
+			$('#nickName').text(data.username);
+		}
+	})
+	$("#signupForm1").validate({
+		rules: {
+			phoneNum: {
+				required: true,
+				rangelength:[11,11]
+			},
+			phoneCaptcha: {
+				required: true
+			},
+			idNum: {
+				required: isNameStatus
+			}
+		},
+		messages: {
+			phoneNum: {
+				required: "请输入手机号码",
+				rangelength: "手机号码位数不正确"
+			},
+			phoneCaptcha: {
+				required: "请输入手机验证码"
+			},
+			idNum: {
+				required: "请输入身份证号码后四位"
+			}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('td'));
+		},
+		submitHandler:function()
+		{
+			if(isNameStatus == true) {
+				WD.api.login.checkUserCertNo({mobile: phone, certNo: $('#idNum').val()}, {
+					success: function (data) {
+						alert('身份验证通过');
+						WD.api.user.checkPhoneCaptchaMobileBind({mobile: $('#phoneNum').val(), verifyCode: $('#phoneCaptcha').val()}, {
+							success: function (data) {
+								alert('手机验证通过');
+								//发送修改手机请求
+								WD.api.user.updatePhone({mobile: $('#phoneNum').val(), email: eMail, verifyCode: $('#phoneCaptcha').val()}, {
+									success: function (data) {
+										if (data.settingValue == true) {
+											alert('手机修改成功！点击跳转至安全设置页面');
+											window.location.href = 'accountSecurity.html';
+										}
+									}
+								});
+							}
+						});
+					}
+				})
+			}else{
+				//发送修改手机请求
+				WD.api.user.updatePhone({mobile:$('#phoneNum').val(),email:eMail,verifyCode:$('#phoneCaptcha').val()},{
+					success:function(data){
+						if(data.settingValue == true){
+							alert('手机修改成功！点击跳转至安全设置页面');
+							window.location.href = 'accountSecurity.html';
+						}
+					}
+				});
+			}
+		}
+	});
+	//手机验证码
+	$('#phoneCaptchaSend').on('click',function(){
+		if($('#phoneNum').val().length==0){
+			alert('请输入手机号码！');
+			return false;
+		}
+		//发送验证码请求
+		WD.api.user.getPhoneCaptchaMobileBind($('#phoneNum').val(),{
+			success:function(data){
+				$('#phoneCaptchaSend').hide();
+				$('#phoneCaptchaSendAgain').show();
+				var second = 60;
+				var t=setInterval(function(){
+					if(second == 0){
+						clearInterval(t);
+						$('#phoneCaptchaSend').show();
+						$('#phoneCaptchaSendAgain').hide();
+						return false;
+					}
+					$('#phoneCaptchaSendAgain').val('('+(second--)+')秒重新发送');
+				},1000)
+			}
+		});
+	})
+	//填入已发送的测试验证码(仅供测试)
+	$('#getPhoneCaptcha').on('click',function(){
+		if($('#phoneNum').val().length==0){
+			alert('请输入手机号码！');
+			return false;
+		}
+		$('#phoneCaptcha').val('');
+		WD.api.user.getTestPhoneCaptchaMobileBind($('#phoneNum').val(),function(data){
+			$('#phoneCaptcha').val(data[0].codeContent);
+		});
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html">
+						<img src="../../images/lxy_02.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html" class="active">
+						<img src="../../images/lxy_05a.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<div class="nextNav">
+						<a href="account.html">
+							<span>个人基础信息</span>
+						</a>
+						<a href="accountCreditInfo.html">
+							<span>认证资料信息</span>
+						</a>
+						<a href="accountSecurity.html" class="active">
+							
+							<span>安全设置</span>
+						</a>
+					</div>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="uc uc_ups">
+					<div class="title">
+						<a href="accountSecurity.html" class="btn btn-small btn-gray">返回</a><span>绑定手机修改</span>
+					</div>
+					<div class="content">
+						<form id="signupForm1" method="post" action="">
+							<table width="100%">
+								<tr class="isNameStatus dp-n">
+									<td class="ta-r" width="200px">用户名：</td>
+									<td id="nickName"></td>
+								</tr>
+								<tr class="isNameStatus dp-n">
+									<td class="ta-r"><span class="c-redLight">*　</span>身份证后四位：</td>
+									<td><input type="text" class="txt-small w-160" name="idNum" id="idNum"/></td>
+								</tr>
+								<tr>
+									<td class="ta-r" width="200px"><span class="c-redLight">*　</span>请输入新的手机号码：</td>
+									<td>
+										<input type="text" name="phoneNum" id="phoneNum" class="txt-small w-160" />
+										<input type="button" class="y_yanz_btn ml-5 cs-p" id="phoneCaptchaSend" value="发送验证码" />
+										<input type="button" class="y_yanz_btn_r ml-5 dp-n" id="phoneCaptchaSendAgain" value="(60)秒重新发送" />
+										<small class="ml-5"><a href="javascript:;" class="c-999">忘记手机号？</a></small>
+										<a href="javascript:;" id="getPhoneCaptcha">填入验证码</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="ta-r"><span class="c-redLight">*　</span>请输入手机验证码：</td>
+									<td>
+										<input type="text" name="phoneCaptcha" id="phoneCaptcha" class="txt-small w-160" />
+										<small class="ml-5 c-999">（请在5分钟内输入验证码）</small>
+									</td>
+								</tr>
+								<tr>
+									<td class="ta-r"></td>
+									<td>
+										<input type="submit" class="btn btn-middle btn-bgray" value="修改"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

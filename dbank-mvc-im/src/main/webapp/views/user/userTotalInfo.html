@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<link href="../../styles/base.css" rel="stylesheet" type="text/css">
+<link href="../../styles/main.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../scripts/lib/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../../scripts/public/main.js"></script>
+
+<script>
+$(function(){
+	WD.api.user.myFinance(null,function(data){
+		$('.iCurrentFinanceAsset').text(data.CurrentFinanceAsset);
+		$('.iRecycle30Asset').text(data.Recycle30Asset);
+		$('.iExpectAllIncome').text(data.ExpectAllIncome);
+		$('.iFinanceCount').text(data.FinanceCount);
+		$('.iLatelyCollectionDate').text(data.LatelyCollectionDate);
+		var iRecycleDataStr = ''
+		for( var i=0,l=data.RecycleData.length;i<l;i++){
+			iRecycleDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.RecycleData[i].loanId
+				+'</a></td><td align="center">'+data.RecycleData[i].loanTime
+				+'</td><td align="center">'+data.RecycleData[i].yearRate
+				+'</td><td align="center">'+data.RecycleData[i].financeAsset
+				+'</td><td align="center">'+data.RecycleData[i].periods
+				+'</td><td align="center">'+data.RecycleData[i].currentWaitPrincipalInterest
+				+'</td><td align="center">'+data.RecycleData[i].currentWaitDate
+				+'</td><td align="center">'+data.RecycleData[i].currentAlreadyPrincipalInterest
+				+'</td></tr>'
+		}
+		$('.iRecycleData').html(iRecycleDataStr);
+		var iOverdueDataStr = ''
+		for( var i=0,l=data.OverdueData.length;i<l;i++){
+			iOverdueDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.OverdueData[i].loanId
+				+'</a></td><td align="center">'+data.OverdueData[i].loanTime
+				+'</td><td align="center">'+data.OverdueData[i].yearRate
+				+'</td><td align="center">'+data.OverdueData[i].financeAsset
+				+'</td><td align="center">'+data.OverdueData[i].alreadyPrincipalInterest
+				+'</td><td align="center">'+data.OverdueData[i].overduePunishInterest
+				+'</td><td align="center">'+data.OverdueData[i].overdueCount
+				+'次</td><td align="center">'+data.OverdueData[i].overdueAllTime
+				+'天</td></tr>'
+		}
+		$('.iOverdueData').html(iOverdueDataStr);
+		var iCloseDataStr = ''
+		for( var i=0,l=data.CloseData.length;i<l;i++){
+			iCloseDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.CloseData[i].loanId
+				+'</a></td><td align="center">'+data.CloseData[i].loanTime
+				+'</td><td align="center">'+data.CloseData[i].yearRate
+				+'</td><td align="center">'+data.CloseData[i].financeAsset
+				+'</td><td align="center">'+data.CloseData[i].alreadyAsset
+				+'</td><td align="center">'+data.CloseData[i].financeInterest
+				+'</td><td align="center">'+data.CloseData[i].closeDate
+				+'</td></tr>'
+		}
+		$('.iCloseData').html(iCloseDataStr);
+		var iBidDataStr = ''
+		for( var i=0,l=data.BidData.length;i<l;i++){
+			iBidDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.BidData[i].loanId
+				+'</a></td><td align="center">'+data.BidData[i].loanTime
+				+'</td><td align="center">'+data.BidData[i].yearRate
+				+'</td><td align="center">'+data.BidData[i].financeAsset
+				+'</td><td align="center">'+data.BidData[i].bidRemainTime
+				+'天</td><td align="center">'+data.BidData[i].bidSchedule
+				+'</td></tr>'
+		}
+		$('.iBidData').html(iBidDataStr);
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+		<div class="top ta-r">
+			<div class="w-960 m-0a">
+				<a href="../../login/register.html" class="c-orangeLight mr-5">免费注册</a>
+				<a href="../../login/login.html" class="c-ccc">立即登录</a>
+			</div>
+		</div>
+		<div class="logo">
+			<div class="w-960 m-0a">
+				<div class="fl-l">
+					<a href="../../index.html"><img src="../../images/logo.png" alt="LOGO"></a>
+				</div>
+				<div class="fl-r">
+					<ul class="nav">
+						<li>
+							<a href="../../index.html" class="active">首页</a>
+						</li>
+						<li>
+							<a href="../../finance/tz-list.html">我要理财</a>
+						</li>
+						<li>
+							<a href="../../loan/pro.html" class="hasNext">我要借款</a>
+							<div class="nextNav">
+								<a href="../../loan/personLoan.html.html">个人信用贷</a>
+								<a href="../../loan/operateLoan.html">经营贷</a>
+							</div>
+						</li>
+						<li>
+							<a href="javascript:;">新手指引</a>
+						</li>
+						<li>
+							<a href="javascript:;" class="line">&nbsp;</a>
+						</li>
+						<li>
+							<a href="userCenter.html" class="hasNext">个人中心</a>
+							<div class="nextNav">
+								<a href="myMoneyPay.html">充值</a>
+								<a href="myMoneyWithdrawal.html" >提现</a>
+								<a href="myMoney.html">资金管理</a>
+								<a href="myFinance.html">理财管理</a>
+								<a href="myLoan.html">借款管理</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html" class="active">
+						<img src="../../images/lxy_02a.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html">
+						<img src="../../images/lxy_05.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<a href="message.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+						<div align="center">
+							<span class="fs-28" >
+							总注册人数:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10320067人
+							</span>
+						</div>
+				</div>
+			</div>
+			
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+						<div align="center">
+							<span class="fs-20" >
+							企业用户数:&nbsp;&nbsp;&nbsp;&nbsp;10320067人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							个人用户数:&nbsp;&nbsp;&nbsp;&nbsp;10320067人
+							</span>
+						</div>
+				</div>
+			</div>
+			
+			
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					<div class="part-right1 w-450 fl-r pt-10 pst-r">
+						<span class="fs-16">投资总人数       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										           所占比例</span><br>
+						<span class="fs-24 iCurrentFinanceAsset"></span>
+						<span class="fs-18">5680067人       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						                    55.04%</span><br>
+					</div>
+					<div class="part-left1 w-225 fl-l">
+						<span class="fs-16 w-170 h-45 fl-l">总投资成功笔数<br>
+							<span class="fs-24 iExpectAllIncome"></span>
+							<span class="fs-18">49480147笔</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					<div class="part-right1 w-450 fl-r pt-10 pst-r">
+						<span class="fs-16">借款人总数       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										           所占比例</span><br>
+						<span class="fs-24 iCurrentFinanceAsset"></span>
+						<span class="fs-18">5354102人       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						                    51.88%</span><br>
+					</div>
+					<div class="part-left1 w-225 fl-l">
+						<span class="fs-16 w-170 h-45 fl-l">总借款成功笔数<br>
+							<span class="fs-24 iExpectAllIncome"></span>
+							<span class="fs-18">37558856笔</span>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					按地域分：<br>
+				</div>
+			</div>
+			
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					按性别分：<br>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+		<div class="w-960 m-0a">
+			<div>
+				<h3 class="fs-18 dp-i">友情链接</h3>
+				<a href="javascript:;">慧聪金融</a>
+				<a href="javascript:;">易观智库</a>
+				<a href="javascript:;">好贷网</a>
+				<a href="javascript:;">银率网</a>
+				<a href="javascript:;">和讯银行</a>
+				<a href="javascript:;">国美在线</a>
+				<a href="javascript:;">财经道</a>
+				<a href="javascript:;">电商服务</a>
+				<a href="javascript:;">ShopEx</a>
+				<a href="javascript:;">58投资担保</a>
+			</div>
+			<div class="line"></div>
+			<div class="w-700 fl-l">
+				<h3 class="fs-18 dp-i">公司介绍</h3>
+				<a href="javascript:;">安全保障</a>
+				<a href="javascript:;">媒体报道</a>
+				<a href="javascript:;">社会责任</a>
+				<a href="javascript:;">网站地图</a>
+				<a href="javascript:;">帮助中心</a>
+				<a href="javascript:;">联系我们</a>
+			</div>
+			<div class="w-250 fl-r fs-18 ta-r">
+				客服电话&nbsp;&nbsp;400-027-8080
+			</div>
+			<div class="clear ta-c pb-100">&copy; 2013 人人贷 All rights reserved    人人贷商务顾问(北京)有限公司       京ICP证 100953号</div>
+		</div>
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

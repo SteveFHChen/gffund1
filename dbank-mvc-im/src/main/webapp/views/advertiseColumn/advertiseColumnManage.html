@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>95508理财系统-后台管理系统</title>
+<script type="text/javascript" src="../../include.js" ></script>
+<script type="text/javascript" src="../../scripts/forPage/advertiseColumnManage.js"></script>
+</head>
+
+<body>
+	<div class="fs-16 ml-20 mt-20 mb-10">信息管理&nbsp;-&gt;&nbsp;广告位管理</div>
+	<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+		<div class="fl-l ml-10">
+			广告位ID:&nbsp; <input id="id" type="text" class="txt-small w-120">
+		</div>
+		<div class="fl-l ml-10">
+			广告位名称:&nbsp; <input id="name" type="text" class="txt-small w-120">
+		</div>
+		<div class="fl-l ml-15">
+			状态:&nbsp; <select id="state" class='sel-small'>
+				<option value='ALL'>全部</option>
+				<option value='OPEN'>开放中</option>
+				<option value='CLOSE'>关闭</option>
+			</select>
+		</div>
+		<div class="fl-l ml-30">
+			<input onclick="getList()" id="searchBtn" type="button" value="查询"
+				class="subBtn round-3 h-30 lh-28 pl-30 pr-30"> 
+			<input onclick="newCreate()" id="searchBtn" type="button" value="新增"
+				class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		</div>
+	</div>
+
+	查询结果
+	<table class="listTable">
+		<thead>
+			<tr>
+				<td>广告ID</td>
+				<td>广告位名称</td>
+				<td>状态</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<tbody id='contractTbody'></tbody>
+	</table>
+
+	<div class="page mt-30">
+		<div class="ui-page-outer">
+			<div class="ui-page">
+				<div id="pageNav"></div>
+			</div>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js" ></script>
+<script>
+$(function(){
+	var id = WD.UrlParams["id"];
+	if(!id){
+		$U.navigate('finance/list.html');
+		return;
+	}
+	WD.Tab();
+	WD.api.finance.getInvestInfo({id:id},function(data){
+		$('.title').text(data.title);
+	});	
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header"></div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle w-960 m-0a">
+		<div class="breadCrumb">
+			<a href="list.html">我要理财</a> &gt; <a href="list.html">投资列表</a>&gt; 投资详情
+		</div><!-- 面包屑结束 -->
+		<div class="xq-main">
+			<div class="panle">
+				<div class="panel-head">
+					<h3 class="title"></h3>
+				</div>
+				<div class="panel-body clearfix">
+					<div class="jiekuan">
+						<ul class="jinE clearfix">
+							<li class="col1">借款金额<br/><span class="fs-30 fw-b">8888.00</span>元</li>
+							<li class="col2">年利率<br/><span class="fs-30 fw-b">12</span>%</li>
+							<li class="col3">还款期限<br/><span class="fs-30 fw-b">18</span>个月</li>
+							<li class="col4">月还本息 <span class="c-999">&yen;10,661.85</span></li>
+							<li class="col4">还款方式 <span class="c-999">按月/等额本息</span></li>
+							<li class="col4 ta-c">标的类型 <span class="c-999">个人信用贷</span></li>
+						</ul>
+						<div class="info">
+							借款用途说明
+							<span class="c-999">客户急需用钱客户急需用钱客户急需用钱客户急需用钱客户急需用钱客户急需用钱&hellip; 
+								<a class=" c-blueDeep" href="##">[详情]</a>
+							</span>
+						</div>
+						<ul class="other clearfix">
+							<li class="col1">14%</li>
+							<li class="col2">剩余时间 6天13小时12分</li>
+							<li class="col3">担保机构</li>
+						</ul>
+					</div>
+					<!-- 借款金额结束 -->
+					<div class="shengyu">
+						<div class="row1">剩余可投<br/><span class="fs-30 fw-b">8888.0</span>元</div>
+						<div class="row2">
+							账户余额
+							<br/>
+							<span class="fw-b">8888.0</span>元 <a class="link pl-10" href="myCenter-wdzjzh-cz.html">&lt;充值&gt;</a>
+							<br/>
+							<input class="input-big" type="text" value="请输入投资金额">
+							<p class="c-999">温馨提示：请输入100元的整数倍金额。</p>
+						</div>
+						<div class="btnbox">
+							<button class="btn-big" onClick="location.href='investVerify.html'">下一步</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="xq-content">
+			<div class="tab">
+				<ul class="clearfix">
+					<li class="on">资料审核</li>
+					<li>个人资料</li>
+					<li>账户详情</li>
+					<li>还款信用</li>
+					<li>投标记录</li>
+				</ul>
+			</div>
+			<!--tab end -->
+			<div class="xq-body">
+				<div class="tab-con1 tabContent" style="display:">
+					<h3>资料审核</h3>
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td class="col1">审核项目</td>
+							<td class="col2">状态</td>
+							<td class="col3">通过日期</td>
+						</tr>
+						<tr class="bg">
+							<td class="col1">个人详情资料</td>
+							<td class="col2"><span class="yes"></span></td>
+							<td class="col3">2012-01-27</td>
+						</tr>
+						<tr>
+							<td class="col1">身份证</td>
+							<td class="col2"><span class="no"></span></td>
+							<td class="col3">2012-01-27</td>
+						</tr>
+						<tr class="bg">
+							<td class="col1">结婚证</td>
+							<td class="col2"><span class="yes"></span></td>
+							<td class="col3">2012-01-27</td>
+						</tr>
+					</table>
+				</div>
+				<!--con1 end -->
+				<div class="tab-con2  tabContent" style=" display:none">
+					<h3>个人资料 <span class="fs-14">ID：123214324</span></h3>
+					<div class="clearfix mt-10">
+						<table width="50%">
+							<tr>
+								<th>用户名</th>
+								<td>weibo3443</td>
+							</tr>
+							<tr>
+								<th>年龄</th>
+								<td>57</td>
+							</tr>
+							<tr>
+								<th>学历</th>
+								<td>本科</td>
+							</tr>
+							<tr>
+								<th>学校</th>
+								<td>北京大学</td>
+							</tr>
+							<tr>
+								<th>婚姻</th>
+								<td>已婚</td>
+							</tr>
+							<tr>
+								<th>房产</th>
+								<td><label>
+									<input type="radio">
+									房产</label><label>
+									<input type="radio">
+									房贷</label></td>
+							</tr>
+							<tr>
+								<th>车产</th>
+								<td>
+									<label><input type="radio">车产</label>
+									<label><input type="radio">车贷</label>
+								</td>
+							</tr>
+						</table>
+						<table width="50%">
+							<tr>
+								<th>公司行业</th>
+								<td>批发</td>
+							</tr>
+							<tr>
+								<th>公司规模</th>
+								<td>10人以下</td>
+							</tr>
+							<tr>
+								<th>工作城市</th>
+								<td>山东青岛</td>
+							</tr>
+							<tr>
+								<th>工作年限</th>
+								<td>10年</td>
+							</tr>
+							<tr>
+								<th>岗位职位</th>
+								<td>法人</td>
+							</tr>
+							<tr>
+								<th>收入范围</th>
+								<td>50000元以上</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!--con2 end -->
+				<div class="tab-con3  tabContent" style="display:none">
+					<h3>账户详情</h3>
+					<div class="clearfix mt-10">
+						<table>
+							<tr>
+								<th>信用总分 <th>信用额度 <th>剩余额度
+							</tr>
+							<tr>
+								<td><span class="fs-30">45435</span>分</td>
+								<td><span class="fs-30">500</span>万元</td>
+								<td><span class="fs-30">0</span>万元</td>
+							</tr>
+							<tr>
+								<th>申请借款 <th>成功借款 <th>借款总款
+							</tr>
+							<tr>
+								<td><span class="fs-30">1</span>笔</td>
+								<td><span class="fs-30">1</span>笔</td>
+								<td>约<span class="fs-30">30</span>万</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!--con3 end -->
+				<div class="tab-con3 tab-con4  tabContent" style="display:none;">
+					<h3>还款信用</h3>
+					<div class="clearfix mt-10">
+						<table>
+							<tr>
+								<th>还清笔数 <th>待还本息 <th>逾期总额
+							</tr>
+							<tr>
+								<td><span class="fs-30">2</span>笔</td>
+								<td><span class="fs-30">500</span>万元</td>
+								<td><span class="fs-30">0</span>万元</td>
+							</tr>
+							<tr>
+								<th>逾期次数 <th>严重逾期
+							</tr>
+							<tr>
+								<td><span class="fs-30">1</span>笔</td>
+								<td><span class="fs-30">0</span>次</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!--con4 end -->
+				<div class="tab-con1 tab-con5  tabContent" style="display:none;">
+					<h3>投标记录</h3>
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td class="col1">投资人</td>
+							<td class="col2">投资金额</td>
+							<td class="col3">投资时间</td>
+						</tr>
+						<tr class="bg">
+							<td class="col1">至尊宝</td>
+							<td class="col2">50元</td>
+							<td class="col3">2012-01-27</td>
+						</tr>
+						<tr>
+							<td class="col1">至尊宝</td>
+							<td class="col2">50元</td>
+							<td class="col3">2012-01-27</td>
+						</tr>
+						<tr class="bg">
+							<td class="col1">至尊宝</td>
+							<td class="col2">50元</td>
+							<td class="col3">2012-01-27</td>
+						</tr>
+					</table>
+				</div>
+				<!--con5 end -->
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

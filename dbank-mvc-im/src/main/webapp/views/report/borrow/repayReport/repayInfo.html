@@ -1,0 +1,361 @@
+<script type="text/javascript" src="../scripts/public/tab.js"></script>
+<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+	<!-- tab-->
+	<div class="tabTitle clearfix">
+		<h3 class="active">
+			<span>还款统计</span>
+		</h3>
+		<h3>
+			<span>已还款信息</span>
+		</h3>
+		<h3>
+			<span>待还款信息</span>
+		</h3>
+	</div>
+	<!-- 还款统计 -->
+	<div id="repayTotal" class="tabContent mt-20">
+		<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+			<div class="fl-l ml-10">统计时间&nbsp;
+				<select class='sel-small'>
+					<option value=''></option>
+				</select>年
+				<select class='sel-small'>
+					<option value=''></option>
+				</select>月
+				-
+				<select class='sel-small'>
+					<option value=''></option>
+				</select>年
+				<select class='sel-small'>
+					<option value=''></option>
+				</select>月
+			</div>
+		</div>
+		
+		<div>
+			<div>还款金额统计</div>
+			<table class='w-500 bd-s1c mt-5 mb-5'>
+				<tr>
+					<td class='w-300'>还款总额（当月实际还款金额）</td>
+					<td>1000000元 </td>
+				</tr>
+			</table>
+		</div>
+		
+		<div>
+			<div>其中：</div>
+			<table class='w-500 bd-s1c mt-5 mb-5'>
+				<tr>
+					<td class='w-300'>本金 </td>
+					<td>1000000元 </td>
+				</tr>
+				<tr>
+					<td>利息 </td>
+					<td>10000元 </td>
+				</tr>
+				<tr>
+					<td>罚息 </td>
+					<td>10000元 </td>
+				</tr>
+			</table>
+		</div>
+		
+		<div>
+			<div>还款状态统计</div>
+			<table class='w-500 bd-s1c mt-5 mb-5'>
+				<tr>
+					<td class='w-300'>正常还款中 </td>
+					<td>80笔 </td>
+				</tr>
+				<tr>
+					<td>逾期 </td>
+					<td>10笔</td>
+				</tr>
+				<tr>
+					<td>担保垫付 </td>
+					<td>10笔 </td>
+				</tr>
+				<tr>
+					<td>坏账核销 </td>
+					<td>20笔 </td>
+				</tr>
+				<tr>
+					<td>正常还清 </td>
+					<td>10笔</td>
+				</tr>
+				<tr>
+					<td>逾期还清 </td>
+					<td>10笔 </td>
+				</tr>
+			</table>
+		</div>
+		
+	</div>
+	<!-- 已还款信息 -->
+	<div id="repayInfo" class="tabContent mt-20 dp-n">
+		<div class="ml-20">
+			<span style="margin-left: 10px;">借款人<input type="text"
+				value="请输入真实姓名" style="color: #CCC; margin-left: 23px" /></span> <span
+				style="margin-left: 200px;">标的状态<select
+				style="width: 140px; margin-left: 10px"><option
+						selected="selected">不限</option>
+					<option>个人信用贷</option>
+					<option>经营贷</option></select></span>
+		</div>
+		<div class="ml-20 mt-20">
+			<span style="margin-left: 10px">还款时间<input type="text"
+				style="color: #CCC; margin: 0 10px; width: 70px" />-<input
+				type="text" style="color: #CCC; margin-left: 10px; width: 70px" /></span>
+			<span style="margin-left: 140px"><input type="checkbox" />担保借款</span>
+			<span style="margin-right: 20px; float: right"><a
+				class="blueBtn round-2 h-30 lh-30 pl-15 pr-15 mr-3">搜索</a></span>
+		</div>
+		<div class="ml-20 mr-20 mb-30 mt-20">
+			<table class="listTable">
+				<thead>
+					<tr>
+						<td style="width: 18%">借款人</td>
+						<td style="width: 10%">借款ID</td>
+						<td style="width: 15%">标的类型</td>
+						<td style="width: 8%">期数</td>
+						<td style="width: 15%">实际还款时间</td>
+						<td style="width: 15%">实际还款金额</td>
+						<td style="width: 10%">还款主体</td>
+						<td style="width: 10%">操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>张三丰</td>
+						<td>12345</td>
+						<td>个人信用贷</td>
+						<td>1/12</td>
+						<td>2013-12-1</td>
+						<td>￥3,000.00</td>
+						<td>本人</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr class='gare_bg'>
+						<td>北京乐满地有限公司</td>
+						<td>23121</td>
+						<td>经营贷</td>
+						<td>2/12</td>
+						<td>2013-12-1</td>
+						<td>￥1,000.00</td>
+						<td>垫付</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr>
+						<td>张三丰</td>
+						<td>12345</td>
+						<td>个人信用贷</td>
+						<td>1/12</td>
+						<td>2013-12-1</td>
+						<td>￥3,000.00</td>
+						<td>本人</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr class='gare_bg'>
+						<td>北京乐满地有限公司</td>
+						<td>23121</td>
+						<td>经营贷</td>
+						<td>2/12</td>
+						<td>2013-12-1</td>
+						<td>￥1,000.00</td>
+						<td>垫付</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr>
+						<td>张三丰</td>
+						<td>12345</td>
+						<td>个人信用贷</td>
+						<td>1/12</td>
+						<td>2013-12-1</td>
+						<td>￥3,000.00</td>
+						<td>本人</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr class='gare_bg'>
+						<td>北京乐满地有限公司</td>
+						<td>23121</td>
+						<td>经营贷</td>
+						<td>2/12</td>
+						<td>2013-12-1</td>
+						<td>￥1,000.00</td>
+						<td>垫付</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr>
+						<td>张三丰</td>
+						<td>12345</td>
+						<td>个人信用贷</td>
+						<td>1/12</td>
+						<td>2013-12-1</td>
+						<td>￥3,000.00</td>
+						<td>本人</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr class='gare_bg'>
+						<td>北京乐满地有限公司</td>
+						<td>23121</td>
+						<td>经营贷</td>
+						<td>2/12</td>
+						<td>2013-12-1</td>
+						<td>￥1,000.00</td>
+						<td>垫付</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr>
+						<td>张三丰</td>
+						<td>12345</td>
+						<td>个人信用贷</td>
+						<td>1/12</td>
+						<td>2013-12-1</td>
+						<td>￥3,000.00</td>
+						<td>本人</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+					<tr class='gare_bg'>
+						<td>北京乐满地有限公司</td>
+						<td>23121</td>
+						<td>经营贷</td>
+						<td>2/12</td>
+						<td>2013-12-1</td>
+						<td>￥1,000.00</td>
+						<td>垫付</td>
+						<td><a href="repayInfoDetail.html">查看</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- 待还款信息  -->
+	<div id="unrepayInfo" class="tabContent mt-20" style="display: none">
+		<div class="ml-20">
+			<span style="margin-left: 10px;">借款人<input type="text"
+				value="请输入真实姓名" style="color: #CCC; margin-left: 23px" /></span> <span
+				style="margin-left: 200px;">标的状态<select
+				style="width: 140px; margin-left: 10px"><option
+						selected="selected">不限</option>
+					<option>个人信用贷</option>
+					<option>经营贷</option></select></span>
+		</div>
+		<div class="ml-20 mt-20">
+			<span style="margin-left: 10px">应还时间<input type="text"
+				style="color: #CCC; margin: 0 10px; width: 70px" />-<input
+				type="text" style="color: #CCC; margin-left: 10px; width: 70px" /></span>
+			<span style="margin-left: 140px"><input type="checkbox" />担保借款</span>
+			<span style="margin-right: 20px; float: right"><a
+				class="blueBtn round-2 h-30 lh-30 pl-15 pr-15 mr-3">搜索</a></span>
+		</div>
+		<div class="ml-20 mr-20 mb-30 mt-20">
+			<div class="mt-20">
+				<table class="listTable">
+					<thead>
+						<tr>
+							<td style="width: 18%">借款人</td>
+							<td style="width: 12%">借款ID</td>
+							<td style="width: 15%">标的类型</td>
+							<td style="width: 10%">期数</td>
+							<td style="width: 15%">应还时间</td>
+							<td style="width: 15%">应还金额</td>
+							<td style="width: 15%">操作</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>张三丰</td>
+							<td>12345</td>
+							<td>个人信用贷</td>
+							<td>1/12</td>
+							<td>2013-12-1</td>
+							<td>￥3,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr class='gare_bg'>
+							<td>北京乐满地有限公司</td>
+							<td>23121</td>
+							<td>经营贷</td>
+							<td>2/12</td>
+							<td>2013-12-1</td>
+							<td>￥1,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr>
+							<td>张三丰</td>
+							<td>12345</td>
+							<td>个人信用贷</td>
+							<td>1/12</td>
+							<td>2013-12-1</td>
+							<td>￥3,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr class='gare_bg'>
+							<td>北京乐满地有限公司</td>
+							<td>23121</td>
+							<td>经营贷</td>
+							<td>2/12</td>
+							<td>2013-12-1</td>
+							<td>￥1,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr>
+							<td>张三丰</td>
+							<td>12345</td>
+							<td>个人信用贷</td>
+							<td>1/12</td>
+							<td>2013-12-1</td>
+							<td>￥3,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr class='gare_bg'>
+							<td>北京乐满地有限公司</td>
+							<td>23121</td>
+							<td>经营贷</td>
+							<td>2/12</td>
+							<td>2013-12-1</td>
+							<td>￥1,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr>
+							<td>张三丰</td>
+							<td>12345</td>
+							<td>个人信用贷</td>
+							<td>1/12</td>
+							<td>2013-12-1</td>
+							<td>￥3,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr class='gare_bg'>
+							<td>北京乐满地有限公司</td>
+							<td>23121</td>
+							<td>经营贷</td>
+							<td>2/12</td>
+							<td>2013-12-1</td>
+							<td>￥1,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr>
+							<td>张三丰</td>
+							<td>12345</td>
+							<td>个人信用贷</td>
+							<td>1/12</td>
+							<td>2013-12-1</td>
+							<td>￥3,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+						<tr class='gare_bg'>
+							<td>北京乐满地有限公司</td>
+							<td>23121</td>
+							<td>经营贷</td>
+							<td>2/12</td>
+							<td>2013-12-1</td>
+							<td>￥1,000.00</td>
+							<td><a href="unrepayInfoDetail.html">查看</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

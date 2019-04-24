@@ -1,0 +1,70 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>题库列表查询</title>
+	<script type="text/javascript" src="../../include.js" ></script>
+</head>
+<body>
+<div class="fs-16 ml-20 mt-20 mb-10">
+	题库管理&nbsp;-&gt;&nbsp;试题管理
+</div>
+<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+	
+	<div class="fl-l ml-10">关键字：&nbsp;
+		<input id="keyword" type="text" class="txt-small w-220">
+	</div>
+
+	<div class="fl-l ml-30">
+		<input id="submit" type="button" value="查询" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input id="addNew" type="button" value="新增" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+	</div>
+</div>
+<div class="page mt-30">
+	<div class="ui-page-outer">
+		<div class="ui-page">
+			<div id="pageNav"></div>
+		</div>
+	</div>
+</div>
+<table class="listTable">
+	<thead>
+		<tr>
+			<td>题目</td>
+			<td>操作</td>
+		</tr>
+	</thead>
+	<tbody id='listTbody'></tbody>
+</table>
+</body>
+<script type="text/javascript">
+$(function(){
+	$('#submit').bind('click', execute);
+	$('#addNew').bind('click', addQuestion);
+	execute();
+});
+
+function execute(){
+ 	var keyword = #('#keyword').val();
+	var searchParams ={keyword:keyword};
+	var pageNav = new WD.PageNav('#pageNav', {
+		callback : $.proxy(function(params) {
+			$.extend(params, searchParams);
+			WD.api.question.getQuestionList(params,function(data){
+				var tbody="";
+				$(data.content).each(function() {
+					tbody += "<tr class='gare_bg'>";
+					tbody += "<td>" + this.title + "</td>";
+					tbody += "<td><a href='javascript:void(0)' onclick='updateAdvertise(\""+ this.id +"\")'>详情</a>  &nbsp; ";
+					tbody += "<a href='javascript:void(0)' onclick='updateAdvertise(\""+ this.id +"\")'>修改</a>  &nbsp; ";
+					tbody += "<a href='javascript:void(0)' onclick='deleteAdvertise(\""+ this.id + "\")'>删除</a></td></tr>";
+				});
+				$("#listTbody").html(tbody);
+				pageNav.setParams(data);
+			});
+		},this)
+	});
+	pageNav.first(); 
+}
+</script>
+</html>

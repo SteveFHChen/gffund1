@@ -1,0 +1,94 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>订单列表查询</title>
+	<script type="text/javascript" src="../../include.js" ></script>
+	<title>订单查询</title>
+</head>
+<body>
+<div class="fs-16 ml-20 mt-20 mb-10">
+	订单管理&nbsp;-&gt;&nbsp;订单查询
+</div>
+<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+	
+	<div class="fl-l ml-10">起始日期：&nbsp;
+		<input id="startDate" type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-10">终止日期：&nbsp;
+		<input id="endDate" type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-10">手机号码：&nbsp;
+		<input id="phone" type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-10">流水号：&nbsp;
+		<input id="orderNo" type="text" class="txt-small w-120">
+	</div>
+	
+	<div class="fl-l ml-30">
+		<input onclick="query()" id="searchBtn" type="button" value="查询" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input onclick="exportfile()" id="createBtn" type="button" value="导出" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+	</div>
+</div>
+<div class="page mt-30">
+	<div class="ui-page-outer">
+		<div class="ui-page">
+			<div id="pageNav"></div>
+		</div>
+	</div>
+</div>
+<table class="listTable">
+	<thead>
+		<tr>
+			<td>流水号</td>
+			<td>交易时间</td>
+			<td>用户名</td>
+			<td>手机号码</td>
+			<td>交易账号</td>
+			<td>交易金额</td>
+			<td>交易摘要</td>
+			<td>状态</td>
+		</tr>
+	</thead>
+	<tbody id='listTbody'></tbody>
+</table>
+</body>
+<script type="text/javascript">
+$(function(){
+	query();
+});
+function query(){
+	var startDate = $('#startDate').val();
+	var endDate = $('#endDate').val();
+	var phone = $('#phone').val();
+	var orderNo = $('#orderNo').val();
+	var searchParams = {startDate:startDate, endDate:endDate, phone:phone, orderNo:orderNo};
+	var pageNav = new WD.PageNav('#pageNav', {
+		callback : $.proxy(function(params) {
+			$.extend(params, searchParams);
+			WD.api.order.getOrderList(params,function(data){
+				var tbody="";
+				$(data.content).each(function() {
+					tbody += "<tr class='gare_bg'>";
+					tbody += "<td>" + this.orderNo + "</td>";
+					tbody += "<td>" + this.createTime + "</td>";
+					tbody += "<td>" + this.personName　+"</td>";
+					tbody += "<td>" + this.phone + "</td>";
+					tbody += "<td>" + this.accountNo + "</td>";
+					tbody += "<td>" + this.amount + "</td>";
+					tbody += "<td>" + this.remark + "</td>";
+					tbody += "<td>" + this.state + "</td></tr>"
+				});
+				$("#listTbody").html(tbody);
+				pageNav.setParams(data);
+			});
+		},this)
+	});
+	pageNav.first();
+};
+
+function exportfile(){
+	alert("此功能有待开发！");
+}
+</script>
+</html>

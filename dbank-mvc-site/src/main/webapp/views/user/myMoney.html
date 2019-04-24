@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	WD.api.user.myMoney(null,function(data){
+		$('.iBalanceAsset').text(data.BalanceAsset);
+		$('.iUsableAsset').text(data.UsableAsset);
+		$('.iFreezeAsset').text(data.FreezeAsset);
+		$('.iMoneyPay').text(data.MoneyPay);
+		$('.iMoneyWithdrawal').text(data.MoneyWithdrawal);
+		var iListDataStr = ''
+		for( var i=0,l=data.ListData.length;i<l;i++){
+			iListDataStr += '<tr><td align="center">'+data.ListData[i].time
+			+'</td><td align="center">'+data.ListData[i].type
+			+'</td><td align="center">'+data.ListData[i].income
+			+'</td><td align="center">'+data.ListData[i].expend
+			+'</td><td align="center">'+data.ListData[i].balance
+			+'</td><td align="center">'+data.ListData[i].remark+'</td></tr>'
+		}
+		$('.iListData').html(iListDataStr);
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html">
+						<img src="../../images/lxy_02.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html" class="active">
+						<img src="../../images/lxy_04a.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html">
+						<img src="../../images/lxy_05.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					<div class="part-left1 w-180 fl-l pt-10 pb-10">
+						<span class="fs-16">账户余额</span><br>
+						<span class="fs-24 iBalanceAsset"></span>
+						<span class="fs-18">元</span>
+					</div>
+					<div class="part-right1 w-495 fl-r pt-15 pst-r">
+						<span class="fs-14 w-170 h-45 fl-l">可用资金  <span class="iUsableAsset"></span>元  <br>
+							冻结资金  <span class="iFreezeAsset"></span>元
+						</span>
+						<span class="fs-14 w-170 h-45 fl-l">充值总额  <span class="iMoneyPay"></span>元<br>
+							提现总额  <span class="iMoneyWithdrawal"></span>元</span>
+						<div class="clear h-20"></div>
+						<a class="blueBtn round-2 h-30 lh-30 pl-15 pr-15 mr-3 pst-a" href="myMoneyPay.html">充值</a>
+						<a class="redBtn round-2 h-30 lh-30 pl-15 pr-15 pst-a" href="myMoneyWithdrawal.html">提现</a>
+					</div>
+				</div>
+				<div class="fs-16 ml-20 mt-20 mb-10">
+				账户交易明细
+				</div>
+				<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+					<div class="fl-l mr-30">交易类型&nbsp;
+						<input type="text" class="txt-small w-125">
+					</div>
+					<div class="fl-l">交易时间&nbsp;
+						<input type="text" class="txt-small w-125">
+						—
+						<input type="text" class="txt-small 2-125">
+					</div>
+					<div class="fl-r mr-20">
+						<input type="button" value="查询" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+				</div>
+				<div class="h-1 ml-20 mr-20 bgc-gray90"></div>
+				<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+
+					<div class="tabContent mt-20">
+					
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc">
+						<thead>
+						<tr>
+							<th scope="col">交易时间</th>
+							<th scope="col">交易类型</th>
+							<th scope="col">收入</th>
+							<th scope="col">支出</th>
+							<th scope="col">账户余额</th>
+							<th scope="col">备注</th>
+						</tr>
+						</thead>
+						<tbody class="iListData"></tbody>
+						<tfoot>
+						<tr>
+							<th align="center" class="pt-10">当页收入支出合计</th>
+							<th align="center" class="pt-10"></th>
+							<th align="center" class="pt-10"></th>
+							<th align="center" class="pt-10"></th>
+							<th align="center" class="pt-10"></th>
+							<th align="center" class="pt-10"></th>
+						</tr>
+						<tr>
+							<th align="center">全部合计</th>
+							<th align="center"></th>
+							<th align="center"></th>
+							<th align="center"></th>
+							<th align="center"></th>
+							<th align="center"></th>
+						</tr>
+						</tfoot>
+					</table>
+					<div class="page mt-30">
+						<div class="ui-page-outer">
+							<div class="ui-page">
+								<span class="ui-page-on">1</span>
+								<a href="#" data-page="2">2</a>
+								<a href="#" data-page="3">3</a>
+								<span class="ui-page-dot">...</span>
+								<a href="#" data-page="16">16</a>
+								<a href="#" class="ui-page-next" data-page="2">&gt;</a>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	WD.Tab();
+	WD.api.user.myFinance(null,function(data){
+		$('.iCurrentFinanceAsset').text(data.CurrentFinanceAsset);
+		$('.iRecycle30Asset').text(data.Recycle30Asset);
+		$('.iExpectAllIncome').text(data.ExpectAllIncome);
+		$('.iFinanceCount').text(data.FinanceCount);
+		$('.iLatelyCollectionDate').text(data.LatelyCollectionDate);
+		var iRecycleDataStr = ''
+		for( var i=0,l=data.RecycleData.length;i<l;i++){
+			iRecycleDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.RecycleData[i].loanId
+				+'</a></td><td align="center">'+data.RecycleData[i].loanTime
+				+'</td><td align="center">'+data.RecycleData[i].yearRate
+				+'</td><td align="center">'+data.RecycleData[i].financeAsset
+				+'</td><td align="center">'+data.RecycleData[i].periods
+				+'</td><td align="center">'+data.RecycleData[i].currentWaitPrincipalInterest
+				+'</td><td align="center">'+data.RecycleData[i].currentWaitDate
+				+'</td><td align="center">'+data.RecycleData[i].currentAlreadyPrincipalInterest
+				+'</td></tr>'
+		}
+		$('.iRecycleData').html(iRecycleDataStr);
+		var iOverdueDataStr = ''
+		for( var i=0,l=data.OverdueData.length;i<l;i++){
+			iOverdueDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.OverdueData[i].loanId
+				+'</a></td><td align="center">'+data.OverdueData[i].loanTime
+				+'</td><td align="center">'+data.OverdueData[i].yearRate
+				+'</td><td align="center">'+data.OverdueData[i].financeAsset
+				+'</td><td align="center">'+data.OverdueData[i].alreadyPrincipalInterest
+				+'</td><td align="center">'+data.OverdueData[i].overduePunishInterest
+				+'</td><td align="center">'+data.OverdueData[i].overdueCount
+				+'次</td><td align="center">'+data.OverdueData[i].overdueAllTime
+				+'天</td></tr>'
+		}
+		$('.iOverdueData').html(iOverdueDataStr);
+		var iCloseDataStr = ''
+		for( var i=0,l=data.CloseData.length;i<l;i++){
+			iCloseDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.CloseData[i].loanId
+				+'</a></td><td align="center">'+data.CloseData[i].loanTime
+				+'</td><td align="center">'+data.CloseData[i].yearRate
+				+'</td><td align="center">'+data.CloseData[i].financeAsset
+				+'</td><td align="center">'+data.CloseData[i].alreadyAsset
+				+'</td><td align="center">'+data.CloseData[i].financeInterest
+				+'</td><td align="center">'+data.CloseData[i].closeDate
+				+'</td></tr>'
+		}
+		$('.iCloseData').html(iCloseDataStr);
+		var iBidDataStr = ''
+		for( var i=0,l=data.BidData.length;i<l;i++){
+			iBidDataStr += '<tr><td align="center"><a href="tb-view.html" class="c-blue1">ID '+data.BidData[i].loanId
+				+'</a></td><td align="center">'+data.BidData[i].loanTime
+				+'</td><td align="center">'+data.BidData[i].yearRate
+				+'</td><td align="center">'+data.BidData[i].financeAsset
+				+'</td><td align="center">'+data.BidData[i].bidRemainTime
+				+'天</td><td align="center">'+data.BidData[i].bidSchedule
+				+'</td></tr>'
+		}
+		$('.iBidData').html(iBidDataStr);
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html" class="active">
+						<img src="../../images/lxy_02a.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html">
+						<img src="../../images/lxy_05.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="yellowBox mt-30 ml-20 mr-20 clearfix">
+					<div class="part-left1 w-225 fl-l">
+						<span class="fs-16">当前投资额</span><br>
+						<span class="fs-24 iCurrentFinanceAsset"></span>
+						<span class="fs-18">元</span><br>
+
+						<div class="h-10"></div>
+
+						<span class="fs-16">未来30天回收金额</span><br>
+						<span class="fs-24 iRecycle30Asset"></span>
+						<span class="fs-18">元</span>
+					</div>
+					<div class="part-right1 w-450 fl-r pt-10 pst-r">
+						<span class="fs-14 w-170 h-45 fl-l">预期总收益<br>
+							<span class="fs-18 iExpectAllIncome"></span>
+							<span class="fs-18">元</span>
+						</span>
+
+						<span class="fs-14 w-140 h-45 fl-l">投资笔数<br>
+							<span class="fs-18 iFinanceCount"></span>
+							<span class="fs-18">笔</span>
+						</span>
+
+						<div class="clear h-20"></div>
+						<span class="blueBox pl-15 pr-15 mr-25">最近收款日期：<span class="iLatelyCollectionDate"></span></span>
+						<a class="blueBtn round-2 h-30 lh-30 pl-15 pr-15 mr-3 pst-a" href="myMoneyPay.html">充值</a>
+						<a class="redBtn round-2 h-30 lh-30 pl-15 pr-15 pst-a" href="myMoneyWithdrawal.html">提现</a>
+					</div>
+				</div>
+				<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+					<div class="tabTitle clearfix">
+						<h3 class="active"><span>回收中的</span></h3>
+						<h3><span>逾期的</span></h3>
+						<h3><span>已结清的</span></h3>
+						<h3><span>投标中的</span></h3>
+						<a class="fs-12 fl-r c-blue1 mt-10" href="myFinanceList.html">投资回收详情查询</a>
+					</div>
+					<div class="tabContent mt-20">
+					<!-- 回收中 -->
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc">
+						<thead>
+						<tr>
+							<th scope="col">借款ID</th>
+							<th scope="col">借款期限</th>
+							<th scope="col">年利率 </th>
+							<th scope="col">投资金额</th>
+							<th scope="col">期数 </th>
+							<th scope="col">本期待收本息</th>
+							<th scope="col">本期待收时间</th>
+							<th scope="col">本期已收本息</th>
+						</tr>
+						</thead>
+						<tbody class="iRecycleData"></tbody>
+					</table>
+					<!-- 逾期的 -->
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc dp-n">
+						<thead>
+						<tr>
+							<th scope="col">借款ID</th>
+							<th scope="col">借款期限</th>
+							<th scope="col">年利率 </th>
+							<th scope="col">投资金额 </th>
+							<th scope="col">已收本息</th>
+							<th scope="col">逾期罚息</th>
+							<th scope="col">逾期次数</th>
+							<th scope="col">逾期总天数</th>
+						</tr>
+						</thead>
+						<tbody class="iOverdueData"></tbody>
+					</table>
+					<!-- 已结清 -->
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc dp-n">
+						<thead>
+						<tr>
+							<th scope="col">借款ID</th>
+							<th scope="col">借款期限</th>
+							<th scope="col">年利率 </th>
+							<th scope="col">投资金额</th>
+							<th scope="col">已收金额</th>
+							<th scope="col">投资收益</th>
+							<th scope="col">结清时间</th>
+						</tr>
+						</thead>
+						<tbody class="iCloseData"></tbody>
+					</table>
+					<!-- 投标中 -->
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc dp-n">
+						<thead>
+						<tr>
+							<th scope="col">借款ID</th>
+							<th scope="col">期限</th>
+							<th scope="col">年利率 </th>
+							<th scope="col">筹标剩余时间</th>
+							<th scope="col">投标进度</th>
+							<th scope="col">投资金额</th>
+						</tr>
+						</thead>
+						<tbody class="iBidData"></tbody>
+					</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

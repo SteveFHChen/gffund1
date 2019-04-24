@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ycnet.dbank</groupId>
+		<artifactId>dbank</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../dbank</relativePath>
+	</parent>
+	<artifactId>dbank-mvc-site</artifactId>
+	<packaging>war</packaging>
+	<name>dbank-mvc-site</name>
+
+    <properties>
+        <welcome.file>views/index.html</welcome.file>
+    </properties>
+
+	<dependencies>
+        <dependency>
+            <groupId>com.ycnet.dbank</groupId>
+            <artifactId>dbank-mvc-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+	</dependencies>
+	<build>
+		<finalName>dbank-mvc-site</finalName>
+	</build>
+</project>

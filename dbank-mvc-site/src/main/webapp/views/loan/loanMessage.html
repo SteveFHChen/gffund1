@@ -1,0 +1,1279 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript" src="../../scripts/lib/jquery.validate.min.js" ></script>
+<script type="text/javascript" src="../../scripts/lib/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript" src="../../scripts/lib/jQselectable/jQselectable.js" ></script>
+<script type="text/javascript" src="../../scripts/public/dict.js" ></script>
+<script>
+var USER_TYPE = "";
+var INFO_SCOLE = {};
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(2).addClass('active');
+	if(!WD.UrlParams.id){
+		$U.navigate('loan/loanApply.html');
+	}
+	//设置全部select样式
+	/*$('select').not('.homeProv,.homeCity,.registProv,.registCity,.workProv,.workCity').jQselectable({
+    	style: "simple",
+    	set: "slideDown",
+		setDuration: "fast",
+		opacity: .9,
+		height: 150
+	});*/
+	$('#birthday').datetimepicker({
+		lang:'ch',
+		timepicker:false,
+		format:'Y-m-d',
+		formatDate:'Y-m-d',
+		maxDate:'+1970/01/01'
+	});
+	//选项卡
+	$('.cMainRight .cRight').first().show().siblings('.cRight').hide();
+	$('.bottomBtn').show();
+	$('.cMainLeft li').click(function(){
+		$(this).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+		$('.cMainRight .cRight').eq($(this).index()).show().siblings('.cRight').hide();
+	});
+	//省市级联
+	$U.fillOptions('.homeProv',WD.Dict.Province,'.homeCity',WD.Dict.City);
+	$U.fillOptions('.registProv',WD.Dict.Province,'.registCity',WD.Dict.City);
+	$U.fillOptions('.workProv',WD.Dict.Province,'.workCity',WD.Dict.City);
+	
+	//信息完整度
+	$('.infoScale').html(_createPercent(0.2));
+	
+	//判断用户类型
+	WD.api.user.getInfo(null,function(data){
+		//data.uType="ent";
+		USER_TYPE = data.uType;
+		if(USER_TYPE=="person"){
+			$('.isPerson').show();
+			$('.isEnt').hide();
+			$('.isEntLeftNav').text('资产信息');
+			$('.isEntTopNav').text('个人信用贷介绍');
+		}else if(USER_TYPE=="ent"){
+			$('.isPerson').hide();
+			$('.isEnt').show();
+			$('.isEntLeftNav').text('财务信息');
+			$('.isEntTopNav').text('经营贷介绍');
+		}
+	});
+	//获取用户实名认证信息
+	WD.api.user.account(null,function(data){
+		$('#realName').text(data.realName);
+		$('#certNo').text(data.certNo);
+		$('#mobile').text(data.mobile);
+	});
+	//查询认证项
+	WD.api.loan.getAllCertify(WD.UrlParams.id,null,function(data){
+		if(!data.id){
+			//return false;
+		}
+		//基本信息
+		// idfile
+		// phonefile
+		// eduFile
+		// liveAddrFile
+
+		$('input[name="sex"]').each(function(index) {
+			if(!data.sex) return false;
+		    if($(this).val()==data.sex.toString()){
+				$(this).attr('checked',true);
+			};
+		});
+		$('#birthday').val(data.birthday);
+		$('#topEdu').val(data.topEdu);
+		$('#entSchYear').val(data.entSchYear);
+		$('#gradSchool').val(data.gradSchool);
+		$('#homeProv').val(data.homeProv);
+		$('#homeProv').change();
+		$('#homeCity').val(data.homeCity);
+		$('#registProv').val(data.registProv);
+		$('#registProv').change();
+		$('#registCity').val(data.registCity);
+		$('#liveAddr').val(data.liveAddr);
+		$('#liveAddrFile').val(data.liveAddrFile);
+		$('#liveAddrPost').val(data.liveAddrPost);
+		$('#liveAddrAreaNo').val(data.liveAddrAreaNo);
+		$('#liveAddrPhone').val(data.liveAddrPhone);
+		
+		//家庭信息
+		// marrStatusFile
+		
+		$('input[name="marrStatus"]').each(function(index) {
+			if(!data.marrStatus) return false;
+		    if($(this).val()==data.marrStatus.toString()){
+				$(this).attr('checked',true);
+			};
+		});
+		$('input[name="childStatus"]').each(function(index) {
+			if(!data.childStatus) return false;
+		    if($(this).val()==data.childStatus.toString()){
+				$(this).attr('checked',true);
+			};
+		});
+		$('#relatName').val(data.relatName);
+		$('#relatShip').val(data.relatShip);
+		$('#relatPhone').val(data.relatShip);
+		$('#otContactName').val(data.otContactName);
+		$('#otContactRelatShip').val(data.otContactRelatShip);
+		$('#otContactPhone').val(data.otContactPhone);
+		
+		//工作信息
+		// workProfFile
+		// workTitleFile
+		// incomeFile
+		
+		$('#workState').val(data.workState);
+		$('#workCompName').val(data.workCompName);
+		$('#position').val(data.position);
+		$('#workEmail').val(data.workEmail);
+		$('#workProv').val(data.workProv);
+		$('#workProv').change();
+		$('#workCity').val(data.workCity);
+		$('#workCompAddr').val(data.workCompAddr);
+		$('#workCompType').val(data.workCompType);
+		$('#workCompIndust').val(data.workCompIndust);
+		$('#workCompScale').val(data.workCompScale);
+		$('#workYears').val(data.workYears);
+		$('#monthIncome').val(data.monthIncome);
+		$('#workCompPhoneArea').val(data.workCompPhoneArea);
+		$('#workCompPhoneNum').val(data.workCompPhoneNum);
+		
+		if(USER_TYPE=="person"){
+			//资产信息
+			// creditFile
+			// houseFile
+			// carFile
+			
+			$('input[name="haveHouse"]').each(function(index) {
+				if(!data.haveHouse) return false;
+			    if($(this).val()==data.haveHouse.toString()){
+					$(this).attr('checked',true);
+				};
+			});
+			$('input[name="haveHouseLoan"]').each(function(index) {
+				if(!data.haveHouseLoan) return false;
+			    if($(this).val()==data.haveHouseLoan.toString()){
+					$(this).attr('checked',true);
+				};
+			});
+			$('input[name="haveCar"]').each(function(index) {
+				if(!data.haveCar) return false;
+			    if($(this).val()==data.haveCar.toString()){
+					$(this).attr('checked',true);
+				};
+			});
+		}else if(USER_TYPE=="ent"){
+			//财务信息
+			// finaReportFile
+			
+			$('#totalAssets').val(data.totalAssets);
+			$('#totalDebt').val(data.totalDebt);
+			$('#lastYearSell').val(data.lastYearSell);
+			$('#lastYearProfit').val(data.lastYearProfit);
+			$('#lastYearFinanCost').val(data.lastYearFinanCost);
+			$('#moneyFund').val(data.moneyFund);
+		}
+	});
+	
+	/* 基本信息 */
+	var v1 = $('#cBaseReg').validate({
+		ignore:'hidden',
+		submitHandler : function () {
+		},
+		rules:{
+			topEdu:{required:true},
+			entSchYear:{required:false},
+			gradSchool:{required:false},
+			homeProv:{required:true},
+			homeCity:{required:true},
+			registProv:{required:true},
+			registCity:{required:true},
+			liveAddr:{required:true},
+			liveAddrPost:{required:true,digits:true,rangelength:[3,6]},
+			liveAddrAreaNo:{required:false,digits:true,rangelength:[1,4]},
+			liveAddrPhone:{required:false,digits:true,rangelength:[7,8]}
+			
+			// idfile:{required:true},
+			// phonefile:{required:true},
+			// eduFile:{required:false},
+			// liveAddrFile:{required:false}
+		},
+		messages:{
+			topEdu:{required:'请选择您的最高学历'},
+			entSchYear:{required:'请选择您的入学年份'},
+			gradSchool:{required:'请输入您的毕业院校'},
+			homeProv:{required:'请选择籍贯-省份'},
+			homeCity:{required:'请选择籍贯-城市'},
+			registProv:{required:'请选择户口-省份'},
+			registCity:{required:'请选择户口-城市'},
+			liveAddr:{required:'请输入居住地'},
+			liveAddrPost:{required:'请输入居住地邮编',digits:'邮编格式不正确',rangelength:'邮编长度为3-6位的数字'},
+			liveAddrAreaNo:{required:'请输入居住地区号',digits:'区号格式不正确',rangelength:'区号长度为1-4位的数字'},
+			liveAddrPhone:{required:'请输入居住地电话',digits:'电话格式不正确',rangelength:'电话长度为7-8位的数字'}
+			
+			// idfile:{required:'身份认证'},
+			// phonefile:{required:'手机认证'},
+			// eduFile:{required:'最高学历'},
+			// liveAddrFile:{required:'居住地证明'}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('dt'));
+		}
+	});
+	/* 家庭信息 */
+	var v2 = $('#cFamReg').validate({
+		ignore:'hidden',
+		submitHandler : function () {
+		},
+		rules:{
+			marrStatus:{required:true},
+			childStatus:{required:true},
+			relatName:{required:true},
+			relatShip:{required:true},
+			relatPhone:{required:true,digits:true,rangelength:[11,11]},
+			otContactName:{required:true},
+			otContactRelatShip:{required:true},
+			otContactPhone:{required:true,digits:true,rangelength:[11,11]}
+			
+			// marrStatusFile:{required:marrStatus}
+		},
+		messages:{
+			marrStatus:{required:'请选择婚姻状况'},
+			childStatus:{required:'请选择有无子女'},
+			relatName:{required:'请填写亲属姓名'},
+			relatShip:{required:'请填写亲属关系'},
+			relatPhone:{required:'请填写亲属手机',digits:'手机格式不正确',rangelength:'手机长度位11位的数字'},
+			otContactName:{required:'请填写其他联系人姓名'},
+			otContactRelatShip:{required:'请填写其他联系人关系'},
+			otContactPhone:{required:'请填写其他联系人手机',digits:'手机格式不正确',rangelength:'手机长度位11位的数字'}
+			
+			// marrStatusFile:{required:'结婚认证'}
+			// 如果婚姻状况是已婚，结婚认证是必须上传；如果婚姻状况是未婚、离异、丧偶，结婚认证是非必须上传
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('dt'));
+		}
+	});
+	/*工作信息 */
+	var v3 = $('#cJobReg').validate({
+		ignore:'hidden',
+		submitHandler : function () {
+		},
+		rules : {
+			workState:{required:true},
+			workCompName:{required:true},
+			position:{required:true},
+			workEmail:{required:true,email:true},
+			workProv:{required:true},
+			workCity:{required:true},
+			workCompAddr:{required:true},
+			workCompType:{required:true},
+			workCompIndust:{required:true},
+			workCompScale:{required:true},
+			workCompAddr:{required:true},
+			workYears:{required:true},
+			monthIncome:{required:true},
+			workCompPhoneArea:{required:true,digits:true,rangelength:[1,4]},
+			workCompPhoneNum:{required:true,digits:true,rangelength:[7,8]}
+			
+			// workProfFile:{required:true},
+			// workTitleFile:{required:false},
+			// incomeFile:{required:true}
+		},
+		messages : {
+			workState:{required:'请输入职业状态'},
+			workCompName:{required:'请输入单位名称'},
+			position:{required:'请输入职位'},
+			workEmail:{required:'请输入工作邮箱',email:'邮箱格式不正确'},
+			workProv:{required:'请选择工作城市-省份'},
+			workCity:{required:'请选择工作城市-城市'},
+			workCompAddr:{required:'请输入公司地址'},
+			workCompType:{required:'请选择公司类别'},
+			workCompIndust:{required:'请选择公司行业'},
+			workCompScale:{required:'请选择公司规模'},
+			workCompAddr:{required:'请输入公司地址'},
+			workYears:{required:'请输入当前工作年限'},
+			monthIncome:{required:'请选择月收入'},
+			workCompPhoneArea:{required:'请输入公司电话区号',digits:'区号格式不正确',rangelength:'区号长度为1-4位的数字'},
+			workCompPhoneNum:{required:'请输入公司电话号码',digits:'电话格式不正确',rangelength:'电话长度为7-8位的数字'}
+			
+			// workProfFile:{required:'工作认证'},
+			// workTitleFile:{required:'技能职称'},
+			// incomeFile:{required:'收入认证'}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('dt'));
+		}
+	});
+	/* 资产信息 */
+	var v4 = $('#cAssetReg').validate({
+		ignore:'hidden',
+		submitHandler : function () {
+		},
+		rules : {
+			haveHouse:{required:true},
+			haveHouseLoan:{required:true},
+			haveCar:{required:true},
+			agreement:{required:true}
+			
+			// creditFile:{required:true},
+			// houseFile:{required:haveHouse},
+			// 如果是否有房选择“有”，房产认证是必须上传，如果是否有房选择“无”，房产认证是非必须上传
+			// carFile:{required:haveCar}
+			// 如果是否有车选择“有”，购车认证是必须上传，如果是否有车选择“无”，购车认证是非必须上传
+		},
+		messages : {
+			haveHouse:{required:'请选择是否有房'},
+			haveHouseLoan:{required:'请选择有无房贷'},
+			haveCar:{required:'请选择是否有车'},
+			agreement:{required: "请勾选《借款协议》"}
+			
+			// creditFile:{required:'信用报告'},
+			// houseFile:{required:'房产认证'},
+			// carFile:{required:'购车认证'}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('dt'));
+		}
+	});
+	/* 财务信息 */
+	var v5 = $('#cAssetEntReg').validate({
+		ignore:'hidden',
+		submitHandler : function () {
+		},
+		rules : {
+			totalAssets:{required:true},
+			totalDebt:{required:true},
+			lastYearSell:{required:true},
+			lastYearProfit:{required:true},
+			lastYearFinanCost:{required:true},
+			moneyFund:{required:true},
+			agreement:{required:true}
+			
+			// finaReportFile:{required:true}
+		},
+		messages : {
+			totalAssets:{required:'请输入企业总资产'},
+			totalDebt:{required:'请输入企业总负债'},
+			lastYearSell:{required:'请输入上一年销售收入'},
+			lastYearProfit:{required:'请输入上一年毛利润'},
+			lastYearFinanCost:{required:'请输入上一年财务费用'},
+			moneyFund:{required:'请输入货币基金'},
+			agreement:{required: "请勾选《借款协议》"}
+			
+			// finaReportFile:{required:'企业财务报表'}
+		},
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parents('dt'));
+		}
+	});
+	 
+	//上一步
+	$('.preStep').click(function(){
+		$(this).parents('.cRight').prev().show().siblings('.cRight').hide();
+		$('.cMainLeft li').eq($(this).parents('.cRight').prev().index()).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+	});
+	//下一步
+	$('.nextStep').click(function(){
+		$(this).parents('.cRight').next().show().siblings('.cRight').hide();	
+		$('.cMainLeft li').eq($(this).parents('.cRight').next().index()).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+	});
+	//保存
+	$('.cKeep').click(function(){
+		var index=$(this).parents('.cRight').index();
+		if(index==0){
+			if(v1.form()){				
+				_dealSubmit(function(){
+					INFO_SCOLE.v1=0.2;
+					getScore();
+					alert('基本信息保存成功！');
+				})
+			}else{
+				INFO_SCOLE.v1=0;
+				getScore();
+			}
+		}else if(index==1){
+			if(v2.form()){
+				_dealSubmit(function(){
+					INFO_SCOLE.v2=0.2;
+					getScore();
+					alert('家庭信息保存成功！');
+				})
+			}else{
+				INFO_SCOLE.v2=0;
+				getScore();
+			}
+		}else if(index==2){
+			if(v3.form()){
+				_dealSubmit(function(){
+					INFO_SCOLE.v3=0.2;
+					getScore();
+					alert('工作信息保存成功！');
+				})
+			}else{
+				INFO_SCOLE.v3=0;
+				getScore();
+			}
+		}else if(index==3){
+			if(USER_TYPE=="person"){
+				if(v4.form()){
+					_dealSubmit(function(){
+						INFO_SCOLE.v4=0.2;
+						getScore();
+						alert('资产信息保存成功！');
+					})
+				}else{
+					INFO_SCOLE.v4=0;
+					getScore();
+				}
+			}else if(USER_TYPE=="ent"){
+				if(v5.form()){
+					_dealSubmit(function(){
+						INFO_SCOLE.v4=0.2;
+						getScore();
+						alert('财务信息保存成功！');
+					})
+				}else{
+					INFO_SCOLE.v4=0;
+					getScore();
+				}
+			}
+		}
+	});
+	//提交
+	$('#subLoan').click(function(){
+		if(USER_TYPE=="person"){
+			if(v1.form() && v2.form() && v3.form() && v4.form()){
+				INFO_SCOLE.v1=INFO_SCOLE.v2=INFO_SCOLE.v3=INFO_SCOLE.v4=0.2;
+				getScore();
+				_dealSubmit(function(id){
+					if(id){
+						$U.navigate('loan/result.html?uType=person&result=success');
+					}else{
+						$U.navigate('loan/result.html?uType=person&result=failed');
+					}
+				})
+			}else{
+				if(v1.form()){INFO_SCOLE.v1=0.2;getScore();}
+				if(v2.form()){INFO_SCOLE.v2=0.2;getScore();}
+				if(v3.form()){INFO_SCOLE.v3=0.2;getScore();}
+				if(v4.form()){INFO_SCOLE.v4=0.2;getScore();}
+				if(v5.form()){INFO_SCOLE.v4=0.2;getScore();}
+				if(!v1.form()){
+					INFO_SCOLE.v1=0;getScore();
+					$('.cMainLeft li').eq(0).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(0).show().siblings('.cRight').hide();
+				}else if(!v2.form()){
+					INFO_SCOLE.v2=0;getScore();
+					$('.cMainLeft li').eq(1).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(1).show().siblings('.cRight').hide();
+				}else if(!v3.form()){
+					INFO_SCOLE.v3=0;getScore();
+					$('.cMainLeft li').eq(2).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(2).show().siblings('.cRight').hide();
+				}else if(!v4.form()){
+					INFO_SCOLE.v4=0;getScore();
+					$('.cMainLeft li').eq(3).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(3).show().siblings('.cRight').hide();
+				}
+			}
+		}else if(USER_TYPE=="ent"){
+			if(v1.form() && v2.form() && v3.form() && v5.form()){
+				INFO_SCOLE.v1=INFO_SCOLE.v2=INFO_SCOLE.v3=INFO_SCOLE.v4=0.2;
+				getScore();
+				_dealSubmit(function(id){
+					if(id){
+						$U.navigate('loan/result.html?uType=ent&result=success');
+					}else{
+						$U.navigate('loan/result.html?uType=ent&result=failed');
+					}
+				})
+			}else{
+				if(v1.form()){INFO_SCOLE.v1=0.2;getScore();}
+				if(v2.form()){INFO_SCOLE.v2=0.2;getScore();}
+				if(v3.form()){INFO_SCOLE.v3=0.2;getScore();}
+				if(v4.form()){INFO_SCOLE.v4=0.2;getScore();}
+				if(v5.form()){INFO_SCOLE.v4=0.2;getScore();}
+				if(!v1.form()){
+					INFO_SCOLE.v1=0;getScore();
+					$('.cMainLeft li').eq(0).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(0).show().siblings('.cRight').hide();
+				}else if(!v2.form()){
+					INFO_SCOLE.v2=0;getScore();
+					$('.cMainLeft li').eq(1).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(1).show().siblings('.cRight').hide();
+				}else if(!v3.form()){
+					INFO_SCOLE.v3=0;getScore();
+					$('.cMainLeft li').eq(2).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(2).show().siblings('.cRight').hide();
+				}else if(!v5.form()){
+					INFO_SCOLE.v4=0;getScore();
+					$('.cMainLeft li').eq(3).addClass('cCurrentBase').siblings().removeClass('cCurrentBase');
+					$('.cRight').eq(3).show().siblings('.cRight').hide();
+				}
+			}
+		}
+	});
+});
+function getScore(){
+	var scole = 0.2;
+	for(var i in INFO_SCOLE){
+		scole += INFO_SCOLE[i];
+	}
+	$('.infoScale').html(_createPercent(scole));
+}
+function _createPercent(data){
+	var s = '';
+	s += '<div class="graph">';
+	var num = 15*data;
+	for(var i=0;i<15;i++){
+		s += (i<num)?'<span class="bar bg-redDeep round-5"></span>':'<span class="bar round-5"></span>';
+	}
+	s += '<span class="bar num">'+(data*100)+'%</span></div>';
+	return s;
+}
+function _dealSubmit(fn){
+	//TODO
+	var params = {};
+	//基本信息
+	params.name= $('#name').text();
+	params.mobile= $('#certNo').text();
+	params.mobile= $('#mobile').text();
+	params.sex= $('input[name="sex"]:checked').val();
+	params.birthday= $('#birthday').val();
+	params.topEdu= $('#topEdu').val();
+	params.entSchYear= $('#entSchYear').val();
+	params.gradSchool= $('#gradSchool').val();
+	params.eduFile= $('#eduFile').val();
+	params.homeProv= $('#homeProv').val();
+	params.homeCity= $('#homeCity').val();
+	params.registProv= $('#registProv').val();
+	params.registCity= $('#registCity').val();
+	params.liveAddr= $('#liveAddr').val();
+	params.liveAddrFile= $('#liveAddrFile').val();
+	params.liveAddrPost= $('#liveAddrPost').val();
+	params.liveAddrAreaNo = $('#liveAddrAreaNo').val();
+	params.liveAddrPhone= $('#liveAddrPhone').val();
+	params.idfile='';
+	params.phonefile='';
+	params.eduFile='';
+	params.liveAddrFile='';
+	//家庭信息
+	params.marrStatus= $('input[name="marrStatus"]:checked').val();
+	params.childStatus= $('input[name="childStatus"]:checked').val();
+	params.relatName= $('#relatName').val();
+	params.relatShip= $('#relatShip').val();
+	params.relatPhone= $('#relatPhone').val();
+	params.otContactName= $('#otContactName').val();
+	params.otContactRelatShip= $('#otContactRelatShip').val();
+	params.otContactPhone= $('#otContactRelatShip').val();
+	params.marrStatusFile='';
+	//工作信息
+	params.workState= $('#workState').val();
+	params.workCompName= $('#workCompName').val();
+	params.position= $('#position').val();
+	params.workEmail= $('#workEmail').val();
+	params.workProv= $('#workProv').val();
+	params.workCity= $('#workCity').val();
+	params.workCompAddr= $('#workCompAddr').val();
+	params.workCompType= $('#workCompType').val();
+	params.workCompIndust= $('#workCompIndust').val();
+	params.workCompScale= $('#workCompScale').val();
+	params.workYears= $('#workYears').val();
+	params.monthIncome= $('#monthIncome').val();
+	params.workCompPhoneArea= $('#workCompPhoneArea').val();
+	params.workCompPhoneNum= $('#workCompPhoneNum').val();
+	params.workProfFile='';
+	params.workTitleFile='';
+	params.incomeFile='';
+	
+	if(USER_TYPE=="person"){
+		//资产信息
+		params.haveHouse= $('input[name="haveHouse"]:checked').val();
+		params.haveHouseLoan= $('input[name="haveHouseLoan"]:checked').val();
+		params.haveCar= $('input[name="haveCar"]:checked').val();
+		params.creditFile='';
+		params.houseFile='';
+		params.carFile='';
+		
+		WD.api.loan.saveAllCertify(WD.UrlParams.id,params,function(data){
+			if(data.id){
+				fn(data.id);
+			}
+		});	
+	}else if(USER_TYPE=="ent"){
+		//财务信息
+		params.totalAssets= $('#totalAssets').val();
+		params.totalDebt= $('#totalDebt').val();
+		params.lastYearSell= $('#lastYearSell').val();
+		params.lastYearProfit= $('#lastYearProfit').val();
+		params.lastYearFinanCost= $('#lastYearFinanCost').val();
+		params.moneyFund= $('#moneyFund').val();
+		params.finaReportFile='';
+		
+		WD.api.loan.saveAllCertifyEnt(WD.UrlParams.id,params,function(data){
+			if(data.id){
+				fn(data.id);
+			}
+		});	
+	}
+};
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!--页面头部-->
+	<div class="header">
+	</div>
+	<!--页面头部END-->
+	<!--页面内容部分-->
+	<div id="aMainWrap" class="middle">
+		<div class="cMainTop clearfix">
+	    	<h3 class="cMainTopTitle">我要借款 > <span class="isEntTopNav">个人信用贷介绍</span> > 借款申请填写</h3>
+	        <div class="cMainContent">
+	        	<div class="cMConLeft">
+	            	<p>信息完整度： <span class="infoScale"></span></p>
+	            </div>
+	            <div class="cMConRight">
+	            	<p>温馨提示：带<span class="cLogoColor">*</span>号为必填项，所有资料均会严格保密</p>
+	            </div>
+	      </div>
+	    </div>
+		<div class="cMain">
+	    	<div class="cMainLeft">
+	        	<ul>
+	            	<li class="cCurrentBase"><a href="javascript:;">基本信息</a></li>
+	                <li><a href="javascript:;">家庭信息</a></li>
+	                <li><a href="javascript:;">工作信息</a></li>
+	                <li><a href="javascript:;" class="isEntLeftNav">资产信息</a></li>
+	            </ul>
+	        </div>
+	        <div class="cMainRight">
+	        	<div>
+		        	<div class="cRight clearfix">
+		        		<h3 class="cMainTitle">基本信息填写</h3>
+		        		<form id="cBaseReg" method="get" action="">
+				            <div class="cMesContent">
+				            	    <dl>
+					                	<dd><span class="cStaColor">*</span>真实姓名：</dd>
+					                    <dt><p id="realName"></p></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>身份证号：</dd>
+					                    <dt><p id="certNo"></p></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>身份认证：</dd>
+					                    <dt>
+					                        <div class="cAuthIcon"><img src="../../images/cGrayIcon6.png" width="58" height="58"></div>
+					                        <div class="cContentIcon">
+					                            <div class="cAuthBtn">
+					                            	<span class="cPtile" style="color:#fff;">上传你的资料</span><br>
+					                                <a href="javascript:;" class="cColor">重新上传</a>
+					                            </div>
+					                        </div>
+					                    </dt>
+					                </dl>
+					                <dl class="clear">
+					                	<dd><span class="cStaColor">*</span>手机号码：</dd>
+					                    <dt><p id="mobile"></p></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>手机实名认证：</dd>
+					                    <dt>
+					                        <div class="cAuthIcon"><img src="../../images/cGrayIcon7.png" width="58" height="58"></div>
+					                        <div class="cContentIcon">
+					                            <div class="cAuthBtn">
+					                            	<span class="cPtile" style="color:#fff;">上传你的资料</span><br>
+					                                <a href="javascript:;" class="cColor">重新上传</a>
+					                            </div>
+					                        </div>
+					                    </dt>
+					                </dl>
+					                <dl class="clear">
+					                	<dd><span class="cStaColor">*</span>性别：</dd>
+					                    <dt>
+					                    	<label><input type="radio" name="sex" value="true">男</label>
+					                    	<label><input type="radio" name="sex" value="false">女</label>
+					                    </dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>出生日期：</dd>
+					                    <dt><input type="text" class="cSta" name="birthday" id="birthday"></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>最高学历：</dd>
+					                    <dt>
+					                    	<select class="sel-small mr-5" id="topEdu" name="topEdu">
+					                            <option value="">请选择</option>
+					                            <option value="1">本科及以上</option>
+					                            <option value="2">大中专</option>
+					                            <option value="3">中学及以下</option>
+					                        </select>
+					                    </dt>
+					                </dl>
+					                <dl>
+					                	<dd>入学年份：</dd>
+					                    <dt>
+					                    	<select class="sel-small" id="entSchYear" name="entSchYear">
+					                            <option value="">请选择</option>
+					                            <option value="2012">2012</option>
+					                            <option value="2012">2011</option>
+					                            <option value="2010">2010</option>
+					                            <option value="2009">2009</option>
+					                        </select>
+					                    </dt>
+					                </dl>
+					                <dl>
+					                	<dd>毕业院校：</dd>
+					                    <dt><input type="text" class="cSta" name="gradSchool" id="gradSchool"></dt>
+					                </dl>
+					                <dl>
+					                	<dd>学历认证：</dd>
+					                    <dt>
+					                        <div class="cAuthIcon"><img src="../../images/cGrayIcon8.png" width="58" height="58"></div>
+					                        <div class="cContentIcon">
+					                            <div class="cAuthBtn">
+					                            	<span class="cPtile" style="color:#fff;">上传你的资料</span><br>
+					                                <a href="javascript:;" class="cColor">重新上传</a>
+					                            </div>
+					                        </div>
+					                    </dt>
+					                </dl>
+					                <div class="cDotLine"></div>
+					                <dl class="clear">
+					               	  <dd><span class="cStaColor">*</span>籍贯：</dd>
+					                    <dt>
+					                    	<div class="cSelect w-200 dp-i">
+					                        	<select class="sel-small mr-5 homeProv" name="homeProv" id="homeProv">
+					                            </select>
+					                            <select class="sel-small mr-5 homeCity" name="homeCity" id="homeCity">
+					                            </select>
+					                        </div>
+					                    </dt>
+					                </dl>
+					                <dl class="clear">
+					               	  <dd><span class="cStaColor">*</span>户口所在地：</dd>
+					                    <dt>
+					                    	<div class="cSelect w-200 dp-i">
+					                        	<select class="sel-small mr-5 registProv" name="registProv" id="registProv">
+					                            </select>
+					                            <select class="sel-small mr-5 registCity" name="registCity" id="registCity">
+					                            </select>
+					                        </div>
+					                    </dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>居住地址：</dd>
+					                    <dt><input type="text" class="cName" name="liveAddr" id="liveAddr"></dt>
+					                </dl>
+					                <dl>
+					                	<dd>居住地证明：</dd>
+					                    <dt>
+					                        <div class="cAuthIcon"><img src="../../images/cGrayIcon9.png" width="58" height="58"></div>
+					                        <div class="cContentIcon">
+					                            <div class="cAuthBtn">
+					                            	<span class="cPtile" style="color:#fff;">上传你的资料</span><br>
+					                                <a href="javascript:;" class="cColor">重新上传</a>
+					                            </div>
+					                        </div>
+					                    </dt>
+					                </dl>
+					                <dl class="clear">
+					                	<dd><span class="cStaColor">*</span>居住地邮编：</dd>
+					                    <dt><input type="text" class="cName" name="liveAddrPost" id="liveAddrPost"></dt>
+					                </dl>
+					                <dl class="clear">
+					                	<dd>居住地电话：</dd>
+					                    <dt>
+					                    	<input type="text" class="cSta cStaShort" name="liveAddrAreaNo" id="liveAddrAreaNo">
+					                    	<em>-</em>
+					                    	<input type="text" class="cSta cStaLonger" name="liveAddrPhone" id="liveAddrPhone">
+					                    </dt>
+					                </dl>
+					                <dl>
+					                	<dd></dd>
+					                    <dt>
+				                            <a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 nextStep">下一步</a>
+				                            <span class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 cKeep">保存</span>
+					                    </dt>
+					                </dl>
+				            </div>
+			            </form>
+		        	</div>
+		        	<div class="cRight clearfix">
+		        		<h3 class="cMainTitle">家庭信息填写</h3>
+		        		<form id="cFamReg" method="get" action="">
+				            <div class="cMesContent">
+					            	<dl>
+					                	<dd><span class="cStaColor">*</span>婚姻状况：</dd>
+					                    <dt class="cRadio">
+					                    	<label><input type="radio" name="marrStatus" value="0">已婚</label>
+					                        <label><input type="radio" name="marrStatus" value="1">未婚</label>
+					                        <label><input type="radio" name="marrStatus" value="2">离异</label>
+					                        <label><input type="radio" name="marrStatus" value="3">丧偶</label>
+					                    </dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>有无子女：</dd>
+					                    <dt class="cRadio">
+					                    	<label><input type="radio" name="childStatus" value="true">有</label>
+					                        <label><input type="radio" name="childStatus" value="false">无</label>
+					                    </dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">**</span>结婚认证：</dd>
+					                    <dt>
+					                        <div class="cAuthIcon"><img src="../../images/cGrayIcon10.png" width="58" height="58"></div>
+					                        <div class="cContentIcon">
+					                            <div class="cAuthBtn">
+					                            	<span class="cPtile" style="color:#fff;">上传你的资料</span><br>
+					                                <a href="javascript:;" class="cColor">重新上传</a>
+					                            </div>
+					                        </div>
+					                    </dt>
+					                </dl>
+					                <div class="cDotLine"></div>
+					                <h3 class="cFamilyMess">直系亲属</h3>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>姓名：</dd>
+					                    <dt><input type="text" class="cSta" name="relatName" id="relatName"></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>关系：</dd>
+					                    <dt><input type="text" class="cSta" name="relatShip" id="relatShip"></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>手机：</dd>
+					                    <dt><input type="text" class="cSta" name="relatPhone" id="relatPhone"></dt>
+					                </dl>
+					                <div style="height:40px"></div>
+					                <h3 class="cFamilyMess">其他联系人</h3>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>姓名：</dd>
+					                    <dt><input type="text" class="cSta" name="otContactName" id="otContactName"></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>关系：</dd>
+					                    <dt><input type="text" class="cSta" name="otContactRelatShip" id="otContactRelatShip"></dt>
+					                </dl>
+					                <dl>
+					                	<dd><span class="cStaColor">*</span>手机：</dd>
+					                    <dt><input type="text" class="cSta" name="otContactPhone" id="otContactPhone"></dt>
+					                </dl>
+					                <dl>
+					                	<dd></dd>
+					                    <dt>
+				                        	<a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 preStep">上一步</a>
+				                            <a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 nextStep">下一步</a>
+				                            <span class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 cKeep">保存</span>
+					                    </dt>
+					                </dl>
+				            </div>
+			            </form>
+		        	</div>
+		        	<div class="cRight clearfix">
+		        		<h3 class="cMainTitle">工作信息填写</h3>
+		        		<form id="cJobReg" method="get" action="">
+							<div class="cMesContent">
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>职业状态：
+										</dd>
+										<dt>
+											<input type="text" class="cSta" name="workState" id="workState">
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>单位名称：
+										</dd>
+										<dt>
+											<input type="text" class="cName" name="workCompName" id="workCompName">
+										</dt>
+									</dl>
+									<dl>
+										<dd><span class="cStaColor">*</span>工作认证：</dd>
+										<dt>
+											<div class="cAuthIcon">
+												<img src="../../images/cGrayIcon.png" width="58" height="58">
+											</div>
+											<div class="cContentIcon">
+												<div class="cAuthBtn">
+													<span class="cPtile" style="color: #fff;">上传你的资料</span><br>
+													<a href="javascript:;" class="cColor">重新上传</a>
+												</div>
+											</div>
+										</dt>
+									</dl>
+									<dl class="clear">
+										<dd>
+											<span class="cStaColor">*</span>职位：
+										</dd>
+										<dt>
+											<input type="text" class="cSta" name="position" id="position">
+										</dt>
+									</dl>
+									<dl>
+										<dd>技术职称认证：</dd>
+										<dt>
+											<div class="cAuthIcon">
+												<img src="../../images/cGrayIcon2.png" width="58" height="58">
+											</div>
+											<div class="cContentIcon">
+												<div class="cAuthBtn">
+													<span class="cPtile" style="color: #fff;">上传你的资料</span><br>
+													<a href="javascript:;" class="cColor">重新上传</a>
+												</div>
+											</div>
+										</dt>
+									</dl>
+									<dl class="clear">
+										<dd>
+											<span class="cStaColor">*</span>工作邮箱：
+										</dd>
+										<dt>
+											<input type="text" class="cSta" name="workEmail" id="workEmail">
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>工作城市：
+										</dd>
+										<dt>
+											<div class="cSelect w-200 dp-i">
+												<select class="sel-small mr-5 workProv" name="workProv" id="workProv">
+												</select> 
+												<select class="sel-small mr-5 workCity" name="workCity" id="workCity">
+												</select>
+											</div>
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>公司地址：
+										</dd>
+										<dt>
+											<input type="text" class="cName" name="workCompAddr" id="workCompAddr">
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>公司类型：
+										</dd>
+										<dt>
+											<select class="sel-small mr-5" name="workCompType" id="workCompType">
+												<option value="">请选择</option>
+												<option value="1">合资</option>
+												<option value="2">独资</option>
+												<option value="3">国有</option>
+												<option value="4">私营</option>
+												<option value="5">全民所有制</option>
+												<option value="6">集体所有制</option>
+												<option value="7">股份制</option>
+												<option value="8">有限责任</option>
+											</select>
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>公司行业：
+										</dd>
+										<dt>
+											<select class="sel-small mr-5" name="workCompIndust" id="workCompIndust">
+												<option value="">请选择</option>
+												<option value="1">农、林、牧、渔业 </option>
+												<option value="2">采矿业</option>
+												<option value="3">制造业</option>
+												<option value="4">电力、煤气、及水的生产和供应业</option>
+												<option value="5">建筑业</option>
+												<option value="6">交通运输、仓储和邮政业</option>
+												<option value="7">信息传输、计算机服务和软件业</option>
+												<option value="8">批发和零售业</option>
+												<option value="9">住宿和餐饮业</option>
+												<option value="10">金融业</option>
+												<option value="11">房地产业</option>
+												<option value="12">租赁和商务服务业</option>
+												<option value="13">科学研究、技术服务和地质勘查业</option>
+												<option value="14">水利、环境和公共设施管理业</option>
+												<option value="15">居民服务和其他服务业</option>
+												<option value="16">教育</option>
+												<option value="17">卫生、社会保障和社会福利业</option>
+												<option value="18">公共管理和社会组织</option>
+												<option value="19">国际组织</option>
+											</select>
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>公司规模：
+										</dd>
+										<dt>
+											<select class="sel-small mr-5" name="workCompScale" id="workCompScale">
+												<option value="">请选择</option>
+												<option value="1">1）20人以下 </option>
+												<option value="2">2）20-99人</option>
+												<option value="3">3）100-499人  </option>
+												<option value="4">4）500-999人 </option>
+												<option value="5">5）1000-9999人</option>
+												<option value="6">6）100000人以上</option>
+											</select>
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>现单位工作年限：
+										</dd>
+										<dt>
+											<select class="sel-small mr-5" name="workYears" id="workYears">
+												<option value="">请选择</option>
+												<option value="1">2年以下</option>
+												<option value="2">2年（含）-5年</option>
+												<option value="3">5年（含）-8年</option>
+												<option value="4">8年（含）以上</option>
+											</select>
+										</dt>
+									</dl>
+									<dl>
+										<dd>
+											<span class="cStaColor">*</span>月收入：
+										</dd>
+										<dt>
+											<select class="sel-small mr-5" name="monthIncome" id="monthIncome">
+												<option value="">请选择</option>
+												<option value="1">无收入</option>
+												<option value="2">1000元（含）以下</option>
+												<option value="3">1000元（含）—3000元</option>
+												<option value="4">3000元（含）—5000元</option>
+												<option value="5">5000元（含）—8000元</option>
+												<option value="6">8000元（含）—10000元</option>
+												<option value="7">10000元（含）以上</option>
+											</select>
+										</dt>
+									</dl>
+									<dl>
+										<dd><span class="cStaColor">*</span>收入证明：</dd>
+										<dt>
+											<div class="cAuthIcon">
+												<img src="../../images/cGrayIcon4.png" width="58" height="58">
+											</div>
+											<div class="cContentIcon">
+												<div class="cAuthBtn">
+													<span class="cPtile" style="color: #fff;">上传</span><br>
+													<a href="javascript:;" class="cColor">重新上传</a>
+												</div>
+											</div>
+										</dt>
+									</dl>
+									<dl class="clear">
+										<dd>
+											<span class="cStaColor">*</span>公司电话：
+										</dd>
+										<dt>
+											<input type="text" class="cSta cStaShort" name="workCompPhoneArea" id="workCompPhoneArea">
+											<em>-</em>
+											<input type="text" class="cSta cStaLonger" name="workCompPhoneNum" id="workCompPhoneNum">
+										</dt>
+									</dl>
+									<dl>
+					                	<dd></dd>
+					                    <dt>
+				                        	<a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 preStep">上一步</a>
+				                            <a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 nextStep">下一步</a>
+				                            <span class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 cKeep">保存</span>
+					                    </dt>
+					                </dl>
+							</div>
+						</form>
+		        	</div>
+		        	<div class="cRight clearfix">
+		        		<div class="isPerson">
+	        				<h3 class="cMainTitle">资产信息填写</h3>
+			        		<form id="cAssetReg" method="get" action="">
+					            <div class="cMesContent">
+					            	<h3 class="cFamilyMess cFamilyMess1">信用信息</h3>
+						                <dl>
+						                	<dd><span class="cStaColor">*</span>信用报告：</dd>
+						                    <dt>
+						                        <div class="cAuthIcon"><img src="../../images/cGrayIcon12.png" width="58" height="58"></div>
+						                        <div class="cContentIcon">
+						                            <div class="cAuthBtn">
+						                            	<span class="cPtile" style="color:#fff;">上传</span><br>
+						                                <a href="javascript:;" class="cColor">重新上传</a>
+						                            </div>
+						                        </div>
+						                    </dt>
+						                </dl>
+						                <h3 class="cFamilyMess cFamilyMess1 clear">房产信息</h3>
+						                <dl>
+						                	<dd><span class="cStaColor">*</span>是否有房：</dd>
+						                    <dt class="cRadio">
+						                    	<label><input type="radio" value="true" name="haveHouse">有</label>
+						                        <label><input type="radio" value="false" name="haveHouse">无</label>
+						                    </dt>
+						                </dl>
+						                <dl>
+						                	<dd><span class="cStaColor">*</span>有无房贷：</dd>
+						                    <dt class="cRadio">
+						                     	<label><input type="radio" value="true" name="haveHouseLoan">有</label>
+						                        <label><input type="radio" value="false" name="haveHouseLoan">无</label>
+						                    </dt>
+						                </dl>
+						                <dl>
+						                	<dd><span class="cStaColor">**</span>房产认证：</dd>
+						                    <dt>
+						                        <div class="cAuthIcon"><img src="../../images/cGrayIcon13.png" width="58" height="58"></div>
+						                        <div class="cContentIcon">
+						                            <div class="cAuthBtn">
+						                            	<span class="cPtile" style="color:#fff;">上传</span><br>
+						                                <a href="javascript:;" class="cColor">重新上传</a>
+						                            </div>
+						                        </div>
+						                    </dt>
+						                </dl>
+						                <h3 class="cFamilyMess cFamilyMess1 clear">车产信息</h3>
+						                <dl>
+						                	<dd><span class="cStaColor">*</span>是否有车：</dd>
+						                    <dt class="cRadio">
+						                    	<label><input type="radio" value="true" name="haveCar">有</label>
+						                        <label><input type="radio" value="false" name="haveCar">无</label>
+						                    </dt>
+						                </dl>
+						                <dl>
+						                	<dd><span class="cStaColor">**</span>购车认证：</dd>
+						                    <dt>
+						                        <div class="cAuthIcon"><img src="../../images/cGrayIcon14.png" width="58" height="58"></div>
+						                        <div class="cContentIcon">
+						                            <div class="cAuthBtn">
+						                            	<span class="cPtile" style="color:#fff;">上传</span><br>
+						                                <a href="javascript:;" class="cColor">重新上传</a>
+						                            </div>
+						                        </div>
+						                    </dt>
+						                </dl>
+						                <dl class="clear">
+						                	<dd></dd>
+						                    <dt>
+					                        	<label>
+					                        		<input type="checkbox" name="agreement" id="agreement">
+					                        		我确认同意接受<a href="javascript:;" class="c-blue1">XX网借款人服务协议</a>
+												</label>
+						                    </dt>
+						                </dl>
+						                <dl>
+						                	<dd></dd>
+						                    <dt>
+					                        	<a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 preStep">上一步</a>
+					                            <span class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 cKeep">保存</span>
+						                    </dt>
+						                </dl>
+								</div>
+							</form>
+			        	</div>
+			        	<div class="isEnt">
+	        				<h3 class="cMainTitle">财务信息填写</h3>
+			        		<form id="cAssetEntReg" method="get" action="">
+					            <div class="cMesContent">
+						            	<dl>
+											<dd>
+												<span class="cStaColor">*</span>企业总资产：
+											</dd>
+											<dt>
+												<input type="text" id="totalAssets" name="totalAssets" class="cSta">
+											</dt>
+										</dl>
+										<dl>
+											<dd>
+												<span class="cStaColor">*</span>企业总负债：
+											</dd>
+											<dt>
+												<input type="text" id="totalDebt" name="totalDebt" class="cSta">
+											</dt>
+										</dl>
+										<dl>
+											<dd>
+												<span class="cStaColor">*</span>销售收入（上一年）：
+											</dd>
+											<dt>
+												<input type="text" id="lastYearSell" name="lastYearSell" class="cSta">
+											</dt>
+										</dl>
+										<dl>
+											<dd>
+												<span class="cStaColor">*</span>毛利润（上一年）：
+											</dd>
+											<dt>
+												<input type="text" id="lastYearProfit" name="lastYearProfit" class="cSta">
+											</dt>
+										</dl>
+										<dl>
+											<dd>
+												<span class="cStaColor">*</span>财务费用（上一年）：
+											</dd>
+											<dt>
+												<input type="text" id="lastYearFinanCost" name="lastYearFinanCost" class="cSta">
+											</dt>
+										</dl>
+										<dl>
+											<dd>
+												<span class="cStaColor">*</span>货币基金：
+											</dd>
+											<dt>
+												<input type="text" id="moneyFund" name="moneyFund" class="cSta">
+											</dt>
+										</dl>
+						              	 <dl>
+						                	<dd><span class="cStaColor">*</span>企业财务报表（上一年）</dd>
+						                    <dt>
+						                        <div class="cAuthIcon"><img width="58" height="58" src="../../images/cGrayIcon6.png"></div>
+						                        <div class="cContentIcon">
+						                            <div class="cAuthBtn">
+						                            	<span style="color:#fff;" class="cPtile">上传你的资料</span><br>
+						                                <a class="cColor" href="javascript:;">重新上传</a>
+						                            </div>
+						                        </div>
+						                    </dt>
+						                </dl>
+						                <dl class="clear">
+						                	<dd></dd>
+						                    <dt>
+					                        	<label>
+					                        		<input type="checkbox" name="agreement" id="agreement">
+					                        		我确认同意接受<a href="javascript:;" class="c-blue1">XX网借款人服务协议</a>
+												</label>
+						                    </dt>
+						                </dl>
+						                <dl>
+						                	<dd></dd>
+						                    <dt>
+					                        	<a href="javascript:;" class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 preStep">上一步</a>
+					                            <span class="subBtn round-3 h-35 lh-34 pl-30 pr-30 fs-14 mr-10 cKeep">保存</span>
+						                    </dt>
+						                </dl>
+								</div>
+							</form>
+			        	</div>
+	        	</div>
+	        	</div>
+	        	<div class="mt-10 pl-10"><input type="submit" value="提交" id="subLoan" class="btn-gray round-3 h-35 lh-34 ml-200 pl-70 pr-70 fs-14 cs-p"></div>
+			    <div class="h-30 clear"></div>          
+	        </div>
+	    </div>
+	</div>
+	<!--页面内容部分END-->
+	
+	<!--页面底部-->
+	<div class="footer">
+	</div>
+	<!--页面底部END-->
+</div>
+</body>
+</html>

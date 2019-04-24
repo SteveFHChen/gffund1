@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../include.js" ></script>
+<script>
+$(function(){
+	$('.nav .headList').eq(0).addClass('active');
+})
+function doInit(){
+	//TODO
+	$('.imgscroll').imgscroll({
+        switchEffect: 'ease',
+        switchMode: 'click',
+        showText: false
+    });
+	
+	WD.api.finance.getInvestList(null,function(data){
+		_createFinanceList(data.content);
+	});
+	
+}
+$(doInit);
+
+function _createFinanceList(data){	
+	var str = '';
+	if(data){		
+		for(var i=0;i<data.length;i++){
+			var fl = data[i];
+			str += '<tr><td><p class="y_shi y_sx ta-l">'+fl.title+'</p></td>';
+			str += '<td>'+fl.rate+'</td>';
+			str += '<td>'+fl.money+'</td>';		
+			str += '<td>'+fl.date+'</td>'
+			str += '<td><div class="graph"><strong class="bar" style="width: '+fl.percent+';"><span>'+fl.percent+'</span></strong></div></td>';
+			str += '<td><a href="finance/investInfo.html" class="y_index_toubiao">查看详情</a></td></tr>';	
+		}
+	}
+	$('#investList>tbody').append(str);
+}
+</script>
+</head>
+<body>
+<div id="pageNav"></div>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header"></div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="w-100b y_area">
+		<!-- banner img start -->
+		<div id="banner" class="ta-c">
+			<div class="imgscroll">
+				<ul>
+					<li><a href="javascript:;"><img src="../images/banner.png" width="960" height="330" alt="" /></a></li>
+					<li><a href="javascript:;"><img src="../images/banner.png" width="960" height="330" alt="" /></a></li>
+					<li><a href="javascript:;"><img src="../images/banner.png" width="960" height="330" alt="" /></a></li>
+					<li><a href="javascript:;"><img src="../images/banner.png" width="960" height="330" alt="" /></a></li>
+				</ul>
+			</div>
+		</div>		
+		<!-- banner img end -->
+		<div class="p-10"></div>
+		
+		<div class="y_main_content w-960 m-0a">
+			<h3 class="pt-8 pb-8 pl-20 pr-20 fs-18">投资列表<a href="finance/list.html" class="y_more fl-r ff-songti fs-12">更多&gt;</a></h3>
+			<div class="y_bdb"></div>
+			<div class="pt-15 pb-15 pl-20 pr-20 clearfix">自主选择投资项目，每月获得等额本息回款；<span class="y_orange">100元</span>即可获得理财乐趣，随时可赎回。<div class="fl-r"><a href="loan/pro.html" class="y_fabiao"></a></div></div>
+			<div class="y_bdb"></div>
+			<div class="pt-15 pb-15 pl-20 pr-20">
+				<table width="100%" class="y_index_table" id="investList">
+					<thead>
+						<th width="25%">借款标题</th>					
+						<th width="10%">年利率</th>
+						<th width="15%">金额</th>
+						<th width="15%">期限</th>
+						<th width="20%">进度</th>
+						<th></th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="p-10"></div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

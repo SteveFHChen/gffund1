@@ -1,0 +1,8 @@
+{	
+"content":[
+		{"name":"jack","realName":"杰克","withdrawAccount":"1234567899999999","withdrawTime":"2013-12-12 12:12:12","withdrawMoney":"100.00元","fee":"5.00元","realMoney":"95.00元","status":"成功"},
+		{"name":"rose","realName":"肉丝","withdrawAccount":"1234567899999999","withdrawTime":"2013-12-12 12:12:12","withdrawMoney":"100.00元","fee":"5.00元","realMoney":"95.00元","status":"失败"},
+		{"name":"amy","realName":"艾米","withdrawAccount":"1234567899999999","withdrawTime":"2013-12-12 12:12:12","withdrawMoney":"100.00元","fee":"5.00元","realMoney":"95.00元","status":"成功"}
+	]
+,"result":"ok"
+}

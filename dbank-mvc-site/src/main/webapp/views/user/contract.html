@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+var a='';
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	//获取数据
+	WD.Tab();
+	WD.api.user.contract({id:WD.UrlParams.id},{
+		success:function(data){
+			$('#zl_content').html('合同内容：'+data.content);
+			a=data.loanId;
+		}
+	});
+	$('#zl_sure').click(function(){//userCenter.html
+		WD.api.user.contract({id:a},{
+			success:function(data){
+				$U.navigate('user/userCenter.html');
+			}
+		});
+	});
+})
+</script>
+</head>
+
+<body>
+<div class="wrap">
+		<!--header start-->
+		<div class="header">
+		</div>
+		<!--header end-->
+		<!--middle start-->
+		<div class="middle">
+			<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+				<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png"alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html">
+						<img src="../../images/lxy_02.png"alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html"class="active">
+						<img src="../../images/lxy_03a.png"alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png"alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html">
+						<img src="../../images/lxy_05.png"alt="">
+						<span>安全与设置</span>
+					</a>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png"alt="">
+						<span>消息通知</span>
+					</a>
+				</div>
+			<div class="part-right fl-r pt-30">
+				<div class="bd-s1c w-90b m-0a p-20">
+					<pre class="wb-p" id="zl_content">
+					</pre>
+				</div>
+				<div class="w-90b m-0a ta-c mt-20 mb-20">
+					<label>
+						<input type="checkbox" name="" id=""/>
+						阅读并同意合同内容
+					</label><br/>
+					<input type="submit" value="确认" id="zl_sure" class="subBtn h-30 lh-30 fs-14  pl-40 pr-40 round-3 mt-10 mb-10 mr-10" />
+					<input type="submit" value="合同打印" class="subBtn h-30 lh-30 fs-14  pl-40 pr-40 round-3 mt-10 mb-10" onClick="javascript:;"/>
+					<div>温馨提示：完成合同确认后平台才打款</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

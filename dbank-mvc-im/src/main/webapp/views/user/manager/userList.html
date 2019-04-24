@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百贷网-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript" src="../../../scripts/forPage/userList.js" ></script>
+</head>
+
+<body>
+	<div align="left">位置：系统管理 > 用户管理</div>
+	<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+		<div class="fl-l mr-30">用户名&nbsp;
+			<input type="text" class="txt-small w-125" id="name">
+		</div>
+		<div class="fl-l">角色&nbsp;
+			<select id="roleSelect">
+				<option value="">全部</option>
+			</select>
+		</div>
+		<div class="fl-r mr-20">
+			<input id="searchBtn" type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+			<input id="addUser" type="button" value="增加用户" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		</div>
+	</div>
+	<table class="listTable">
+		<caption align="left">
+			<img src="../../../images/table-list.png"/> 用户列表
+		</caption>
+		<thead>
+			<tr>
+				<td>序号</td>
+				<td>用户名</td>
+				<td>角色</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<div class="page mt-30">
+		<div class="ui-page-outer">
+			<div class="ui-page">
+				<div id="pageNav"></div>
+			</div>
+		</div>
+	</div>
+</body>

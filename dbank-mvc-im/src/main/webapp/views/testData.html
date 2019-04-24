@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../include.js" ></script>
+<script type="text/javascript">
+	function doInit() {
+		$('#submitBtn').click(function() {
+			var form = document.forms[0];
+			params = {
+				menuName : form.menuName.value,
+				icon : form.icon.value,
+				url : form.url.value,
+				parentId : form.parentId.value
+			};
+			WD.api.adminMenu.saveMenu(params, function(data) {
+				alert('success')
+			});
+		});
+		$('#submitBtn_saveAdmin').click(function() {
+			var form = document.forms[1];
+			params = {
+				username : form.username.value,
+				name : form.name.value,
+				password : form.password.value
+			};
+			WD.api.admin.saveAdmin(params, function(data) {
+				alert('success')
+			});
+		});
+		$('#submitBtn_saveAdminRole').click(function() {
+			var form = document.forms[2];
+			params = {
+				code : form.code.value,
+				name : form.name.value,
+				desc : form.desc.value
+			};
+			WD.api.adminRole.saveAdminRole(params, function(data) {
+				alert('success')
+			});
+		});
+		$('#submitBtn_saveRoleAdminMenu').click(function() {
+			var form = document.forms[3];
+			params = {
+				roleId : form.roleId.value
+			};
+			WD.api.roleAdminMenu.saveRoleAdminMenu(params, function(data) {
+				alert('success')
+			});
+		});
+		
+	}
+	$(doInit);
+</script>
+</head>
+<body>
+	***************************************************************************<br/><br/>
+	@Desc 创建菜单<br/><br/>
+	***************************************************************************
+	<form action="#">
+		menuName : <input name="menuName" type="text"> <br /> <br /> 
+		icon : <input name="icon" type="text"> <br /> <br /> 
+		url : <input name="url" type="text"> <br /> <br /> 
+		parentId : <input name="parentId" type="text"> <br /> <br /> 
+		<input type="button" id="submitBtn" value=" save ">
+	</form>
+	<br/><br/>
+	***************************************************************************<br/><br/>
+	@Desc 创建用户<br/><br/>
+	***************************************************************************
+	<br/><br/>
+	<form action="#">
+		username(login name) : <input name="username" type="text"> <br /> <br /> 
+		name : <input name="name" type="text"> <br /> <br /> 
+		password : <input name="password" type="text"> <br /> <br /> 
+		<input type="button" id="submitBtn_saveAdmin" value=" save ">
+	</form>
+	<br/><br/>
+	***************************************************************************<br/><br/>
+	@Desc 创建角色<br/><br/>
+	***************************************************************************
+	<br/><br/>
+	<form action="#">
+		code(code) : <input name="code" type="text"> <br /> <br /> 
+		desc : <input name="desc" type="text"> <br /> <br /> 
+		name : <input name="name" type="text"> <br /> <br /> 
+		<input type="button" id="submitBtn_saveAdminRole" value=" save ">
+	</form>
+	<br/><br/>
+	***************************************************************************<br/><br/>
+	@Desc 角色权限配置<br/><br/>
+	***************************************************************************<br/><br/>
+	<form action="#">
+		roleId : <input name="roleId" type="text"> <br /> <br /> 
+		<input type="button" id="submitBtn_saveRoleAdminMenu" value=" save ">
+	</form>
+</body>
+</html>

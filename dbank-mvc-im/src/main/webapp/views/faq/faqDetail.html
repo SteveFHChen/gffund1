@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>95508理财系统-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript">
+	/**页面数据初始化**/
+	 $(function() {
+			var id = WD.UrlParams['id'];
+			initPage(id);
+		});
+	/**页面数据初始化**/
+	function initPage(id){
+		WD.api.faq.getFaqDetailById({id:id}, function(data) {
+			//alert(data.question)
+			var tbody = '';
+			tbody += '<tr><td bgcolor="#ededed">分类名称</td><td >'+data.categoryName+'</td></tr>';
+			tbody += '<tr><td bgcolor="#ededed">创建日期</td><td >'+data.creatDate+'</td></tr>';
+			tbody += '<tr><td bgcolor="#ededed">问题</td><td >'+data.question+'</td></tr>';
+			tbody += '<tr><td bgcolor="#ededed">回答</td><td >'+data.answer+'</td></tr>';
+			$("table > tbody").html(tbody);
+		});
+	}
+	</script>	
+</head>
+
+<body>
+	<div class="fs-16 ml-20 mt-20 mb-10">
+ <a href ="javascript:history.back(-1)">帮助维护</a>&nbsp;-&gt;&nbsp;FAQ详情
+</div>
+<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+	<table class="listTable">
+		<tbody id='faqTbody'></tbody>
+	</table>
+</body>

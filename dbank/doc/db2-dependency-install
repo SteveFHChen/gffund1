@@ -1,0 +1,4 @@
+mvn install:install-file -DlocalRepositoryPath=C:\Users\guozp\.m2\repository -DcreateChecksum=true -Dpackaging=jar -Dfile=D:/workspace/ideaProjects/db2jcc.jar -DgroupId=com.ibm.db2.jcc -DartifactId=db2jcc -Dversion=3.8.47
+1.修改lib包所在的位置 -Dfile=D:/workspace/ideaProjects/db2jcc.jar
+2.修改本地repository的路径 -DlocalRepositoryPath=C:\Users\guozp\m2\repository
+2.执行命令

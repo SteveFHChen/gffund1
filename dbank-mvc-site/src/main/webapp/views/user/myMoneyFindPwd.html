@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript">
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	$('table:gt(0)').hide();
+	$('#toSetNew').click(function(){
+		$('table').hide();
+		$('table:eq(1)').show();
+	});
+	$('#toResult').click(function(){
+		$('table').hide();
+		$('table:eq(2)').show();
+	});
+	$('#goBack').click(function(){
+		$('table').hide();
+		$('table:eq(0)').show();
+	})
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html">
+						<img src="../../images/lxy_02.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html">
+						<img src="../../images/lxy_04.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html" class="active">
+						<img src="../../images/lxy_05a.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<div class="nextNav">
+						<a href="account.html">
+							<span>个人基础信息</span>
+						</a>
+						<a href="accountCreditInfo.html">
+							<span>认证资料信息</span>
+						</a>
+						<a href="accountSecurity.html" class="active">
+							
+							<span>安全设置</span>
+						</a>
+					</div>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="uc uc_ups">
+					<div class="title">
+						<a href="accountSecurity.html" class="btn btn-small btn-gray">返回</a><span>找回交易密码</span>
+					</div>
+					<div class="content">
+						<table>
+								<tr><td colspan='2'><div class="email_step"></div></td></tr>
+								<tr>
+									<td class="ta-r" width="200px"><span class="c-redLight">*　</span>请输入手机号：</td>
+									<td width="550px">
+										<input type="text" class="inp" />
+										<a href="javascript:;" class="btn btn-small btn-blue">发送验证码</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="ta-r"><span class="c-redLight">*　</span>请输入手机验证码：</td>
+									<td><input type="text" class="inp" /></td>
+								</tr>
+								<tr>
+									<td class="ta-r"><span class="c-redLight">*　</span>身份证后四位：</td>
+									<td><input type="text" class="inp" /></td>
+								</tr>
+								<tr>
+									<td class="ta-r"></td>
+									<td><a href="javascript:;" id="toSetNew" class="btn btn-middle btn-bgray">下一步</a></td>
+								</tr>
+						</table>
+						<table>
+								<tr><td colspan='2'><div class="email_step email_step2"></div></td></tr>
+								<tr>
+									<td class="ta-r" width="200px"><span class="c-redLight">*　</span>请输入新密码：</td>
+									<td width="550px">
+										<input type="password" class="inp" />
+									</td>
+								</tr>
+								<tr>
+									<td class="ta-r"><span class="c-redLight">*　</span>请再次输入密码：</td>
+									<td><input type="password" class="inp" /></td>
+								</tr>
+								<tr>
+									<td class="ta-r"></td>
+									<td>
+										<a href="javascript:;" id="toResult" class="btn btn-middle btn-bgray">确认</a>
+										<a href="javascript:;" id="goBack" class="btn btn-middle btn-bgray">取消</a>
+									</td>
+								</tr>
+						</table>
+						<table>
+								<tr><td width="750"><div class="email_step email_step3"></div></td></tr>
+								<tr>
+									<td class="ta-c"><span class="find_success es_pwd" >找回已成功</span></td>
+								</tr>
+						</table>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

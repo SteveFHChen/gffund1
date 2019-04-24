@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>95508理财系统-后台管理系统</title>
+<script type="text/javascript" src="../../include.js" ></script>
+<script type="text/javascript">
+	//var id = document.getElementById("id");
+    var id = WD.UrlParams['id'];
+	var params = {
+		id : id
+	};
+	WD.api.advertiseColumn.getOne(params, function(data) {
+		$('#id').val(id);
+		$('#name').val(data.name);
+		if('OPEN'==data.state)
+			$('#state').val('开放中');
+		else if('CLOSE'==data.state)
+			$('#state').val('关闭');
+		$('#polling').val(data.polling);
+		$('#desc').val(data.desc);
+	});
+</script>
+
+</head>
+
+<body>
+	<div class="fs-16 ml-20 mt-20 mb-10">广告栏管理&nbsp;-&gt;&nbsp;广告栏查看</div>
+	<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+		<table>
+			<tr>
+				<td>
+					<div class="fl-l ml-10">
+						广告位ID：&nbsp; <input id="id" type="text" readonly class="txt-small w-120">
+					</div>
+					<div class="fl-l ml-10">
+						广告位名称：&nbsp; <input id="name" type="text" readonly class="txt-small w-120">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="fl-l ml-10">
+						状态：&nbsp;
+						<input id="state" type="text" readonly class="txt-small w-120">
+					</div>
+					<div class="fl-l ml-10">
+						轮询时间：&nbsp; <input id="polling" type="text" readonly class="txt-small w-120">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="fl-l ml-10">
+						广告位描述：&nbsp; <textarea id="desc" rows="5" cols="75" readonly></textarea>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="fl-l ml-30">
+						<input onclick="save()" id="saveBtn" type="button"
+							value="保存" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+					<div class="fl-l ml-30">
+						<input id="reset" type="reset"
+							value="重置" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+					<div class="fl-l ml-30">
+						<input id="backBtn" type="button"
+							value="返回" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>

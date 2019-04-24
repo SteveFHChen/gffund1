@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>广告列表查询</title>
+	<script type="text/javascript" src="../../include.js" ></script>
+</head>
+<body>
+<div class="fs-16 ml-20 mt-20 mb-10">
+	信息管理&nbsp;-&gt;&nbsp;广告管理
+</div>
+<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+	
+	<div class="fl-l ml-10">广告ID：&nbsp;
+		<input id="adId" type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-10">广告名称：&nbsp;
+		<input id="adName" type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-10">广告位：&nbsp;
+		<input id="adcId" type="text" class="txt-small w-120">
+	</div>
+	<div class="fl-l ml-10">状态：&nbsp;
+		<select id="adStatus" class='sel-small'>
+			<option value="">全部</option>
+			<option value="OPEN">开放</option>
+			<option value="CLOSE">关闭</option>
+		</select>
+	</div>
+	
+	<div class="fl-l ml-30">
+		<input id="submit" type="button" value="查询" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input id="addNew" type="button" value="新增" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+	</div>
+</div>
+<div class="page mt-30">
+	<div class="ui-page-outer">
+		<div class="ui-page">
+			<div id="pageNav"></div>
+		</div>
+	</div>
+</div>
+<table class="listTable">
+	<thead>
+		<tr>
+			<td>广告ID</td>
+			<td>广告名称</td>
+			<td>广告标题</td>
+			<td>广告位名称</td>
+			<td>状态</td>
+			<td>操作</td>
+		</tr>
+	</thead>
+	<tbody id='listTbody'></tbody>
+</table>
+</body>
+<script type="text/javascript">
+$(function(){
+	$('#submit').bind('click', execute);
+	$('#addNew').bind('click', addAdvertise);
+	execute();
+});
+
+/* function execute(){
+	alert("Hello execute");
+	var adId = $('#adid').val();
+	var adname = $('#adname').val();
+	//var adcid = $('#adcid').val();
+	//var adstatus = $('#adstatus').val();
+	var params={adId: adId, name: adname};
+	WD.api.advertise.getAdvertiseList(params, function(data){
+		//alert(JSON.stringify(data));
+		var div1=document.getElementById("div1");
+		div1.innerHTML=JSON.stringify(data);
+		//document.write(JSON.stringify(data));
+	});
+} */
+
+function execute(){
+ 	var adId = $('#adId').val();
+	var adname = $('#adName').val();
+	var adcid = $('#adcId').val();
+	var adstatus = $('#adStatus').val();
+	var searchParams ={adId: adId, name: adname, adColumnId: adcid, status: adstatus};
+	var pageNav = new WD.PageNav('#pageNav', {
+		callback : $.proxy(function(params) {
+			$.extend(params, searchParams);
+			WD.api.advertise.getAdvertiseList(params,function(data){
+				var tbody="";
+				$(data.content).each(function() {
+					tbody += "<tr class='gare_bg'>";
+					tbody += "<td>" + this.adId + "</td>";
+					tbody += "<td><a href='javascript:void(0)' onclick='getDetailsById(\"" +this.adId +"\")'>" + this.name + "</a></td>";
+					tbody += "<td>" + this.title　+"</td>";
+					tbody += "<td>" + this.adColumnName + "</td>";
+					tbody += "<td>" + this.status + "</td>";
+					tbody += "<td><a href='javascript:void(0)' onclick='updateAdvertise(\""+ this.adId +"\")'>修改</a>  &nbsp; ";
+					tbody += "<a href='javascript:void(0)' onclick='deleteAdvertise(\""+ this.adId + "\")'>删除</a></td></tr>";
+				});
+				$("#listTbody").html(tbody);
+				pageNav.setParams(data);
+			});
+		},this)
+	});
+	pageNav.first(); 
+}
+
+function addAdvertise(){
+	$U.navigate('advertise/advertiseNew.html');
+}
+
+function getDetailsById(adId){
+	$U.navigate('advertise/advertiseDetail.html?id='+adId);
+}
+
+function updateAdvertise(adId){
+	$U.navigate('advertise/advertiseUpdate.html?id='+adId);
+}
+
+function deleteAdvertise(adId){
+	var params={adId:adId};
+	alert(JSON.stringify(params));
+	WD.api.advertise.deleteAdvertise(params, function(data) {
+		alert("删除成功!");
+		$U.navigate('advertise/advertiseManage.html');
+	}); 
+} 
+</script>
+</html>

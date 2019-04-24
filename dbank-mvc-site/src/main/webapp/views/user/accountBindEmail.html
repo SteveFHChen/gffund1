@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript" src="../../scripts/lib/jquery.validate.min.js" ></script>
+<script>
+    $(function() {
+    //nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+        if(WD.UrlParams.result == 'success') {
+            WD.api.user.updateEmailAsEmail({
+                id : WD.UrlParams.id,
+                email : WD.UrlParams.email
+            }, function(data) {
+                if(data.settingValue == true) {
+                    $('.part3').show();
+                    $('.part1,.part2').hide();
+                } else {
+                    alert('绑定失败！');
+                    window.location.href = "accountSecurity.html";
+                }
+            });
+        }
+        $("#signupForm1").validate({
+            rules : {
+                eMail : {
+                    required : true,
+                    email : true
+                }
+            },
+            messages : {
+                eMail : {
+                    required : "请输入Email地址",
+                    email : "请输入正确的email地址"
+                }
+            },
+            errorPlacement : function(error, element) {
+                error.appendTo(element.parents('td'));
+            },
+            submitHandler : function() {
+                //发送绑定邮箱请求
+                WD.api.user.sendEmail({
+                    email : $('#eMail').val()
+                }, {
+                    success : function(data) {
+                        if(data.result == 'success') {
+                            $('.part2').show();
+                            $('.part1,.part3').hide();
+                            $('#gotoEmail').attr('href', 'http://mail.' + $('#eMail').val().split('@')[1])
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header"></div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+				<a href="userCenter.html"> <img src="../../images/lxy_01.png" alt=""> <span>信息总览</span> </a>
+				<a href="myFinance.html"> <img src="../../images/lxy_02.png" alt=""> <span>我的投资</span> </a>
+				<a href="myLoan.html"> <img src="../../images/lxy_03.png" alt=""> <span>我的借款</span> </a>
+				<a href="myMoney.html"> <img src="../../images/lxy_04.png" alt=""> <span>我的资金账户</span> </a>
+				<a href="account.html" class="active"> <img src="../../images/lxy_05a.png" alt=""> <span> 安全与设置</span> </a>
+				<div class="nextNav">
+					<a href="account.html"> <span>个人基础信息</span> </a>
+					<a href="accountCreditInfo.html"> <span>认证资料信息</span> </a>
+					<a href="accountSecurity.html" class="active"> <span>安全设置</span> </a>
+				</div>
+				<a href="notice.html"> <img src="../../images/lxy_06.png" alt=""> <span>消息通知</span> </a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="uc uc_ups">
+					<div class="title">
+						<a href="accountSecurity.html" class="btn btn-small btn-gray">返回</a><span>绑定邮箱</span>
+					</div>
+					<div class="content">
+						<form id="signupForm1" method="post" action="">
+							<table class="part1">
+								<tr>
+									<td class="ta-r" width="200px"><span class="c-redLight">*　 </span>请输入邮箱：</td>
+									<td width="450px">
+									<input type="text" class="txt-small w-160" id="eMail" name="eMail"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="ta-r"></td>
+									<td>
+									<input type="submit" class="btn btn-middle btn-bgray" value="绑定">
+									</td>
+								</tr>
+							</table>
+						</form>
+						<table class="part2" style="display: none">
+							<tr>
+								<td width="500px" class="ta-r"><span class="send_email">验证信息已发送，请登录邮箱查收</span></td>
+							</tr>
+							<tr>
+								<td class="ta-c"><a href="" class="btn btn-middle btn-bgray" id="gotoEmail">登录邮箱</a></td>
+							</tr>
+						</table>
+						<table class="part3" style="display: none">
+							<tr>
+								<td  width="500px" class="ta-c"><span class="find_success">绑定已成功</span></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

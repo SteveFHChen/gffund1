@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.content div').first().siblings().hide();
+	$('.zl_helpList a').click(function(){
+		$('.zl_helpList a').removeClass('active');
+		$('.content div').hide();
+		$(this).addClass('active');
+		$('.content div').eq($(this).index()).show();
+	});
+	//nav栏点亮
+	$('.nav .headList').eq(3).addClass('active');
+})
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l zl_helpList">
+					<a href="javascript:;" class="active">
+						<span>名词解释</span>
+					</a>
+					<a href="javascript:;">
+						<span>平台介绍</span>
+					</a>
+					<a href="javascript:;">
+						<span>利息和费用</span>
+					</a>
+					<a href="javascript:;">
+						<span>我要理财</span>
+					</a>
+					<a href="javascript:;">
+						<span>我要借款</span>
+					</a>
+					<a href="javascript:;">
+						<span>个人账户</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="uc uc_baseInfo">
+					<div class="content">
+						<div>
+                        	<h3 class="pl-10 fw-b zl_title">名词解释</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li>......</li>
+                            </ul>
+                        </div>
+                        <div>
+                        	<h3 class="pl-10 fw-b zl_title">关于XXX</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">相关政策法规</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">安全保障</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">网站协议及产品说明</h3>
+                            <ul class="zl_defin">
+                                <li>1.投资人服务协议</li>
+                                <li>2.借款人服务协议</li>
+                                <li>3.借款协议（样本）</li>
+                                <li>4.</li>
+                            </ul>
+                        </div>
+                        <div>
+                        	<h3 class="pl-10 fw-b zl_title">理财人费用</h3>
+                            <ul class="zl_defin">
+                                <li>1.充值费用</li>
+                                <li>2.提现费用</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">借款人费用</h3>
+                            <ul class="zl_defin">
+                                <li>1.充值费用</li>
+                                <li>2.提现费用</li>
+                                <li>3.借款服务费</li>
+                                <li>4.借款管理费</li>
+                                <li>5.逾期罚息</li>
+                                <li>6.逾期管理费</li>
+                                <li>7.</li>
+                            </ul>
+                        </div>
+                        <div>
+                        	<h3 class="pl-10 fw-b zl_title">如何理财</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">注意事项</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">标的类型介绍</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                        </div>
+                        <div>
+                        	<h3 class="pl-10 fw-b zl_title">产品分类</h3>
+                            <ul class="zl_defin">
+                                <li>1.个人信用贷</li>
+                                <li>2.经营贷</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">如何借款</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">认证资料介绍</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">信用等级与信用额度</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">借款审核</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">借款成功、提现</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">还款</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">逾期还款</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                        </div>
+                        <div>
+                        	<h3 class="pl-10 fw-b zl_title">注册和登录</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">我的账户</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                            <h3 class="pl-10 fw-b zl_title">充值和提现</h3>
+                            <ul class="zl_defin">
+                                <li>1.</li>
+                                <li>2.</li>
+                                <li>3.</li>
+                            </ul>
+                        </div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

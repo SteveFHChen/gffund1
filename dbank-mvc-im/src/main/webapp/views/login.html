@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百贷网-后台管理系统</title>
+    <script type="text/javascript" src="../include.js" ></script>
+	<script type="text/javascript">
+	$(function() {
+		$('#submit').click(function() {
+			var form = document.forms[0];
+			var params = {
+				username : form.username.value,
+				password : form.password.value
+			};
+			WD.api.auth.login(params, function(data) {
+				if('success' == data.result) {
+					document.location.href = 'main.html';
+				}
+			});
+		});
+	});
+	</script>
+</head>
+
+<body>
+	<!--header start-->
+<div class="header h-65 clearfix">
+	<div class="w-195 h-65 fl-l">
+		<img src="../images/logo.png" alt="LOGO" class="ml-20 mt-15">
+	</div>
+</div>
+<!--header end-->
+<!--main start-->
+<div class="main">
+	<div align="center">
+		<form action='#' method='POST'>
+				<table class="listTable mt-50" cellpadding="0" cellspacing="0"
+					border="1" style="width: 300px; background: #eee; border: solid;">
+					<caption>
+						<img src="../images/table-list.png" /> 用户登录
+					</caption>
+					<tr style="border: 0px;line-height: 50px;height: 50px;">
+						<td align="right" width="100" style="padding-top:20px;">登陆名：</td>
+						<td align="left" style="padding-top:20px;"><input type='text' name='username' value=''></td>
+					</tr>
+					<tr style="border: 0px;line-height: 50px;height: 50px;">
+						<td align="right">密码：</td>
+						<td align="left"><input type='password' name='password' /></td>
+					</tr>
+					<tr style="border: 0px;line-height: 40px;height: 40px;">
+						<td></td>
+						<td align="right" style="padding-right:20px; padding-bottom:20px;"><input type="button" value="登录"
+							id="submit" class="subBtn round-3 h-30 lh-28 pl-30 pr-30"></td>
+					</tr>
+				</table>
+			</form>
+	</div>
+	<div class="left">
+		<ul class="leftNav mt-10 mb-10">
+			<!-- left menus -->
+		</ul>
+	</div>
+</div>
+<!--main end-->
+<!--footer start-->
+<div class="footer h-115">
+</div>
+<!--footer end-->
+</body>
+</html>

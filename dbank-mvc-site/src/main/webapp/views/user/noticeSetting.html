@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	WD.api.user.noticeSettingQuery(null,function(data){
+		$('#mail').attr('checked',data.mail);
+		$('#mobile').attr('checked',data.mobile);
+		$('#web').attr('checked',data.web);
+	});
+	
+	$('.subBtn').click(function() {
+		var params = {
+			mail : $('#mail').get(0).checked,
+			mobile : $('#mobile').get(0).checked,
+			web : $('#web').get(0).checked
+		};
+		WD.api.user.noticeSetting(params,function(data){
+			if(data.result == 'success'){
+				alert('设置成功！');
+			};
+		});
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+				<a href="userCenter.html">
+					<img src="../../images/lxy_01.png" alt="">
+					<span>信息总览</span>
+				</a>
+				<a href="myFinance.html">
+					<img src="../../images/lxy_02.png" alt="">
+					<span>我的投资</span>
+				</a>
+				<a href="myLoan.html">
+					<img src="../../images/lxy_03.png" alt="">
+					<span>我的借款</span>
+				</a>
+				<a href="myMoney.html">
+					<img src="../../images/lxy_04.png" alt="">
+					<span>我的资金账户</span>
+				</a>
+				<a href="account.html">
+					<img src="../../images/lxy_05.png" alt="">
+					<span> 安全与设置</span>
+				</a>
+				<a href="notice.html" class="active">
+					<img src="../../images/lxy_06a.png" alt="">
+					<span>消息通知</span>
+				</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="clearfix m-20">
+					<div class="fs-16 ml-20 mt-20 mb-10 fl-l">
+						通知设置选择
+					</div>
+				</div>
+				<div class="tabBox m-20">
+					<div class="tabContent m-20">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 lh-34">
+							<tbody>
+								<tr>
+									<td class="w-260" valign="top">
+										<h3>我是借入者</h3>
+										<ul>
+											<li class="bgc-gray95 pl-20">借款操作</li>
+											<li class="pl-20">有人向我的借款列表投标</li>
+											<li class="pl-20">我的借款列表流标</li>
+											<li class="pl-20">我的借款列表完成度超过过50%</li>
+										</ul>
+										<h3 class="mt-20">我是借出者</h3>
+										<ul>
+											<li class="bgc-gray95 pl-20">投标操作</li>
+											<li class="pl-20">我的投标成功</li>
+											<li class="pl-20">我的投标流标</li>
+											<li class="pl-20">我收到一笔还款</li>
+										</ul>
+									</td>
+									<td valign="top" class="pl-100">
+										<table class="w-60b">
+											<tr>
+												<td>电子邮件</td>
+												<td>手机短信</td>
+												<td>通知</td>
+											</tr>
+											<tr>
+												<td><input type="checkbox" id="mail" value="mail"/></td>
+												<td><input type="checkbox" id="mobile" value="mobile"/></td>
+												<td><input type="checkbox" id="web" value="web"/></td>
+											</tr>
+											<tr>
+												<td colspan="3" class="pt-40">
+													<input type="button" value="设置" class="subBtn round-3 pl-30 pr-30 h-30 lh-30 fs-14" id="subBtn">
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

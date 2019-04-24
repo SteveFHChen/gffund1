@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+	WD.api.user.notice(null,function(data){
+		var iListDataStr = '';
+		for( var i=0,l=data.length;i<l;i++){
+			var date = new Date(data[i].publishTime);
+			var dateStr = ''+date.getFullYear()+'-'+dateZeros((date.getMonth()+1))+'-'+dateZeros(date.getDate());
+			iListDataStr += '<tr><td align="left" valign="top">'
+				+dateStr
+				+'</td><td align="left" valign="top"><div class="cs-p noticeTitle">'
+				+data[i].title
+				+'</div><div class="c-999 dp-n noticeContent">'
+				+data[i].content
+				+'</div></td></tr>'
+		}
+		$('.iListData').html(iListDataStr);
+		$('.noticeTitle').click(function() {
+			$('.noticeContent').hide();
+			$(this).next().show();
+		});
+	});
+});
+function dateZeros(params){
+	return params<10 ? params = '0'+params : params;
+}
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+				<a href="userCenter.html">
+					<img src="../../images/lxy_01.png" alt="">
+					<span>信息总览</span>
+				</a>
+				<a href="myFinance.html">
+					<img src="../../images/lxy_02.png" alt="">
+					<span>我的投资</span>
+				</a>
+				<a href="myLoan.html">
+					<img src="../../images/lxy_03.png" alt="">
+					<span>我的借款</span>
+				</a>
+				<a href="myMoney.html">
+					<img src="../../images/lxy_04.png" alt="">
+					<span>我的资金账户</span>
+				</a>
+				<a href="account.html">
+					<img src="../../images/lxy_05.png" alt="">
+					<span> 安全与设置</span>
+				</a>
+				<a href="notice.html" class="active">
+					<img src="../../images/lxy_06a.png" alt="">
+					<span>消息通知</span>
+				</a>
+			</div>
+			<div class="part-right fl-r">
+				<div class="clearfix m-20">
+					<div class="fs-16 ml-20 mt-20 mb-10 fl-l">
+						通知列表
+					</div>
+					<a href="noticeSetting.html" class="fs-12 fl-r c-blue1 mt-10 mr-20">通知设置</a>
+				</div>
+				<div class="tabBox m-20">
+					<div class="tabContent m-20">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fs-14 tbLc">
+							<thead>
+								<tr>
+									<th scope="col" class="w-180" align="left">时间</th>
+									<th scope="col" align="left">标题</th>
+								</tr>
+							</thead>
+							<tbody class="iListData">
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

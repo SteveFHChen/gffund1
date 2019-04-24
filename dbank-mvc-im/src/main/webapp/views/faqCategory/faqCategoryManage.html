@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>95508理财系统-后台管理系统</title>
+	<script type="text/javascript" src="../../include.js" ></script>
+
+	<script type="text/javascript">
+		 $(function() {
+			loadFaqCategoryList();
+		 });
+ 		function loadFaqCategoryList(cateName) {
+			var pageNav = new WD.PageNav('#pageNav', {
+			callback : $.proxy(function(params) {
+				if(cateName) {
+					$.extend(params, {categoryName : cateName});
+				}
+				WD.api.faqCategory.queryListByPage(params, function(data) {
+					var tbody="";
+					$(data.content).each(function() {
+						tbody += "<tr class='gare_bg'>";
+						tbody += "<td>" + this.sequence + "</td>";
+						tbody += "<td>" + this.categoryName + "</td>";
+						tbody += "<td>" + this.createdDate　+"</td>";
+						tbody += "<td><a href='javascript:void(0)' onclick='updateFaqCategory(\""+ this.id +"\")'>修改</a>  &nbsp; ";
+						tbody += "<a href='javascript:void(0)' onclick='deleteFaqCategory(\""+ this.id + "\")'>删除</a></td></tr>";
+					});
+					$("#faqCateTbody").html(tbody);
+					pageNav.setParams(data);
+					});
+				}, this)
+			});
+			pageNav.first();
+		} 
+		
+ 		function queryFaqCategoryList() {
+ 			var cateName = $("#categoryName").val();
+ 			loadFaqCategoryList(cateName);
+ 		}
+		
+		function updateFaqCategory(faqCateId) {
+			$U.navigate('faqCategory/faqCategoryUpdate.html?id='+faqCateId);
+		}
+		
+		function createFaqCategory() {
+			$U.navigate('faqCategory/faqCategoryAdd.html');
+		}
+		
+		function deleteFaqCategory(faqCateId) {
+			if(!confirm("删除该分类将级联删除关联的内容，确定要删除？")) {
+				return;
+			}
+			WD.api.faqCategory.deteleFaqCategory({id : faqCateId}, {
+				success:function(data) {
+					alert("删除成功!");
+					queryFaqCategoryList();
+				}, error : function(data) {
+					alert(data);
+				}
+			});
+		} 
+		
+	</script>	
+</head>
+
+<body>
+	<div class="fs-16 ml-20 mt-20 mb-10">
+		帮助分类管理&nbsp;-&gt;&nbsp;分类列表
+	</div>
+	
+	<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+		<div class="fl-l ml-10">分类名称&nbsp;
+			<input id="categoryName" type="text" class="txt-small w-120">
+		</div>
+		<div class="fl-l ml-30">
+			<input onclick="queryFaqCategoryList()" id="searchBtn" type="button" value="查询" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">&nbsp;&nbsp;
+			<input onclick="createFaqCategory()" id="createFaqBtn" type="button" value="新增" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		</div>
+	</div>
+
+	<table class="listTable">
+		<thead>
+			<tr>
+				<td>序号</td>
+				<td>分类名称</td>
+				<td>最后修改时间</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<tbody id='faqCateTbody'></tbody>
+	</table>
+
+	<div class="page mt-30">
+		<div class="ui-page-outer">
+			<div class="ui-page">
+				<div id="pageNav"></div>
+			</div>
+		</div>
+	</div>
+</body>

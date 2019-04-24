@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>95508理财系统-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript">
+	/**页面数据初始化**/
+	 $(function() {
+		 	/** 下拉选择框初始化*/
+			queryFaqCatList();
+		 	/***表格数据初始化**/
+			queryFaqList();
+		});
+	 
+	 /**查询FAQ列表*/
+	function queryFaqList(){
+			var faqCategoryId = $('#faqCategoryId').val();
+			var question = $('#question').val();
+			var searchParams = {
+				faqCategoryId : faqCategoryId,
+				question : question
+			};
+			var pageNav = new WD.PageNav('#pageNav', {
+			callback : $.proxy(function(params) {
+				$.extend(params, searchParams);
+				WD.api.faq.queryListByPage(params, function(data) {
+					drawDataTable(data.content);
+					pageNav.setParams(data);
+					});
+				}, this)
+			});
+			pageNav.first();
+	}
+
+	/**组装数据 **/
+	function drawDataTable(data){
+			var tbody = "";
+			if (data) 
+			{
+				for(var i = 0; i < data.length; i++){
+					var result = data[i];
+					if(i%2 == 0){
+						tbody += "<tr class='gare_bg'><td><input type='radio' name ='faqid' value='"+result.id +"'></td>";
+					}
+					else{
+						tbody += "<tr><td><input type='radio' name ='faqid' value='"+result.id +"'></td>";
+					}
+					tbody += "<td>" + (i+1) + "</td>";
+					tbody += "<td>" + result.categoryName + "</td>";
+					tbody += "<td>" + result.question + "</td>";
+					tbody += "<td>" + result.creatDate + "</td>";
+					tbody += "<td><a href='javascript:void(0)' onclick='queryDetail("+result.id+")'>详情</a></td></tr>";
+				}
+				//console.info(tbody);
+				$("table > tbody").html(tbody);
+			}
+	}
+
+	/**
+	 * 查看详细
+	 * 
+	 * @param id
+	 */
+	function queryDetail(faqId) {
+		//alert('faq/faqDetail.html?id='+faqId);
+		$U.navigate('faq/faqDetail.html?id='+faqId);
+	}
+	/**
+	*创建FAQ
+	*/
+	function createFaq() {
+		$U.navigate('faq/faqCreate.html');
+	}
+	
+	/**
+	*修改FAQ
+	*/
+	function updateFaq(faqId) {
+		var faqid = $('input[name="faqid"]:checked').val();
+		$U.navigate('faq/faqUpdate.html?id='+faqid);
+	}
+	/**
+	*删除FAQ
+	*/
+	function deleteFaq(faqId) {
+		//alert("帮助分类删除，待开发！")
+		var faqid = $('input[name="faqid"]:checked').val();
+		$U.navigate('faq/faqDelete.html?id='+faqid);
+	}
+	/**FaqCategory下拉选择框*/
+	function queryFaqCatList() {
+		WD.api.faqCategory.getFaqCategoryList(null, function(data) {
+			var tbody="<option value=''>全部</option>";
+			for(var i = 0; i < data.length; i++){
+				var result = data[i];
+				tbody += "<option value='"+ data[i].id+"'>" + data[i].categoryName + "</option>";
+			}
+			$("#faqCategoryId").html(tbody);
+		});
+	} 
+	
+	</script>	
+</head>
+
+<body>
+	<div class="fs-16 ml-20 mt-20 mb-10">
+帮助维护&nbsp;-&gt;&nbsp;内容维护
+</div>
+<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+	
+	<div class="fl-l ml-15">分类名称&nbsp;
+		<select id="faqCategoryId" class='sel-small'>
+			<option value="">全部</option>
+			
+		</select>
+	</div>
+	<div class="fl-l ml-10">问题关键字&nbsp;
+		<input id="question" type="text" class="txt-small w-120">
+	</div>
+	
+	<div class="fl-l ml-30">
+		<input onclick="queryFaqList()" id="searchBtn" type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input onclick="createFaq()" id="createBtn" type="button" value="新增" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+	</div>
+</div>
+
+	<table class="listTable">
+		<caption align="left">
+			<img src="../../images/table-list.png"/> 查询结果
+		</caption>
+		<thead>
+			<tr>
+				<td>选择</td>
+				<td>序号</td>
+				<td>分类名称</td>
+				<td>问题</td>
+				<td>创建日期</td>
+				<td>操作</td>
+			</tr>
+		</thead>
+		<tbody id='faqTbody'></tbody>
+	</table>
+	
+	<div class="page mt-30">
+		<div class="ui-page-outer">
+			<div class="ui-page">
+				<div id="pageNav"></div>
+			</div>
+		</div>
+	</div>
+	<div align =center ><br/><br/>
+		<div class="fl-l ml-30" >
+			<input onclick="updateFaq()" id="searchBtn" type="button" value="修改" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<input onclick="deleteFaq()" id="searchBtn" type="button" value="删除" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+		</div>
+	</div>
+</body>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>95508理财系统-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript">
+	/**页面数据初始化**/
+	 $(function() {
+		 	/** 下拉选择框初始化*/
+			queryFaqCatList();
+		});
+	/**FaqCategory下拉选择框*/
+	function queryFaqCatList() {
+		WD.api.faqCategory.getFaqCategoryList(null, function(data) {
+			var tbody="";
+			for(var i = 0; i < data.length; i++){
+				var result = data[i];
+				tbody += "<option value='"+ data[i].id+"'>" + data[i].categoryName + "</option>";
+			}
+			$("#faqCategoryId").html(tbody);
+		});
+	} 
+	
+	/**
+	 * 限制textarea输入字数
+	 * @param textArea，输入文字内容的文本域对象
+	 * @param total，最大输入字数
+	 * @param message，输入字数超过最大限制的提示消息
+	 */
+	
+	function textareaMaxProc(textArea,total, message)
+	{
+	  var max;
+	  max=total;
+	  if( $(textArea).val().length > max)
+	  {
+		$(textArea).val($(textArea).val().substring(0,max));
+	    alert(message);
+	  }
+	}
+	
+	function addFaq() {
+		var faqCategoryId = $('#faqCategoryId').val();
+		var question = $('#question').val();
+		var answer = $('#answer').val();
+		
+		var params = {
+				faqCategoryId : faqCategoryId,
+				question:question,
+				answer:answer
+				};
+		WD.api.faq.createFaq(params, function(data) {
+			alert("添加成功!");
+			//document.location.href = '/dbank-mvc-im/views/faqCategory/faqCategoryManage.html';
+			$U.navigate('faq/faq.html');
+		});
+	}
+	</script>	
+</head>
+
+<body>
+	<div align="left">位置：系统管理 > 帮助管理 > 新增</div>
+	<div align="center">
+		<table class="editTable">
+			<tr>
+				<td align="right">分类名称：</td>
+				<td align="left">
+					<select id="faqCategoryId" class='sel-small'>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">问题：</td>
+				<td align="left">
+					<input name ="question" id = "question" maxlength ="80" size =50>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">回答：</td>
+				<td align="left">
+					<textarea name ="answer" id ="answer" cols="50"  rows="4" onchange="javascript:textareaMaxProc('#answer',240, '输入字数不能超过120个汉字或240个数字、字母！')"  >
+						
+					</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input onclick="javascript:history.back(-1);" type="button" value="返回" id="backBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+					<input onclick="addFaq()" type="button" value="添加" id="addFaqBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>

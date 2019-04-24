@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百贷网-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript" src="../../scripts/forPage/certificationCreditCorpor.js"></script>
+</head>
+
+<body>
+	<div align="left">位置：贷前管理 > 认证授信 > 基本信息认证</div>
+	<div class="ml-20 mr-20 mb-30">
+		<div>
+			<span id="menuItem"></span><span id="crumbs"></span>
+		</div>
+		<div class="tabTitle clearfix">
+			<h3 class="active" id="basicInformation">
+				<span>法人信息</span>
+			</h3>
+			<h3 id="theBankCredit">
+				<span>企业基本信息</span>
+			</h3>
+			<h3 id="familyInformation">
+				<span>企业财务信息</span>
+			</h3>
+			<h3 id="creditextension">
+				<span>授信</span>
+			</h3>
+			<div align="right"><input type="button" value="返回" id="backBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30"></div>
+		</div>
+		<!-- 法人信息 -->
+		<div id="basicInformation-content" class="tabContent mt-20">
+			<div class="basicInformation">
+				<div class="content">
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td align="right">法人姓名：</td>
+							<td align="left" width="220"><span id="realname"></span></td>
+							<td align="right">性别：</td>
+							<td align="left"><span id="sex"></span></td>
+						</tr>
+						<tr>
+							<td align="right">证件类型：</td>
+							<td align="left"><span id="certType"></span></td>
+							<td align="right">身份证号：</td>
+							<td align="left"><span id="certNo"></span></td>
+						</tr>
+						<tr>
+							<td align="right">联系电话：</td>
+							<td align="left"><span id="phonenum"></span></td>
+							<td align="right">家庭地址：</td>
+							<td align="left"><span id="liveAddr"></span></td>
+						</tr>
+						<tr>
+							<td align="right">教育程度：</td>
+							<td align="left" colspan="3"><span id="topEdu"></span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- 法人信息 end -->
+		<!-- 企业基本信息 -->
+		<div id="theBankCredit-content" class="tabContent mt-20"
+			style="display: none">
+			<div class="basicInformation">
+				<div class="content">
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td align="right">企业名称：</td>
+							<td align="left" width="220"><span id="name"></span></td>
+							<td align="right">营业执照：</td>
+							<td align="left"><a href="#">下载</a></td>
+						</tr>
+						<tr>
+							<td align="right">注册资本：</td>
+							<td align="left" width="220"><span id="regMoney"></span></td>
+							<td align="right">组织机构代码证：</td>
+							<td align="left"><a href="#">下载</a></td>
+						</tr>
+						<tr>
+							<td align="right">所属行业：</td>
+							<td align="left" width="220"><span id="industry"></span></td>
+							<td align="right">税务登记证：</td>
+							<td align="left"><a href="#">下载</a></td>
+						</tr>
+						<tr>
+							<td align="right">主营业务：</td>
+							<td align="left" width="220"><span id="mainBusi"></span></td>
+							<td align="right"></td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="right">经营年限：</td>
+							<td align="left" width="220"><span id="runYears"></span></td>
+							<td align="right"></td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="right">注册地址：</td>
+							<td align="left" width="220"><span id="regAddress"></span></td>
+							<td align="right"></td>
+							<td align="left"></td>
+						</tr>
+						<tr>
+							<td align="right">经营场所：</td>
+							<td align="left" width="220"><span id="runAddress"></span></td>
+							<td align="right"></td>
+							<td align="left"></td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+		<!-- 企业基本信息 end -->
+		<!-- 企业财务信息 -->
+		<div id="familyInformation-content" class="tabContent mt-20" style="display: none">
+			<div class="basicInformation">
+				<div class="content">
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td align="right">总资产：</td>
+							<td align="left" width="220"><span id="totalAssets"></span></td>
+							<td align="right">总负债：</td>
+							<td align="left"><span id="totalDebt"></span></td>
+						</tr>
+						<tr>
+							<td align="right">销售收入（上一财务年）：</td>
+							<td align="left" width="220"><span id="lastYearSell"></span></td>
+							<td align="right">毛利润（上一财务年）：</td>
+							<td align="left"><span id="lastYearProfit"></span></td>
+						</tr>
+						<tr>
+							<td align="right">财务费用（上一财务年）：</td>
+							<td align="left" width="220"><span id="lastYearFinanCost"></span></td>
+							<td align="right">货币基金：</td>
+							<td align="left"><span id="moneyFund"></span></td>
+						</tr>
+						<tr>
+							<td align="right">企业财务报表：</td>
+							<td align="left" width="220"><a href="#">下载</a></td>
+							<td align="right">状态：</td>
+							<td align="left">
+								<span id="finaReportFileAuthStatus"></span>
+								<span class="ml-20" id="frfasContent" style="display:none;">
+									<input type="button" value="认证通过" id="certSuccessBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+									<input type="button" value="格式不对" id="formatErrorBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+									<input type="button" value="虚假资料" id="falseInfoBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+								</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- 企业财务信息 end -->
+		<!-- 授信 -->
+		<div id="creditextension-content" class="tabContent mt-20" style="display: none">
+			<div class="basicInformation">
+				<div class="content">
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td width="23%">
+								<span class="w-80 ml-5">借款人： </span> 
+								<span id="loanPerson"></span>
+							</td>
+							<td width="23%">
+								<span class="w-80 ml-5">用户名： </span> 
+								<span id="username2"></span>
+							</td>
+							<td width="25%">
+								<span class="w-80 ml-5"> 借款标题： </span> 
+								<span id="title"></span>
+							</td>
+							<td width="29%">
+								<span class="w-80 ml-5"> 标的类型： </span> 
+								<span id="type"></span>
+							</td>
+						</tr>
+						<tr>
+							<td width="23%">
+								<span class="w-80 ml-5">借款金额： </span> 
+								￥<span id="amount"></span>
+							</td>
+							<td width="23%">
+								<span class="w-80 ml-5">利率： </span> 
+								<span id="interest"></span>
+							</td>
+							<td width="25%">
+								<span class="w-80 ml-5">期限： </span> 
+								<span id="period"></span>
+							</td>
+							<td width="29%">
+								<span class="w-80 ml-5">还款方式： </span> 
+								<span id="repayMode"></span>
+							</td>
+						</tr>
+						<tr>
+							<td width="23%">
+								<span class="w-80 ml-5">借款用途： </span> 
+								<span id="usage"></span>
+							</td>
+							<td width="23%">
+								<span class="w-80 ml-5">筹标期限： </span> 
+								<span id="raisePeriod"></span>
+							</td>
+							<td width="25%">
+								<span class="w-80 ml-5"> 借款状态： </span> 
+								<span id="status"></span>
+							</td>
+							<td width="29%">
+								<span class="w-80 ml-5">
+									<img src="../../images/lxy_01.png">
+								</span> 
+								<span><a href="#">资料认证表</a></span>
+							</td>
+						</tr>
+					</table>
+					<div class="h-1 ml-20 mr-20 bgc-gray90"></div>
+
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td width="10%">
+								<span class="w-115 ml-5">是否担保借款： </span>
+							</td>
+							<td width="90%">
+								<span class="w-115 ml-5"> 
+									<input type="radio" value="true" name="isEnsure"> 是
+									&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+									<input type="radio" value="false" name="isEnsure"> 否
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="10%"><span class="w-115 ml-5"> 担保机构： </span></td>
+							<td width="90%">
+								<span class="w-115 ml-5"> 
+									<select>
+										<option>无</option>
+									</select>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="10%"><span class="w-115 ml-5"> 担保时间： </span></td>
+							<td width="90%">
+								<span class="w-115 ml-5"> 
+									<input type="text" value="2014-05-01"></input>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="10%"><span class="w-115 ml-5"> 授信额： </span></td>
+							<td width="90%">
+								<span class="w-115 ml-5"> 
+									<input type="text" value="￥3000.00"></input>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="10%"><span class="w-115 ml-5"> 授信意见： </span></td>
+							<td width="90%">
+								<span class="w-115 ml-5"> 
+									<textarea rows="5" cols="75"></textarea>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" colspan="2">
+								<input type="button" value="确定" id="creditBtn" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+							</td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

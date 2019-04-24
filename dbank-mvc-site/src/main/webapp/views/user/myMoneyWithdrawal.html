@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>百贷网</title>
+<script type="text/javascript" src="../../include.js"></script>
+<script>
+$(function(){
+	//nav栏点亮
+	$('.nav .headList').eq(4).find('.typeUser').find('a').eq(0).addClass('active');
+})
+</script>
+</head>
+
+<body>
+<div class="wrap">
+	<!-- header start -->
+	<div class="header">
+	</div>
+	<!-- header end -->
+	<!-- middle start -->
+	<div class="middle">
+		<div class="box w-960 m-0a mt-20 mb-20 clearfix">
+			<div class="part-left fl-l">
+					<a href="userCenter.html">
+						<img src="../../images/lxy_01.png" alt="">
+						<span>信息总览</span>
+					</a>
+					<a href="myFinance.html">
+						<img src="../../images/lxy_02.png" alt="">
+						<span>我的投资</span>
+					</a>
+					<a href="myLoan.html">
+						<img src="../../images/lxy_03.png" alt="">
+						<span>我的借款</span>
+					</a>
+					<a href="myMoney.html" class="active">
+						<img src="../../images/lxy_04a.png" alt="">
+						<span>我的资金账户</span>
+					</a>
+					<a href="account.html">
+						<img src="../../images/lxy_05.png" alt="">
+						<span> 安全与设置</span>
+					</a>
+					<a href="notice.html">
+						<img src="../../images/lxy_06.png" alt="">
+						<span>消息通知</span>
+					</a>
+			</div>
+			<div class="part-right fl-r">
+				<table width="70%" border="0" cellspacing="0" cellpadding="0" class="mt-35 mb-65 m-0a lh-40">
+					<tr>
+						<td colspan="2" class="fs-18 pt-30 pb-20">银行卡信息</td>
+					</tr>
+					
+					<tr>
+						<td align="right" class="pr-10">持卡人：</td>
+						<td>张三</td>
+					</tr>
+					<tr>
+						<td align="right" class="w-150 pr-10">
+							<span class="c-redLight">*&nbsp;</span>选择银行：</td>
+						<td><select class="sel-small" style="width:182px">
+							<option value="请选择">请选择</option>
+							<option value="中国工商银行">中国工商银行</option>
+							<option value="中国农业银行">中国农业银行</option>
+							<option value="民生银行">民生银行</option>
+							<option value="招商银行">招商银行</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td align="right" class="w-150 pr-10">
+							<span class="c-redLight">*&nbsp;</span>
+							开户行所在地：</td>
+						<td><input type="text" class="txt-small w-170"></td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">
+							<span class="c-redLight">*&nbsp;</span>
+							开户行：</td>
+						<td><input type="text" class="txt-small w-170">
+							<input type="submit" value="搜索" class="blueBtn1 h-30 lh-28 pl-15 pr-15 round-3 fs-14 ml-5">
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">
+							<span class="c-redLight">*&nbsp;</span>
+							银行卡号：</td>
+						<td><input type="text" class="txt-small w-170">
+							<span class="pl-5">请输入12-19位银行借记卡卡号</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">
+							<span class="c-redLight">*&nbsp;</span>
+							确认卡号：</td>
+						<td><input type="text" class="txt-small w-170"></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="fs-18 pt-30 pb-20">填写提现金额</td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">可用金额：</td>
+						<td>张三</td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">
+							提现金额：</td>
+						<td><input type="text" class="txt-small w-170"></td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">提现费用：</td>
+						<td>101.00元<a href="javascript:;" class="c-blue1 td-unl ml-15">第三方收取提现手续费标准</a></td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">预计到账时间：</td>
+						<td>2013年12月12日</td>
+					</tr>
+					<tr>
+						<td align="right" class="pr-10">
+							交易密码：</td>
+						<td><input type="text" class="txt-small w-170"></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+							<input type="button" value="提现申请" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14">
+							<a href="myMoneyFindPwd.html" class="c-blue1 td-unl ml-15">忘记登录密码</a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" class="pt-30 lh-26 c-999">
+						<span class="fs-14">温馨提示</span><br>
+						<span class="fs-12">
+1.请确保您输入的提现金额，以及银行帐号信息准确无误。<br>
+2.如果您填写的提现信息不正确可能会导致提现失败，由此产生的提现费用将不予返还。<br> 
+3. 在双休日和法定节假日期间，用户可以申请提现，平台会在下一个工作日进行处理。<br>
+由此造成的不便，请多多谅解！<br>
+4. 平台禁止洗钱、信用卡套现、虚假交易等行为，一经发现并确认，将终止该账户的使用。
+						</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- middle end -->
+	<!-- footer start -->
+	<div class="footer">
+	</div>
+	<!-- footer end -->
+</div>
+</body>
+</html>

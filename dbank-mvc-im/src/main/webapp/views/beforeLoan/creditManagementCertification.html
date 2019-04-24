@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百贷网-后台管理系统</title>
+    <script type="text/javascript" src="../../include.js" ></script>
+	<script type="text/javascript" src="../../scripts/forPage/creditManagementCertification.js" ></script>
+</head>
+<body>
+	<div align="left">位置：贷前管理 > 认证授信 > <span id="navPath">待认证授信借款</span></div>
+	<div class="ml-20 mr-20 mb-30">
+		<div>
+			<span id="menuItem"></span><span id="crumbs"></span>
+		</div>
+		<div class="tabTitle clearfix">
+			<h3 class="active" id="toBeCertied">
+				<span>待认证授信借款</span>
+			</h3>
+			<h3 id="agree">
+				<span>复审通过借款</span>
+			</h3>
+			<h3 id="disagree">
+				<span>复审未通过借款</span>
+			</h3>
+		</div>
+		<!-- 待认证授信借款 -->
+		<div id="toBeCertied-content" class="tabContent mt-20">
+			<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+				<div class="fl-l mr-30">
+					借款人： <input type="text" id="toBeCertied_loanPerson" placeholder="请输入真实姓名" class="txt-small w-125">
+				</div>
+				<div class="fl-l mr-30">
+					标的类型： <select id="toBeCertied_bidType" class="bidType"></select>
+				</div>
+				<div class="fl-l mr-30">
+					<input type="checkbox" id="toBeCertied_isGuarantee">担保借款
+				</div>
+				<div class="fl-r mr-20">
+					<input type="button" id="toBeCertied_searchBtn" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</div>
+			</div>
+			<table class="listTable">
+				<caption align="left">
+					<img src="../../images/table-list.png"/> 待认证授信借款列表
+				</caption>
+				<thead>
+					<tr>
+						<td>借款人</td>
+						<td>标的类型</td>
+						<td>借款金额</td>
+						<td>年利率</td>
+						<td>借款期限</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<div class="page mt-30">
+				<div class="ui-page-outer">
+					<div class="ui-page">
+						<div id="toBeCertied_pageNav"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 待认证授信借款 end -->
+		<!-- 复审通过借款 -->
+		<div id="agree-content" class="tabContent mt-20" style="display: none">
+			<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+				<div class="fl-l mr-30">
+					借款人： <input type="text" id="agree_loanPerson" placeholder="请输入真实姓名" class="txt-small w-125">
+				</div>
+				<div class="fl-l mr-30">
+					标的类型： <select id="agree_bidType" class="bidType"></select>
+				</div>
+				<div class="fl-l mr-30">
+					<input type="checkbox" id="agree_isGuarantee">担保借款
+				</div>
+				<div class="fl-r mr-20">
+					<input type="button" id="agree_searchBtn" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</div>
+			</div>
+			<table class="listTable">
+				<caption align="left">
+					<img src="../../images/table-list.png"/> 复审通过借款列表
+				</caption>
+				<thead>
+					<tr>
+						<td>借款人</td>
+						<td>标的类型</td>
+						<td>借款金额</td>
+						<td>年利率</td>
+						<td>借款期限</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<div class="page mt-30">
+				<div class="ui-page-outer">
+					<div class="ui-page">
+						<div id="agree_pageNav"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 复审通过借款 end -->
+		<!-- 复审未通过借款 -->
+		<div id="disagree-content" class="tabContent mt-20" style="display: none">
+			<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+				<div class="fl-l mr-30">
+					借款人： <input type="text" id="disagree_loanPerson" placeholder="请输入真实姓名" class="txt-small w-125">
+				</div>
+				<div class="fl-l mr-30">
+					标的类型： <select id="disagree_bidType" class="bidType"></select>
+				</div>
+				<div class="fl-l mr-30">
+					<input type="checkbox" id="disagree_isGuarantee">担保借款
+				</div>
+				<div class="fl-r mr-20">
+					<input type="button" id="disagree_searchBtn" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</div>
+			</div>
+			<table class="listTable">
+				<caption align="left">
+					<img src="../../images/table-list.png"/> 复审未通过借款列表
+				</caption>
+				<thead>
+					<tr>
+						<td>借款人</td>
+						<td>标的类型</td>
+						<td>借款金额</td>
+						<td>年利率</td>
+						<td>借款期限</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<div class="page mt-30">
+				<div class="ui-page-outer">
+					<div class="ui-page">
+						<div id="disagree_pageNav"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 复审未通过借款 end -->
+	</div>
+</body>

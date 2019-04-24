@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ycnet.dbank</groupId>
+        <artifactId>dbank</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../dbank</relativePath>
+    </parent>
+  <artifactId>dbank-mvc-common</artifactId>
+  <dependencies>
+      <dependency>
+          <groupId>com.ycnet.mirage</groupId>
+          <artifactId>mirage-mvc</artifactId>
+          <version>1.0.0.RELEASE</version>
+      </dependency>
+      <dependency>
+          <groupId>commons-codec</groupId>
+          <artifactId>commons-codec</artifactId>
+          <version>1.9</version>
+      </dependency>
+      <dependency>
+          <groupId>com.ycnet.dbank</groupId>
+          <artifactId>dbank-core</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.3.1</version>
+      </dependency>
+
+      <!--&lt;!&ndash; cas &ndash;&gt;-->
+      <!--<dependency>-->
+          <!--<groupId>org.jasig.cas.client</groupId>-->
+          <!--<artifactId>cas-client</artifactId>-->
+          <!--<version>3.3.1</version>-->
+      <!--</dependency>-->
+      <!--<dependency>-->
+          <!--<groupId>org.jasig.cas.client</groupId>-->
+          <!--<artifactId>cas-client-core</artifactId>-->
+          <!--<version>3.3.1</version>-->
+      <!--</dependency>-->
+
+      <!--<dependency>-->
+          <!--<groupId>org.springframework.security</groupId>-->
+          <!--<artifactId>spring-security-cas</artifactId>-->
+          <!--<version>3.2.3.RELEASE</version>-->
+      <!--</dependency>-->
+
+  </dependencies>
+  <build>
+    <finalName>dbank-mvc</finalName>
+  </build>
+</project>

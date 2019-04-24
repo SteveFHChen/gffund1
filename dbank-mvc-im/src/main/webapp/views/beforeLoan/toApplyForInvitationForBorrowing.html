@@ -1,0 +1,189 @@
+<script type="text/javascript" src="views/beforeLoan/toApplyForInvitationForBorrowing.js"></script>
+		<div ><span id="menuItem" ></span><span id ="crumbs" ></span></div>
+					<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+						<div class="tabTitle clearfix">
+							<h3 class="active" id="dairenzheng"  >
+								<span>待申请发标借款</span>
+							</h3>
+							<h3 id="agree"  >
+								<span>发布成功借款</span>
+							</h3>
+							<h3 id="disagree"  >
+								<span>撤销借款</span>
+							</h3>
+						</div>
+						<div id="dairenzheng-content" class="tabContent mt-20"  >
+							<!-- 回收中 -->
+							<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+								<div class="fl-l mr-30">借款人&nbsp;
+									<input type="text" placeholder="请输入真实姓名" class="txt-small w-125">
+								</div>
+								<div class="fl-l mr-30" >标的类型&nbsp;
+									<select><option>不限</option></select>
+								</div>
+								<div class="fl-l mr-30">
+								<input type="checkbox">担保借款
+								</div>
+								<div class="fl-r mr-20">
+									<input type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+								</div>
+							</div>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0"  	class="fs-14 tbLc">
+								<tr class="head">
+									<th scope="col" align="left" >借款人</th>
+									<th scope="col" align="left">标的类型</th>
+									<th scope="col" align="left">借款金额</th>
+									<th scope="col" align="left">年利率</th>
+									<th scope="col" align="left">借款期限</th>
+									<th scope="col" align="left"></th>
+									<th scope="col" align="left"></th>
+									<th scope="col" align="left"></th>
+								</tr>
+								<tr>
+									<td align="left">张三丰</td>
+									<td align="left">个人信用贷</td>
+									<td align="left">10,000</td>
+									<td align="left">10%</td>
+									<td align="left">30天</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14" onclick="$U.loadPage('beforeLoan/toApplyForInvitationForBorrowingPerDetails.html');"></td>
+									<td align="left"><input type="button" value="提交" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"  onclick="$U.loadPage('beforeLoan/toApplyForInvitationForBorrowingSubmit.html');"></td>
+									<td align="left"><input type="button" value="撤销" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"></td>
+								</tr>
+								<tr>
+									<td align="left">北京乐满地有限公司</td>
+									<td align="left">经营贷</td>
+									<td align="left">10%</td>
+									<td align="left">50,000元</td>
+									<td align="left">3个月</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14" onclick="$U.loadPage('beforeLoan/toApplyForInvitationForBorrowingCorDetails.html');"></td>
+									<td align="left"><input type="button" value="提交" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14" onclick="$U.loadPage('beforeLoan/toApplyForInvitationForBorrowingSubmit.html');"></td>
+									<td align="left"><input type="button" value="撤销" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"></td>
+								</tr>
+								<tr>
+									<td align="left">张三丰</td>
+									<td align="left">个人信用贷</td>
+									<td align="left">10,000</td>
+									<td align="left">10%</td>
+									<td align="left">30天</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"></td>
+									<td align="left"><input type="button" value="提交" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"></td>
+									<td align="left"><input type="button" value="撤销" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"></td>
+								</tr>
+							</table>
+						</div>
+					
+<!-- 					end 待认证授信借款 -->
+
+						<div id="agree-content" class="tabContent mt-20"  style="display: none">
+							<!-- 回收中 -->
+							<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+								<div class="fl-l mr-30">借款人&nbsp;
+									<input type="text" placeholder="请输入真实姓名" class="txt-small w-125">
+								</div>
+								<div class="fl-l mr-30" >标的类型&nbsp;
+									<select><option>不限</option></select>
+								</div>
+								<div class="fl-l mr-30">
+								<input type="checkbox">担保借款
+								</div>
+								<div class="fl-r mr-20">
+									<input type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+								</div>
+							</div>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0"  	class="fs-14 tbLc">
+								<tr class="head">
+									<th scope="col" align="left" >借款人</th>
+									<th scope="col" align="left">标的类型</th>
+									<th scope="col" align="left">借款金额</th>
+									<th scope="col" align="left">年利率</th>
+									<th scope="col" align="left">借款期限</th>
+									<th scope="col" align="left"></th>
+								</tr>
+								<tr>
+									<td align="left">李三丰</td>
+									<td align="left">个人信用贷</td>
+									<td align="left">10,000</td>
+									<td align="left">10%</td>
+									<td align="left">30天</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"
+									onclick="$U.loadPage('beforeLoan/theResultsOfAuditReleased.html');"></td>
+								</tr>
+								<tr>
+									<td align="left">北京乐满地有限公司</td>
+									<td align="left">经营贷</td>
+									<td align="left">10%</td>
+									<td align="left">50,000元</td>
+									<td align="left">3个月</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"
+									onclick="$U.loadPage('beforeLoan/theResultsOfAuditReleased.html');"></td>
+								</tr>
+																<tr>
+									<td align="left">张三丰</td>
+									<td align="left">个人信用贷</td>
+									<td align="left">10,000</td>
+									<td align="left">10%</td>
+									<td align="left">30天</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"
+									onclick="$U.loadPage('beforeLoan/theResultsOfAuditReleased.html');"></td>
+								</tr>
+							</table>
+						</div>
+						
+						<!-- 					end复审通过 -->
+
+						<div id="agree-content" class="tabContent mt-20" style="display: none">
+							<!-- 回收中 -->
+							<div class="searchBox ml-20 mt-20 mb-30 clearfix">
+								<div class="fl-l mr-30">借款人&nbsp;
+									<input type="text" placeholder="请输入真实姓名" class="txt-small w-125">
+								</div>
+								<div class="fl-l mr-30" >标的类型&nbsp;
+									<select><option>不限</option></select>
+								</div>
+								<div class="fl-l mr-30">
+								<input type="checkbox">担保借款
+								</div>
+								<div class="fl-r mr-20">
+									<input type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+								</div>
+							</div>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0"  	class="fs-14 tbLc">
+								<tr class="head">
+									<th scope="col" align="left" >借款人</th>
+									<th scope="col" align="left">标的类型</th>
+									<th scope="col" align="left">借款金额</th>
+									<th scope="col" align="left">年利率</th>
+									<th scope="col" align="left">借款期限</th>
+									<th scope="col" align="left"></th>
+								</tr>
+								<tr>
+									<td align="left">王三丰</td>
+									<td align="left">个人信用贷</td>
+									<td align="left">10,000</td>
+									<td align="left">10%</td>
+									<td align="left">30天</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"
+									onclick="$U.loadPage('beforeLoan/theResultsOfAuditReleased.html');"></td>
+								</tr>
+								<tr>
+									<td align="left">北京乐满地有限公司</td>
+									<td align="left">经营贷</td>
+									<td align="left">10%</td>
+									<td align="left">50,000元</td>
+									<td align="left">3个月</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"
+									onclick="$U.loadPage('beforeLoan/theResultsOfAuditReleased.html');"></td>
+								</tr>
+																<tr>
+									<td align="left">张三丰</td>
+									<td align="left">个人信用贷</td>
+									<td align="left">10,000</td>
+									<td align="left">10%</td>
+									<td align="left">30天</td>
+									<td align="left"><input type="button" value="查看" class="subBtn round-3 h-30 lh-28 pl-30 pr-30 fs-14"
+									onclick="$U.loadPage('beforeLoan/theResultsOfAuditReleased.html');"></td>
+								</tr>
+							</table>
+						</div>
+						<!-- 					end复审未通过 -->
+					</div>

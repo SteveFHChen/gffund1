@@ -1,0 +1,122 @@
+<script type="text/javascript"
+	src="../scripts/forPage/borrowReportList.js"></script>
+<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+	<div class="tabTitle clearfix">
+		<h3 class="active"><span>借款统计</span></h3>
+		<h3><span>借款查询</span></h3>
+	</div>
+	<div class="tabContent mt-20">
+		<div>
+			<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+				<div class="fl-l ml-10">统计时间&nbsp;
+					<select class='sel-small'>
+						<option value=''></option>
+					</select>年
+					<select class='sel-small'>
+						<option value=''></option>
+					</select>月
+					-
+					<select class='sel-small'>
+						<option value=''></option>
+					</select>年
+					<select class='sel-small'>
+						<option value=''></option>
+					</select>月
+				</div>
+			</div>
+			<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+				<div class="fl-l ml-15">担保状态&nbsp;
+					<select class='sel-small'>
+						<option value=''>全部</option>
+						<option value=''>担保借款</option>
+						<option value=''>非担保借款</option>
+					</select>
+				</div>
+				<div class="fl-l ml-15">费用类型&nbsp;
+					<select class='sel-small'>
+						<option value=''>全部</option>
+						<option value=''>经营贷</option>
+						<option value=''>个人信用贷</option>
+					</select>
+				</div>
+				<div class="fl-l ml-30">
+					<input id='queryTotal' type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</div>
+			</div>
+			<div class="pt-15 pb-15 pl-20 pr-20">
+				<table>
+					<tr>
+						<td>借款总笔数：500笔（当月借款成功的笔数）</td>
+						<td>占申请数的比例：60%</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>借款类型——个人信用贷：300笔         经营贷： 200笔</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>担保状态——担保借款：   200笔     非担保借款：300笔</td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	
+		<div class='dp-n'>
+			<div class="ml-20 mr-20 clearfix" style="margin-top: 10px">
+				<div class="w-225 fl-l" style="width: 100%; padding-bottom: 10px">
+					<span style="font-weight: bold; font-size: 16px">查询统计  -> 借款查询</span><br>
+				</div>
+				<div>
+					<span style="margin-left: 30px; margin-bottom: 10px">借款人&nbsp;&nbsp;<input
+						type="text" value="请输入真实姓名" style="color: #CCC" /></span>
+				</div>
+				<div>
+					<span style="margin-left: 20px">标的类型&nbsp;<select
+						style="width: 140px;"><option selected="selected">不限</option>
+							<option>个人信用贷</option>
+							<option>经营贷</option></select></span> <span style="margin-left: 50px">借款状态&nbsp;<select
+						style="width: 140px;"><option selected="selected">不限</option>
+							<option>投标中</option>
+							<option>还款中</option>
+							</select></span> <span style="margin-left: 50px"><input
+						type="checkbox" />担保借款</span> <span style="margin-left: 40px"><a
+						id="queryLoan" class="blueBtn round-2 h-30 lh-30 pl-15 pr-15 mr-3">搜索</a></span>
+			
+				</div>
+			</div>
+			<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+				<div class="tabContent mt-20">
+					<table class="listTable">
+						<caption>
+							<div class="ta-l">
+								<img src="../images/table-list.png" /> 借款列表
+							</div>
+						</caption>
+						<thead>
+							<tr>
+								<td style="width: 20%">借款人</td>
+								<td style="width: 15%">标的类型</td>
+								<td style="width: 15%">借款金额</td>
+								<td style="width: 15%">年利率</td>
+								<td style="width: 10%">借款期限</td>
+								<td style="width: 10%">借款状态</td>
+								<td style="width: 15%">操作</td>
+							</tr>
+						</thead>
+						<tbody>
+			
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

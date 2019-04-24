@@ -1,0 +1,89 @@
+<script type="text/javascript" src="../scripts/forPage/platFeeQuery.js" ></script>
+<div class="tabBox ml-20 mr-20 mb-30 mt-20">
+	<div class="tabTitle clearfix">
+		<h3 class="active"><span>平台费用查询</span></h3>
+		<h3><span>平台费用统计</span></h3>
+	</div>
+	<div class="tabContent mt-20">
+		<div>
+			<div class="fs-16 ml-20 mt-20 mb-10">
+			查询统计&nbsp;-&gt;&nbsp;收费信息&nbsp;-&gt;&nbsp;平台费用&nbsp;-&gt;&nbsp;平台费用记录查询
+			</div>
+			<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+				<div class="fl-l ml-10">收取时间&nbsp;
+					<input type="text" class="txt-small w-120">
+					-
+					<input type="text" class="txt-small w-120">
+				</div>
+				<div class="fl-l ml-15">费用类型&nbsp;
+					<select class='sel-small'>
+						<option value=''>全部</option>
+						<option value=''>借款服务费</option>
+						<option value=''>投资服务费</option>
+						<option value=''>充值费</option>
+						<option value=''>提现费</option>
+					</select>
+				</div>
+				<div class="fl-l ml-30">
+					<input id='queryFee' type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</div>
+			</div>
+			<div class="pt-15 pb-15 pl-20 pr-20">
+				<table class="listTable">
+					<thead>
+						<tr>
+							<td>费用类型</td>
+							<td>收取金额</td>
+							<td>收取时间</td>
+							<td>收费对象</td>
+						</tr>
+					</thead>
+					<tbody id='feeTbody'>
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class='dp-n'>
+			<div class="fs-16 ml-20 mt-20 mb-10">
+			查询统计&nbsp;-&gt;&nbsp;收费信息&nbsp;-&gt;&nbsp;平台费用&nbsp;-&gt;&nbsp;平台费用统计
+			</div>
+			<div class="searchBox ml-10 mt-20 mb-30 clearfix">
+				<div class="fl-l ml-10">统计时间类型&nbsp;
+					<select class='sel-small'>
+						<option value=''>按月</option>
+						<option value=''>按时间段</option>
+						<option value=''>按年</option>
+					</select>
+				</div>
+				<div class="fl-l ml-15">费用类型&nbsp;
+					<select class='sel-small'>
+						<option value=''>全部</option>
+						<option value=''>借款服务费</option>
+						<option value=''>投资服务费</option>
+						<option value=''>充值费</option>
+						<option value=''>提现费</option>
+					</select>
+				</div>
+				<div class="fl-l ml-30">
+					<input id='queryTotalFee' type="button" value="搜索" class="subBtn round-3 h-30 lh-28 pl-30 pr-30">
+				</div>
+			</div>
+			<div class="pt-15 pb-15 pl-20 pr-20">
+				<table class="listTable">
+					<thead>
+						<tr>
+							<td>费用类型</td>
+							<td>统计金额</td>
+						</tr>
+					</thead>
+					<tbody id='feeTotalTbody'>
+					
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+			
